@@ -5,65 +5,103 @@
 #define Nil NULL
 
 typedef int ElType;
+#define IdxMax 4
+#define IdxMin 1
+#define IdxUndef -999
 
 typedef struct listSkillNode *address;
 typedef struct listSkillNode {
     address nextskill;
-    char skillName[20];
+    char skillName[25];
 } lsNode;
 
 typedef struct {
     address addrFirstSkill;
-} pSkill;
+} Skill;
 
-/* Player menggunakan circular linked list */
-typedef struct playerNode *address;
-typedef struct playerNode {
-    ElType position;
-    boolean isTeleportedBefore;
-    boolean isImmune;
-    address next;
-    pSkill skills;
-    char playerName[16];
-} pNode;
+/* Player menggunakan array */
+typedef struct {
+    char uname[IdxMax-IdxMin+1][16];
+    int Neff;
+} pUserName;
 
 typedef struct {
-    address addrFirstPlayer;
-} Player;
+    ElType pos[IdxMax-IdxMin+1];
+} pPosition;
 
-#define NEXT(p) (p)->next
-#define POS(p) (p)->position
-#define ISTELE(p) (p)->isTeleportedBefore
-#define ISIMMUNE(p) (p)->isImmune
-#define SKILLS(p) (p)->skills
-#define SKILLNAME(p) (p)->skillName[20]
-#define PNAME(p) (p)->playerName[16]
-#define ADDR_FIRSTSKILL(p) (p).addrFirstSkill
-#define ADDR_FIRSTPLAYER(p) (p).addrFirstPlayer
+typedef struct {
+    boolean isTele[IdxMax-IdxMin+1];
+} pIsTeleported;
+
+typedef struct {
+    boolean isImun[IdxMax-IdxMin+1];
+} pIsImune;
+
+
+#define ADDR_HEADSKILL(p) (p).addrFirstSkill
 #define NEXTSKILL(p) (p)->nextskill
+#define SKILLNAME(p) (p)->skillName
 
-void createEmptyPlayerList (Player *PL);
-/*  Prosedur membuat List pemain kosong
-    I.S sembarang
-    F.S list player kosong
-*/
-
-void createEmptyPlayerSkillsList (pSkill *PR);
-
-void inputPlayerList (Player *PL, int n);
+void createEmptyPlayerList (pUserName *pU);
 /*
-    Prosedur mengisi list player
-    I.S kosong, N <= 4
-    F.S list player berisi n player
+	I.S. array pU sembarang
+	F.S. array pU kosong
 */
-
+void createEmptyPlayerSkilslList (Skill *S);
+/*
+	S adalah Sebuah linked list yang dapat diakses dari array pSkill dengan cara
+	(*S).sk[idxPlayer]
+	I.S	Linked List S sembarang
+	F.S	Linked List S kosong
+*/
 address newSkillNode ();
-
-address newPlayerNode ();
-
-const char* randomSkillGenerator();
-
-void getSkill (Player *PL, char plName[16]);
+/*
+	Fungsi mereturn sebuah address dari lsNode (list skill node)
+	Jika fungsi gagal mengalokasi lsNode maka akan mereturn Nil
+*/
+void preparationSkillList (Skill *pS1, Skill *pS2, Skill *pS3, Skill *pS4, int n);
+/*
+	I.S 	sembarang
+	F.S	semua list player skill kosong
+*/
+void summonPlayer(pUserName *pU, pIsTeleported *pT, pPosition *pP, pIsImune *pI, int n);
+/*
+	Prosedur untuk membuat list pemain sebanyak n pemain
+	I.S	array pU, pT, pP, pI kosong
+	F.S	array pU, pT, pP, pI terisi informasi kondisi awal permainan sebanyak n
+		pU.uname[ indexPlayer ] terisi inputan
+*/
+int getIdxOfPlayer (pUserName pU, char *name);
+/*
+	Fungsi mereturn index player dalam array pU dengan username parameter input uname
+	Jika tidak ditemukan player uname di dalam array pU, maka akan meretrun IdxUndef
+*/
+void insertVSkill (Skill *pS, char *skname);
+/*
+	Prosedur menambahkan skill ke salah satu linked list skill
+	I.S	linked list sembarang
+	F.S	jika linked list < 10 akan ditambahkan skill
+		Jika penuh Skill  akan tetap
+*/
+boolean isEmptyList (Skill pS);
+/*
+	Mereturn True jika pS kosong
+*/
+boolean getTeleportedConditionOfPlayer (pIsTeleported pT, pUserName pU, char *uname);
+/*
+	Fungsi untuk mendapatkan informasi kondisi pemain dengan username uname, apakah
+sebelumnya terkena portal (teleported) atau tidak
+*/
+boolean getImmunityConditionOfPlayer (pIsImune pI, pUserName pU, char *uname);
+/*
+	Fungsi untuk mendapatkan informasi kondisi pemain dengan username uname, apakah
+	Sedang imune terhadap efek apapun atau tidak
+*/
+int getPositionOfPlayer (pPosition pP, pUserName pU, char *uname);
+/*
+	Fungsi untuk mendapatkan informasi posisi terakhir dari pemain dengan username
+	uname;
+*/
 
 
 #endif

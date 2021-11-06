@@ -3,19 +3,19 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void createEmptyPlayerList (Player *PL) {
-    ADDR_FIRSTPLAYER(*PL) = Nil;
+void createEmptyPlayerList (pUserName *pU) {
+    (*pU).Neff = 0;
 }
 
-void createEmptyPlayerSkillsList (pSkill *PR) {
-    ADDR_FIRSTSKILL(*PR) = Nil;
+void createEmptyPlayerSkillsList (Skill *S) {
+    ADDR_HEADSKILL(*S) = Nil;
 }
 
 address newSkillNode () {
     lsNode *P = (lsNode *)malloc(sizeof(lsNode));
     if (P != Nil) {
         NEXTSKILL(P) = Nil;
-        SKILLNAME(P) = "";
+        strcpy(SKILLNAME(P), "kosong");
         return P;
     }
     else {
@@ -23,48 +23,93 @@ address newSkillNode () {
     }
 }
 
-address newPlayerNode () {
-    pNode *P = (pNode *)malloc(sizeof(pNode));
-    if (P != Nil) {
-        POS(P) = 0;
-        ISTELE(P) = FALSE;
-        ISIMMUNE(P) = FALSE;
-        NEXT(P) = Nil;
-        ADDR_FIRSTSKILL(SKILLS(P)) = Nil;
-        return P;
+void preparationSkillList (Skill *pS1, Skill *pS2, Skill *pS3, Skill *pS4, int n) {
+    for (int i = 1; i <= n ; i ++) {
+        if (i == 1) {
+            createEmptyPlayerSkillsList(pS1);
+        }
+        else if (i == 2) {
+            createEmptyPlayerSkillsList(pS2);
+        }
+        else if (i == 3) {
+            createEmptyPlayerSkillsList(pS3);
+        }
+        else if (i == 4) {
+            createEmptyPlayerSkillsList(pS4);
+        }
+    }
+}
+
+void summonPlayer (pUserName *pU, pIsTeleported *pT, pPosition *pP, pIsImune *pI, int n) {
+    for (int i = 1 ; i <= n ; i++) {
+        printf("coba masukin uname\n");
+        scanf("%s", &((*pU).uname[i]));
+        (*pT).isTele[i] = FALSE;
+        (*pP).pos[i] = 1;
+        (*pI).isImun[i] = FALSE;
+    }
+    (*pU).Neff = n;
+}
+
+int getIdxOfPlayer(pUserName pU, char *name) {
+    int i = IdxMin;
+    char temp[16];
+    strcpy(temp, name);
+    while ((strcmp(pU.uname[i], temp) != 0) && (i <= IdxMax)) {
+        i++;
+    }
+    if (i <= IdxMax) {
+        return i;
     }
     else {
-        return Nil;
+        return IdxUndef;
     }
 }
 
-void inputPlayerList (Player *PL, int n) {
-    createEmptyPlayerList(&PL);
-    address P = ADDR_FIRSTPLAYER(*PL);
-    address node;
-    for (int i = 1; i <= n; i++) {
-        node = newPlayerNode();
-        P = node;
-        printf("Nama Player ke %d: ", n);
-        scanf("%s", &(PNAME(P)));
-        P = NEXT(P);
-    }
-    P = ADDR_FIRSTPLAYER(*PL);
+boolean isEmptyList (Skill pS) {
+    return ((ADDR_HEADSKILL(pS)) == Nil);
 }
 
-void getFirstSkill (Player *PL, address playerWhoGetSkill) {
-    address P = ADDR_FIRSTPLAYER(*PL);
-    while (P != playerWhoGetSkill) {
-        P = NEXT(P);
-    }   
-    pSkill PS;
-    createEmptyPlayerSkillsList(&PS);
-    SKILLS(P) = PS;
-    address PLS = ADDR_FIRSTSKILL(SKILLS(P));
-    while (PLS != Nil) {
-        PLS = NEXTSKILL(PLS);
+void insertVSkill (Skill *pS, char *skname) {
+    if (isEmptyList(*pS)) {
+        address P = newSkillNode();
+        strcpy(SKILLNAME(P), skname);
+        NEXTSKILL(P) = Nil;
+        ADDR_HEADSKILL(*pS) = P;
     }
-    address node = newSkillNode();
-    SKILLNAME(node) = randomSkillGenerator();
-    PLS = node;
+    else {
+        address P = ADDR_HEADSKILL(*pS);
+        int count = 1;
+        while ((NEXTSKILL(P) != Nil) && (count <= 10)) {
+            count++;
+            P = NEXTSKILL(P);
+        }
+        if (count <= 10) {
+            address X = newSkillNode();
+            strcpy(SKILLNAME(X), skname);
+            NEXTSKILL(X) = Nil;
+            NEXTSKILL(P) = X;
+        }
+    }
+}
+
+boolean getTeleportedConditionOfPlayer(pIsTeleported pT, pUserName pU, char *uname) {
+    int idx = getIdxOfPlayer(pU, uname);
+    if (idx != IdxUndef) {
+        return (pT.isTele[idx]);
+    }
+}
+
+boolean getImmunityConditionOfPlayer (pIsImune pI, pUserName pU, char *uname) {
+    int idx = getIdxOfPlayer(pU, uname);
+    if (idx != IdxUndef) {
+        return (pI.isImun[idx]);
+    }
+}
+
+int getPositionOfPlayer (pPosition pP, pUserName pU, char *uname) {
+    int idx = getIdxOfPlayer(pU, uname);
+    if (idx != IdxUndef) {
+        return (pP.pos[idx]);
+    }
 }
