@@ -3,7 +3,8 @@
 #include <string.h>
 #include "../boolean.h"
 
-void readFile() {
+int main()
+{
     char namafile[255];
     int petak, maxroll, telcount;
     char terrain[100];
@@ -43,11 +44,4 @@ void readFile() {
     }
 
     fclose(fpointer);
-}
-
-int main()
-{
-    readFile();
-    
     return 0;
-}
