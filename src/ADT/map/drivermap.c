@@ -4,9 +4,12 @@
 #include "../map/map.c"
 #include "../chartoint/chartoint.c"
 
+void printConfig();
+
 int main()
 {  
     inputConfig(); // 1
-    printf("Input file konfigurasi berhasil..\nSelamat bermain!\n");
+    // printConfig();
+    showMap();
     return 0;
 }
