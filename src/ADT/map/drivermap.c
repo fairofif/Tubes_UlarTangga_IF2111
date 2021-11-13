@@ -6,10 +6,6 @@
 
 int main()
 {  
-    // char test[10] = "oke";
-    // char (*p)[10];
-    // p = &test;
-    // printf("%s", *p);
     inputConfig(); // 1
     return 0;
 }

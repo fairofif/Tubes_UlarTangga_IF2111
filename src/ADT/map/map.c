@@ -42,63 +42,6 @@ void assignConfig()
         printf("\n");
         //CEK DULU IF C.LENGTHNYA SAMA KAYA LENGTH
     } else {
-        int value = 0;
-        int n = CKata.Length;
-        // printf("input indicator = %d\n", inputIndicator); //PRINTF
-        if(inputIndicator > 4) {
-            int tel1, tel2;
-            n = 0;
-            for(int i = CKata.Length; i > 0; i--) {
-                if(CKata.TabKata[i] == BLANK) {
-                    tel2 = value;
-                    value = 0;
-                    n = 0;
-                } else {
-                    int temp = chartoint(CKata.TabKata[i]);
-                    value = value + (temp * pow(10, n));
-                    n++;
-                }
-            }
-            tel1 = value;
-            TELEPORT_LAYOUT(CurrentMap)[TELEPORT_NEFF(CurrentMap)] = tel1;
-            TELEPORT_LAYOUT(CurrentMap)[TELEPORT_NEFF(CurrentMap) + 1] = tel2;
-            printf("%d %d\n", TELEPORT_LAYOUT(CurrentMap)[TELEPORT_NEFF(CurrentMap)], TELEPORT_LAYOUT(CurrentMap)[TELEPORT_NEFF(CurrentMap) + 1]);   
-            TELEPORT_NEFF(CurrentMap) += 2;
-        } else {
-            for(int i = 1; i <= CKata.Length; i++) {
-                int temp = chartoint(CKata.TabKata[i]);
-                value = value + (temp * pow(10, n-i));
-                if(inputIndicator == 1) {
-                    MAP_LENGTH(CurrentMap) = value;
-                } else if(inputIndicator == 3) {
-                    MAP_MAXROLL(CurrentMap) = value;
-                } else if(inputIndicator == 4) {
-                    TELEPORT_COUNT(CurrentMap) = value;
-                }
-            }
-        } 
+        chartoint(CKata.TabKata, CKata.Length);
     }
-    printf("NEFF %d\n", TELEPORT_NEFF(CurrentMap));
 }
-
-// void assignTeleport() {
-//     int j = 0;
-//     int tel1, tel2;
-//     n = 0;
-//     for(int i = CKata.Length; i > 0; i--) {
-//         if(CKata.TabKata[i] == BLANK) {
-//             tel2 = value;
-//             value = 0;
-//             n = 0;
-//         } else {
-//             int temp = chartoint(CKata.TabKata[i]);
-//             value = value + (temp * pow(10, n));
-//             n++;
-//         }
-//     }
-//     tel1 = value;
-//     TELEPORT_LAYOUT(CurrentMap)[j] = tel1;
-//     TELEPORT_LAYOUT(CurrentMap)[j+1] = tel2;
-//     printf("%d %d\n", TELEPORT_LAYOUT(CurrentMap)[j], TELEPORT_LAYOUT(CurrentMap)[j+1]);   
-//     j += 2;
-// }
