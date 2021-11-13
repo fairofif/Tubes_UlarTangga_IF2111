@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include "../../boolean.h"
 #include "../mesinkata/mesin_kata.h"
 
@@ -17,13 +18,19 @@ typedef struct {
 } MapLayout;
 
 typedef struct {
+    int TeleportLayout[198];
+    int TeleportCount;
+} TeleportLayout;
+
+typedef struct {
     int MapLength; //panjang map maximal yang mungkin
     MapLayout ConfigMap; //akses Map.Layout dan Map.LayoutLength
     int MaxRoll; //max roll pada dadu
-    int TeleportCount; //jumlah teleport
+    TeleportLayout Teleport; //jumlah teleport
 } Map;
 
 extern Map CurrentMap;
+extern int inputIndicator;
 
 void inputConfig();
 /* Memasukkan input berupa nama file konfigurasi map yang akan dimainkan.

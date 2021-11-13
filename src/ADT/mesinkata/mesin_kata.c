@@ -16,11 +16,11 @@ void SalinKata() { //untuk input semua ke array
     while((CC != MARK) && (CC != NEWLINE)) {
         CKata.TabKata[i] = CC;
         // printf("indeks %d CC", i);
-        printf("%c", CKata.TabKata[i]);
+        // printf("%c", CKata.TabKata[i]);
         ADV();
         i++;
     }
-    printf("\n"); //PRINTF
+    // printf("\n"); //PRINTF
     CKata.Length = i - 1;
     assignConfig();
 }

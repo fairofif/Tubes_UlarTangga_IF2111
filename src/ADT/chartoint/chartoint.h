@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int chartoint();
+int chartoint(char a);
 /*SEBUAH FUNGSI UNTUK MENGUBAH CHAR MENJADI INTEGER
   MENGGUNAKAN METODE ASCII*/
 
