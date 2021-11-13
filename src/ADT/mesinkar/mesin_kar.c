@@ -5,6 +5,7 @@
 #include <stdio.h>
 
 char CC;
+char (*fileconfig)[254];
 boolean EOP;
 
 static FILE * pita;
@@ -18,8 +19,8 @@ void START() {
           Jika CC = MARK maka EOP akan menyala (true) */
 
     /* Algoritma */
-    pita = stdin;
-    ADV();
+    pita = fopen(*fileconfig, "r");;
+    ADV(); // 4
 }
 
 void ADV() {

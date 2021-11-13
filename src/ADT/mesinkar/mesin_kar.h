@@ -6,10 +6,11 @@
 
 #include "../../boolean.h"
 
-#define MARK '\n'
+#define MARK '!'
 /* State Mesin */
 extern char CC;
 extern boolean EOP;
+extern char (*fileconfig)[254];
 
 void START();
 /* Mesin siap dioperasikan. Pita disiapkan untuk dibaca.

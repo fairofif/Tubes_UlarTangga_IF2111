@@ -7,8 +7,8 @@
 #include "../../boolean.h"
 #include "../mesinkar/mesin_kar.h"
 
-#define NMax 254
-#define BLANK ' '
+#define NMax 254 //bisa 299 ga karena butuh untuk kasus 100 petak dan 98 portal dll
+#define NEWLINE '\n'
 
 typedef struct {
    char TabKata[NMax+1]; /* container penyimpan kata, indeks yang dipakai [1..NMax] */

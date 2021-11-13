@@ -4,26 +4,30 @@
 boolean EndKata;
 Kata CKata;
 
-void IgnoreBlank() {
-    while(CC == BLANK){
+void IgnoreBlank() { //untuk input teleport
+    while(CC == NEWLINE){
         ADV();
     }
 }
 
-void SalinKata() {
-    int i;
-    i = 1;
-    while((CC != MARK) && (CC != BLANK)) {
+void SalinKata() { //untuk input semua ke array
+    int i = CKata.Length + 1;
+    while((CC != MARK) && (CC != NEWLINE)) {
         CKata.TabKata[i] = CC;
+        printf("%c", CKata.TabKata[i]); //PRINTF
         ADV();
         i++;
     }
+    printf("\n"); //PRINTF
     CKata.Length = i - 1;
+    printf("length kata %d\n", CKata.Length); //PRINTF
 }
 
-void STARTKATA() {
-    START();
+void STARTKATA() { //untuk nerima input dari semua isi file
+    printf("masuk start\n"); //PRINTF
+    START(); // 3
     IgnoreBlank();
+    printf("%c\n", CC); //PRINTF
     if (CC == MARK) {
         EndKata = TRUE;
     }
@@ -34,11 +38,13 @@ void STARTKATA() {
 }
 
 void ADVKATA() {
-    IgnoreBlank();
+    IgnoreBlank(); 
+    printf("CC sekarang %c\n", CC); //PRINTF
     if (CC == MARK) {
+        printf("masuk ke endkata jd true di advkata\n");
         EndKata = TRUE;
     }
     else {
-        SalinKata();
+        SalinKata(); // 6
     }
 }
