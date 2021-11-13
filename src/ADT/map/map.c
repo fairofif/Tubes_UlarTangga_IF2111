@@ -46,20 +46,24 @@ void assignConfig()
         int n = CKata.Length;
         if(inputIndicator > 4) {
             int j = 0;
+            int tel1, tel2;
             n = 0;
             for(int i = CKata.Length; i > 0; i--) {
                 if(CKata.TabKata[i] == BLANK) {
+                    tel2 = value;
                     value = 0;
                     n = 0;
                 } else {
                     int temp = chartoint(CKata.TabKata[i]);
                     value = value + (temp * pow(10, n));
-                    CurrentMap.Teleport.TeleportLayout[j] = value;
-                    j++; //CEK SAMA KAYA TELEPORTCOUNT NGGA
                     n++;
                 }
             }
-            printf("%d %d\n", CurrentMap.Teleport.TeleportLayout[j-1], CurrentMap.Teleport.TeleportLayout[j-2]);   
+            tel1 = value;
+            CurrentMap.Teleport.TeleportLayout[j] = tel1;
+            CurrentMap.Teleport.TeleportLayout[j+1] = tel2;
+            printf("%d %d\n", CurrentMap.Teleport.TeleportLayout[j], CurrentMap.Teleport.TeleportLayout[j+1]);   
+            j += 2;
         } else {
             for(int i = 1; i <= CKata.Length; i++) {
                 int temp = chartoint(CKata.TabKata[i]);
