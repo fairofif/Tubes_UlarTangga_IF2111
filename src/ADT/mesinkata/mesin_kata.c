@@ -11,21 +11,16 @@ void IgnoreBlank() { //untuk input teleport
 }
 
 void SalinKata() { //untuk input semua ke array
-    int i = CKata.Length + 1; //tinggal diubah ke 1 kl mau kepisah2
-    while((CC != MARK)) {
-        if(CC == NEWLINE) {
-            CKata.TabKata[i] = ' ';
-        } else if(CC == BLANK) {
-            CKata.TabKata[i] = '*';
-        } else {
-            CKata.TabKata[i] = CC;
-        }
-        // printf("%c", CKata.TabKata[i]);
+    int i = 1; //tinggal diubah ke 1 kl mau kepisah2
+    while((CC != MARK) && (CC != NEWLINE)) {
+        CKata.TabKata[i] = CC;
+        printf("%c", CKata.TabKata[i]);
         ADV();
         i++;
     }
-    // printf("\n"); //PRINTF
+    printf("\n"); //PRINTF
     CKata.Length = i - 1;
+    printf("panjang %d\n", CKata.Length);
 }
 
 void STARTKATA() { //untuk nerima input dari semua isi file

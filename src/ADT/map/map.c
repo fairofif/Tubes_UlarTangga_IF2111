@@ -29,7 +29,7 @@ void readConfig()
     while(!EndKata) {
         ADVKATA(); // 5
     }
-    assignConfig();
+    // assignConfig();
 }
 
 void assignConfig()
