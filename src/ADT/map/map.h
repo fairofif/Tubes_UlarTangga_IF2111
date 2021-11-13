@@ -18,8 +18,9 @@ typedef struct {
 } MapLayout;
 
 typedef struct {
-    int TeleportLayout[198];
-    int TeleportCount;
+    int Layout[198];
+    int Neff;
+    int Count;
 } TeleportLayout;
 
 typedef struct {
@@ -28,6 +29,15 @@ typedef struct {
     int MaxRoll; //max roll pada dadu
     TeleportLayout Teleport; //jumlah teleport
 } Map;
+
+#define MAP_LENGTH(m) (m).MapLength
+#define MAP_LAYOUT(m) (m).ConfigMap.Layout
+#define MAP_LAYOUT_LENGTH(m) (m).ConfigMap.LayoutLength
+#define MAP_MAXROLL(m) (m).MaxRoll
+#define TELEPORT_LAYOUT(m) (m).Teleport.Layout
+#define TELEPORT_NEFF(m) (m).Teleport.Neff
+#define TELEPORT_COUNT(m) (m).Teleport.Count
+
 
 extern Map CurrentMap;
 extern int inputIndicator;
