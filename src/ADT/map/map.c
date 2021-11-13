@@ -30,6 +30,7 @@ void readConfig()
         inputIndicator++;
         ADVKATA(); 
     }
+    printf("Input file konfigurasi berhasil..\nSelamat bermain!\n");
 }
 
 void assignConfig()
@@ -38,11 +39,36 @@ void assignConfig()
         MAP_LENGTH(CurrentMap) = CKata.Length;
         for(int i = 1; i <= CKata.Length; i++) {
             MAP_LAYOUT(CurrentMap)[i] = CKata.TabKata[i];
-            printf("%c", MAP_LAYOUT(CurrentMap)[i]);
+            MAP_NEFF(CurrentMap) += 1;
         }
         printf("\n");
         //CEK DULU IF C.LENGTHNYA SAMA KAYA LENGTH
     } else {
         chartoint(CKata.TabKata, CKata.Length);
     }
+}
+
+void printConfig() 
+{
+    printf("Panjang map : %d\n", MAP_LENGTH(CurrentMap));
+    printf("Layout map : ");
+    for(int i = 0; i < MAP_LENGTH(CurrentMap); i++) {
+        printf("%c", MAP_LAYOUT(CurrentMap)[i]);
+    }
+    printf("\n");
+    printf("Maksimal dadu : %d\n", MAP_MAXROLL(CurrentMap));
+    printf("Jumlah teleport : %d\n", TELEPORT_COUNT(CurrentMap));
+    printf("List teleport : \n");
+    for(int i = 0; i < TELEPORT_COUNT(CurrentMap); i++) {
+        printf("%d %d\n", TELEPORT_LAYOUT(CurrentMap)[i], TELEPORT_LAYOUT(CurrentMap)[i+1]);
+    }
+
+}
+
+void showMap() {
+    printf("Layout map : ");
+    for(int i = 0; i < MAP_LENGTH(CurrentMap); i++) {
+        printf("%c", MAP_LAYOUT(CurrentMap)[i]);
+    }
+    printf("\n");
 }

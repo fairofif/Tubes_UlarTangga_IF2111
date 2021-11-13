@@ -14,7 +14,8 @@
 
 typedef struct {
     char Layout[MaxMap+1]; //layout map berisi ...#..#..
-    int LayoutLength; //nanti buat ngecek sama ga kaya MapLength
+    int Neff;
+    int Length; //nanti buat ngecek sama ga kaya MapLength
 } MapLayout;
 
 typedef struct {
@@ -24,13 +25,13 @@ typedef struct {
 } TeleportLayout;
 
 typedef struct {
-    int MapLength; //panjang map maximal yang mungkin
     MapLayout ConfigMap; //akses Map.Layout dan Map.LayoutLength
     int MaxRoll; //max roll pada dadu
     TeleportLayout Teleport; //jumlah teleport
 } Map;
 
-#define MAP_LENGTH(m) (m).MapLength
+#define MAP_LENGTH(m) (m).ConfigMap.Length
+#define MAP_NEFF(m) (m).ConfigMap.Neff
 #define MAP_LAYOUT(m) (m).ConfigMap.Layout
 #define MAP_LAYOUT_LENGTH(m) (m).ConfigMap.LayoutLength
 #define MAP_MAXROLL(m) (m).MaxRoll
@@ -63,4 +64,9 @@ void charToInt();
 
 
 void assignConfig();
+
+void printConfig();
+
+void showMap();
+
 #endif

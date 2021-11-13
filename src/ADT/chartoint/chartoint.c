@@ -21,7 +21,6 @@ int chartoint(char a[], int len)
         tel1 = value;
         TELEPORT_LAYOUT(CurrentMap)[TELEPORT_NEFF(CurrentMap)] = tel1;
         TELEPORT_LAYOUT(CurrentMap)[TELEPORT_NEFF(CurrentMap) + 1] = tel2;
-        printf("%d %d\n", TELEPORT_LAYOUT(CurrentMap)[TELEPORT_NEFF(CurrentMap)], TELEPORT_LAYOUT(CurrentMap)[TELEPORT_NEFF(CurrentMap) + 1]);   
         TELEPORT_NEFF(CurrentMap) += 2;
     } else {
         if(inputIndicator == 1) {
@@ -31,7 +30,6 @@ int chartoint(char a[], int len)
         } else if(inputIndicator == 4) {
             TELEPORT_COUNT(CurrentMap) = value;
         }
-        printf("%d\n", value);
     }
     return 0;
 }
