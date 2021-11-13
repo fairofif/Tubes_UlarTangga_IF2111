@@ -7,5 +7,6 @@
 int main()
 {  
     inputConfig(); // 1
+    printf("Input file konfigurasi berhasil..\nSelamat bermain!\n");
     return 0;
 }

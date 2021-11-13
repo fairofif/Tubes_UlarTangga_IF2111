@@ -5,18 +5,19 @@ int inputIndicator = 1; //teleport indikator (mengindikasikan input berupa telpo
 
 void inputConfig() 
 {
-    char namafile[254] = "map1.txt";
+    char namafile[254];
     char *dummy = "map1.txt";
     boolean valid = FALSE;
     TELEPORT_NEFF(CurrentMap) = 0;
 
     while(!valid){
-        // scanf("%s", namafile);
+        printf("Masukkan file config txt : ");
+        scanf("%s", namafile);
         if(strcmp(namafile, dummy) == 0) { //ini masih harus ditanya boleh pake strcmp ngga
             fileconfig = &namafile;
             valid = TRUE;
         } else {
-            printf("Masukkan file config salah.\n"); 
+            printf("File tidak ditemukan. HINT : masukin map1.txt (dummy)\n"); 
         }
     }
     readConfig();
@@ -24,10 +25,10 @@ void inputConfig()
 
 void readConfig()
 {
-    STARTKATA(); // 2
+    STARTKATA(); 
     while(!EndKata) {
         inputIndicator++;
-        ADVKATA(); // 5
+        ADVKATA(); 
     }
 }
 
