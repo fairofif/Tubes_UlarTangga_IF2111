@@ -7,7 +7,7 @@
 #include "../../boolean.h"
 #include "../mesinkar/mesin_kar.h"
 
-#define NMax 254 //bisa 299 ga karena butuh untuk kasus 100 petak dan 98 portal dll
+#define NMax 100 //bisa 299 ga karena butuh untuk kasus 100 petak dan 98 portal dll
 #define NEWLINE '\n'
 #define BLANK ' '
 

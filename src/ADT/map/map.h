@@ -18,10 +18,12 @@ typedef struct {
 
 typedef struct {
     int MapLength; //panjang map maximal yang mungkin
-    MapLayout Map; //akses Map.Layout dan Map.LayoutLength
+    MapLayout ConfigMap; //akses Map.Layout dan Map.LayoutLength
     int MaxRoll; //max roll pada dadu
     int TeleportCount; //jumlah teleport
 } Map;
+
+extern Map CurrentMap;
 
 void inputConfig();
 /* Memasukkan input berupa nama file konfigurasi map yang akan dimainkan.

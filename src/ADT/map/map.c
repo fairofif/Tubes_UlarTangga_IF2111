@@ -1,9 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "../../boolean.h"
 #include "map.h"
 
+Map CurrentMap;
 
 void inputConfig() 
 {
@@ -29,13 +26,23 @@ void readConfig()
     while(!EndKata) {
         ADVKATA(); // 5
     }
-    // assignConfig();
 }
 
 void assignConfig()
 {
-    Map *CurrentMap;
-    for (int i = 1; i <= CKata.Length; i++) {
-        printf("%c", CKata.TabKata[i]);
+    if(CKata.TabKata[1] == '.') {
+        CurrentMap.ConfigMap.LayoutLength = CKata.Length;
+        for(int i = 1; i <= CKata.Length; i++) {
+            CurrentMap.ConfigMap.Layout[i] = CKata.TabKata[i];
+            printf("%c", CurrentMap.ConfigMap.Layout[i]);
+        }
+        printf("\n");
+        //CEK DULU IF C.LENGTHNYA SAMA KAYA LENGTH
+    } else {
+        for(int i = 1; i <= CKata.Length; i++) {
+            int value = 0;
+            int temp = chartoint(CKata.TabKata[i]);
+            IgnoreBlank();
+        }
     }
 }
