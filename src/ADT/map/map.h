@@ -23,8 +23,6 @@ typedef struct {
     int TeleportCount; //jumlah teleport
 } Map;
 
-extern int *petak, *maxroll, *telcount;
-
 void inputConfig();
 /* Memasukkan input berupa nama file konfigurasi map yang akan dimainkan.
    I.S. : tidak ada map yang diinput/dipilih
@@ -44,4 +42,6 @@ void charToInt();
            pada array
     F.S. : input berupa array of char menjadi int */
 
+
+void assignConfig();
 #endif

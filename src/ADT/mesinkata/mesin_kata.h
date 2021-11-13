@@ -9,6 +9,7 @@
 
 #define NMax 254 //bisa 299 ga karena butuh untuk kasus 100 petak dan 98 portal dll
 #define NEWLINE '\n'
+#define BLANK ' '
 
 typedef struct {
    char TabKata[NMax+1]; /* container penyimpan kata, indeks yang dipakai [1..NMax] */
