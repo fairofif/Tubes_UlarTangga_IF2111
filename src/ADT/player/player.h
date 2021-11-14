@@ -1,6 +1,6 @@
 #ifndef _PLAYER_H
 #define _PLAYER_H
-#include "../boolean.h"
+#include "../../boolean.h"
 #include <stdlib.h>
 #define Nil NULL
 
