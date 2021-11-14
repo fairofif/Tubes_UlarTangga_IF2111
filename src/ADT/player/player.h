@@ -21,22 +21,40 @@ typedef struct {
 
 /* Player menggunakan array */
 typedef struct {
-    char uname[IdxMax-IdxMin+1][16];
+    char uname[IdxMax+1][16];
     int Neff;
 } pUserName;
 
 typedef struct {
-    ElType pos[IdxMax-IdxMin+1];
+    ElType pos[IdxMax+1];
 } pPosition;
 
 typedef struct {
-    boolean isTele[IdxMax-IdxMin+1];
+    boolean isTele[IdxMax+1];
 } pIsTeleported;
 
 typedef struct {
-    boolean isImun[IdxMax-IdxMin+1];
+    boolean isImun[IdxMax+1];
 } pIsImune;
 
+typedef struct {
+	boolean isCermin[IdxMax+1];
+} pIsCermin;
+
+typedef struct {
+	boolean isSenterBesar[IdxMax+1];
+} pIsSenterBesar;
+
+typedef struct {
+	boolean isSenterKecil[IdxMax+1];
+} pIsSenterKecil;
+
+/*
+	pIsMesinWaktu
+	pIsBalingBaling
+	pIsPenukar
+	pIsTeknologiGagal
+*/
 
 #define ADDR_HEADSKILL(p) (p).addrFirstSkill
 #define NEXTSKILL(p) (p)->nextskill
@@ -64,7 +82,7 @@ void preparationSkillList (Skill *pS1, Skill *pS2, Skill *pS3, Skill *pS4, int n
 	I.S 	sembarang
 	F.S	semua list player skill kosong
 */
-void summonPlayer(pUserName *pU, pIsTeleported *pT, pPosition *pP, pIsImune *pI, int n);
+void summonPlayer(pUserName *pU, pIsTeleported *pT, pPosition *pP, pIsImune *pI, pIsCermin *pC, pIsSenterBesar *pSB, pIsSenterKecil *pSK, int n);
 /*
 	Prosedur untuk membuat list pemain sebanyak n pemain
 	I.S	array pU, pT, pP, pI kosong
@@ -97,6 +115,25 @@ boolean getImmunityConditionOfPlayer (pIsImune pI, pUserName pU, char *uname);
 	Fungsi untuk mendapatkan informasi kondisi pemain dengan username uname, apakah
 	Sedang imune terhadap efek apapun atau tidak
 */
+
+boolean getCerminConditionOfPlayer (pIsCermin pC, pUserName pU, char *uname);
+/*
+	Fungsi untuk mendapatkan informasi kondisi pemain dengan username uname, apakah
+	Sedang memiliki buff cermin ganda atau tidak
+*/
+
+boolean getSenterBesarConditionOfPlayer (pIsSenterBesar pSB, pUserName pU, char *uname);
+/*
+	Fungsi untuk mendapatkan informasi kondisi pemain dengan username uname, apakah
+	Sedang memiliki buff senter pembesar atau tidak
+*/
+
+boolean getSenterKecilConditionOfPlayer (pIsSenterKecil pSK, pUserName pU, char *uname);
+/*
+	Fungsi untuk mendapatkan informasi kondisi pemain dengan username uname, apakah
+	Sedang memiliki buff senter pengecil atau tidak
+*/
+
 int getPositionOfPlayer (pPosition pP, pUserName pU, char *uname);
 /*
 	Fungsi untuk mendapatkan informasi posisi terakhir dari pemain dengan username
