@@ -1,5 +1,4 @@
-#include "../map/map.h"
-#include <stdio.h>
+#include "chartoint.h"
 
 int chartoint(char a[], int len)
 {   
