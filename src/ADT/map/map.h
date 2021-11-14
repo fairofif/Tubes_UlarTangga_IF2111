@@ -1,13 +1,7 @@
 #ifndef _MAP_H
 #define _MAP_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
-#include "../../boolean.h"
-#include "../mesinkata/mesin_kata.h"
-
+#include "../../console.h"
 
 #define Nil NULL
 #define MaxMap 100
@@ -64,9 +58,17 @@ void charToInt();
 
 
 void assignConfig();
+/* Memasukkan input bacaan dari file konfigurasi ke dalam variabel pointer yang digunakan
+   selama permainan.
+   I.S. : pointer currentMap tidak menunjuk kemana-mana
+   F.S. : pointer menunjuk input sesuai dengan format yang ada */
 
 void printConfig();
+/* Melakukan pencetakan semua input yang ada pada file konfigurasi yang telah ditunjuk pointer.
+   F.S. : output berupa semua setup map yang ingin dimainkan */
 
 void showMap();
+/* Mencetak peta yang akan/sedang dimainkan.
+   F.S. : output berupa layout map yang sedang dimainkan */
 
 #endif

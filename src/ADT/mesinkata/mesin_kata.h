@@ -4,8 +4,7 @@
 #ifndef __MESINKATA_H__
 #define __MESINKATA_H__
 
-#include "../../boolean.h"
-#include "../mesinkar/mesin_kar.h"
+#include "../../console.h"
 
 #define NMax 100 //bisa 299 ga karena butuh untuk kasus 100 petak dan 98 portal dll
 #define NEWLINE '\n'

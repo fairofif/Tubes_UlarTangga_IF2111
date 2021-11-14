@@ -4,12 +4,10 @@
 #include "../map/map.c"
 #include "../chartoint/chartoint.c"
 
-void printConfig();
 
 int main()
 {  
-    inputConfig(); // 1
-    // printConfig();
+    inputConfig(); 
     showMap();
     return 0;
 }

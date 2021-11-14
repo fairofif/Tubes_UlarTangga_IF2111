@@ -1,11 +1,12 @@
 #ifndef _CHARTOINT_H
 #define _CHARTOINT_H
 
-#include <stdio.h>
-#include <stdlib.h>
+#include "../../console.h"
 
 int chartoint(char a[], int len);
-/*SEBUAH FUNGSI UNTUK MENGUBAH CHAR MENJADI INTEGER
-  MENGGUNAKAN METODE ASCII*/
+/* Mengubah semua char menjadi integer sesuai dengan nilai yang terpampang pada input
+   file konfigurasi.
+   I.S. : meminta array karakter dan panjang arraynya
+   F.S. : mengubah semua karakter menjadi integer sesuai dengan nilainya (puluhan, satuan) */
 
 #endif

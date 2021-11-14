@@ -4,8 +4,7 @@
 #ifndef __MESIN_KAR_H_
 #define __MESIN_KAR_H_
 
-#include "../../boolean.h"
-#include "../chartoint/chartoint.h"
+#include "../../console.h"
 
 #define MARK '!'
 /* State Mesin */
