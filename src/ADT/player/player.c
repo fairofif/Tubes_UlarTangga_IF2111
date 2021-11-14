@@ -40,13 +40,16 @@ void preparationSkillList (Skill *pS1, Skill *pS2, Skill *pS3, Skill *pS4, int n
     }
 }
 
-void summonPlayer (pUserName *pU, pIsTeleported *pT, pPosition *pP, pIsImune *pI, int n) {
+void summonPlayer (pUserName *pU, pIsTeleported *pT, pPosition *pP, pIsImune *pI, pIsCermin *pC, pIsSenterBesar *pSB, pIsSenterKecil *pSK, int n) {
     for (int i = 1 ; i <= n ; i++) {
         printf("coba masukin uname\n");
         scanf("%s", &((*pU).uname[i]));
         (*pT).isTele[i] = FALSE;
         (*pP).pos[i] = 1;
         (*pI).isImun[i] = FALSE;
+        (*pC).isCermin[i] = FALSE;
+        (*pSB).isSenterBesar[i] = FALSE;
+        (*pSK).isSenterKecil[i] = FALSE;
     }
     (*pU).Neff = n;
 }
@@ -56,7 +59,7 @@ int getIdxOfPlayer(pUserName pU, char *name) {
     char temp[16];
     strcpy(temp, name);
     while ((strcmp(pU.uname[i], temp) != 0) && (i <= IdxMax)) {
-        i++;
+        ++i;
     }
     if (i <= IdxMax) {
         return i;
@@ -111,5 +114,26 @@ int getPositionOfPlayer (pPosition pP, pUserName pU, char *uname) {
     int idx = getIdxOfPlayer(pU, uname);
     if (idx != IdxUndef) {
         return (pP.pos[idx]);
+    }
+}
+
+boolean getCerminConditionOfPlayer (pIsCermin pC, pUserName pU, char *uname) {
+    int idx = getIdxOfPlayer(pU, uname);
+    if (idx != IdxUndef) {
+        return (pC.isCermin[idx]);
+    }
+}
+
+boolean getSenterBesarConditionOfPlayer (pIsSenterBesar pSB, pUserName pU, char *uname) {
+    int idx = getIdxOfPlayer(pU, uname);
+    if (idx != IdxUndef) {
+        return (pSB.isSenterBesar[idx]);
+    }
+}
+
+boolean getSenterKecilConditionOfPlayer (pIsSenterKecil pSK, pUserName pU, char *uname) {
+    int idx = getIdxOfPlayer(pU, uname);
+    if (idx != IdxUndef) {
+        return (pSK.isSenterKecil[idx]);
     }
 }
