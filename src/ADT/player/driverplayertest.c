@@ -1,5 +1,5 @@
 #include "player.h"
-#include "../boolean.h"
+#include "../../boolean.h"
 #include <stdlib.h>
 #include <stdio.h>
 
