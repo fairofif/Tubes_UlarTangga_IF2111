@@ -8,9 +8,10 @@
 int main(){
     char s[15];
     int count = 0;
+    printf("Oops, Anda berada pada teleport!\n");
     if (getTeleportedConditionOfPlayer){
         if(getImmunityConditionOfPlayer){
-            printf("Apakah ingin menggunakan imun?\n");
+            printf("Apakah ingin menggunakan imun (yes/no)? \n");
             scanf("%s",s);
             if (strcmp(s, "no") == 0){
                 count++;
@@ -27,50 +28,40 @@ int main(){
 }
 
 // ini function si teleportnya
-int teleport (pPosition pP, pUserName pU, char *uname){
-    int idx = getIdxOfPlayer(pU, uname);
-    if (idx != IdxUndef) {
-        /* Teleport maju */
-        if (pP.pos[idx] == 1){
-            pP.pos[idx] = 24;
-            return (pP.pos[idx]);
-        }
-        else if (pP.pos[idx] == 12){
-            pP.pos[idx] = 48;
-            return (pP.pos[idx]);
-        }
-        else if (pP.pos[idx] == 42){
-            pP.pos[idx] = 66;
-            return (pP.pos[idx]);
-        }
-        else if (pP.pos[idx] == 58){
-            pP.pos[idx] = 72;
-            return (pP.pos[idx]);
-        }
-        else if (pP.pos[idx] == 85){
-            pP.pos[idx] = 93;
-            return (pP.pos[idx]);
-        }
-        /* Teleport mundur*/
-        else if (pP.pos[idx] == 28){
-            pP.pos[idx] = 16;
-            return (pP.pos[idx]);
-        }
-        else if (pP.pos[idx] == 50){
-            pP.pos[idx] = 25;
-            return (pP.pos[idx]);
-        }
-        else if (pP.pos[idx] == 71){
-            pP.pos[idx] = 60;
-            return (pP.pos[idx]);
-        }
-        else if (pP.pos[idx] == 91){
-            pP.pos[idx] = 59;
-            return (pP.pos[idx]);
-        }
-        else if (pP.pos[idx] == 96){
-            pP.pos[idx] = 89;
-            return (pP.pos[idx]);
-        }
+void teleport (pPosition pP, pUserName pU, char *uname){
+    int idxP;
+    idxP = getIdxOfPlayer(pU, uname);
+    /* Teleport maju */
+    if (pP.pos[idxP] == 1){
+        pP.pos[idxP] = 24;
     }
+    else if (pP.pos[idxP] == 12){
+        pP.pos[idxP] = 48;
+    }
+    else if (pP.pos[idxP] == 42){
+        pP.pos[idxP] = 66;
+    }
+    else if (pP.pos[idxP] == 58){
+        pP.pos[idxP] = 72;
+    }
+    else if (pP.pos[idxP] == 85){
+        pP.pos[idxP] = 93;
+    }
+    /* Teleport mundur*/
+    else if (pP.pos[idxP] == 28){
+        pP.pos[idxP] = 16;
+    }
+    else if (pP.pos[idxP] == 50){
+        pP.pos[idxP] = 25;
+    }
+    else if (pP.pos[idxP] == 71){
+        pP.pos[idxP] = 60;
+    }
+    else if (pP.pos[idxP] == 91){
+        pP.pos[idxP] = 59;
+    }
+    else if (pP.pos[idxP] == 96){
+        pP.pos[idxP] = 89;
+    }
+    printf("Anda sekarang berada pada posisi ", pP.pos[idxP], "\n");
 }
