@@ -7,6 +7,7 @@
 #include "ADT/mesinkar/mesin_kar.h"
 #include "ADT/mesinkata/mesin_kata.h"
 #include "ADT/chartoint/chartoint.h"
+#include "ADT/player/player.h"
 
 // common used h
 #include <stdio.h>

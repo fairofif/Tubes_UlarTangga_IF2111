@@ -40,7 +40,9 @@ void preparationSkillList (Skill *pS1, Skill *pS2, Skill *pS3, Skill *pS4, int n
     }
 }
 
-void summonPlayer (pUserName *pU, pIsTeleported *pT, pPosition *pP, pIsImune *pI, pIsCermin *pC, pIsSenterBesar *pSB, pIsSenterKecil *pSK, int n) {
+void summonPlayer (pUserName *pU, pIsTeleported *pT, pPosition *pP, pIsImune *pI, pIsCermin *pC, 
+pIsSenterBesar *pSB, pIsSenterKecil *pSK, pIsMesinWaktu *pMW, 
+pIsBalingBaling *pB, pIsPenukar *pPen, pIsTeknologiGagal *pTG, int n) {
     for (int i = 1 ; i <= n ; i++) {
         printf("coba masukin uname\n");
         scanf("%s", &((*pU).uname[i]));
@@ -50,6 +52,10 @@ void summonPlayer (pUserName *pU, pIsTeleported *pT, pPosition *pP, pIsImune *pI
         (*pC).isCermin[i] = FALSE;
         (*pSB).isSenterBesar[i] = FALSE;
         (*pSK).isSenterKecil[i] = FALSE;
+        (*pMW).isMesin[i] = FALSE;
+        (*pB).isBaling[i] = FALSE;
+        (*pPen).isTukar[i] = FALSE;
+        (*pTG).isTek[i] = FALSE;
     }
     (*pU).Neff = n;
 }
@@ -135,5 +141,33 @@ boolean getSenterKecilConditionOfPlayer (pIsSenterKecil pSK, pUserName pU, char 
     int idx = getIdxOfPlayer(pU, uname);
     if (idx != IdxUndef) {
         return (pSK.isSenterKecil[idx]);
+    }
+}
+
+boolean getMesinWaktuConditionOfPlayer (pIsMesinWaktu pMW, pUserName pU, char *uname) {
+    int idx = getIdxOfPlayer(pU, uname);
+    if (idx != IdxUndef) {
+        return (pMW.isMesin[idx]);
+    }
+}
+
+boolean getBalingBalingConditionOfPlayer (pIsBalingBaling pB, pUserName pU, char *uname) {
+    int idx = getIdxOfPlayer(pU, uname);
+    if (idx != IdxUndef) {
+        return (pB.isBaling[idx]);
+    }
+}
+
+boolean getPenukarConditionOfPlayer (pIsPenukar pPen, pUserName pU, char *uname) {
+    int idx = getIdxOfPlayer(pU, uname);
+    if (idx != IdxUndef) {
+        return (pPen.isTukar[idx]);
+    }
+}
+
+boolean getTeknologiGagalConditionOfPlayer (pIsTeknologiGagal pTG, pUserName pU, char *uname) {
+    int idx = getIdxOfPlayer(pU, uname);
+    if (idx != IdxUndef) {
+        return (pTG.isTek[idx]);
     }
 }
