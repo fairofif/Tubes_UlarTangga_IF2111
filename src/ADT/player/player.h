@@ -49,6 +49,22 @@ typedef struct {
 	boolean isSenterKecil[IdxMax+1];
 } pIsSenterKecil;
 
+typedef struct {
+	boolean isMesin[IdxMax+1];
+} pIsMesinWaktu;
+
+typedef struct {
+	boolean isBaling[IdxMax+1];
+} pIsBalingBaling;
+
+typedef struct {
+	boolean isTukar[IdxMax+1];
+} pIsPenukar;
+
+typedef struct {
+	boolean isTek[IdxMax+1];
+} pIsTeknologiGagal;
+
 /*
 	pIsMesinWaktu
 	pIsBalingBaling
@@ -82,7 +98,9 @@ void preparationSkillList (Skill *pS1, Skill *pS2, Skill *pS3, Skill *pS4, int n
 	I.S 	sembarang
 	F.S	semua list player skill kosong
 */
-void summonPlayer(pUserName *pU, pIsTeleported *pT, pPosition *pP, pIsImune *pI, pIsCermin *pC, pIsSenterBesar *pSB, pIsSenterKecil *pSK, int n);
+void summonPlayer(pUserName *pU, pIsTeleported *pT, pPosition *pP, pIsImune *pI, pIsCermin *pC, 
+pIsSenterBesar *pSB, pIsSenterKecil *pSK, pIsMesinWaktu *pMW, 
+pIsBalingBaling *pB, pIsPenukar *pPen, pIsTeknologiGagal *pTG, int n);
 /*
 	Prosedur untuk membuat list pemain sebanyak n pemain
 	I.S	array pU, pT, pP, pI kosong
