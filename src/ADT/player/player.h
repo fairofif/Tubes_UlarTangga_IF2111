@@ -98,6 +98,15 @@ void preparationSkillList (Skill *pS1, Skill *pS2, Skill *pS3, Skill *pS4, int n
 	I.S 	sembarang
 	F.S	semua list player skill kosong
 */
+
+int banyaknyaSkill (Skill pS1, Skill pS2, Skill pS3, Skill pS4, int idxP);
+
+int returnIdxSkill (Skill pS1, Skill pS2, Skill pS3, Skill pS4, int idxP, char *skName);
+
+boolean isSkillExists (Skill pS1, Skill pS2, Skill pS3, Skill pS4, int idxP, char *skName);
+
+void deleteSkill (Skill *pS1, Skill *pS2, Skill *pS3, Skill *pS4, int idxP, int idxS);
+
 void summonPlayer(pUserName *pU, pIsTeleported *pT, pPosition *pP, pIsImune *pI, pIsCermin *pC, 
 pIsSenterBesar *pSB, pIsSenterKecil *pSK, pIsMesinWaktu *pMW, 
 pIsBalingBaling *pB, pIsPenukar *pPen, pIsTeknologiGagal *pTG, int n);
