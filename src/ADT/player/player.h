@@ -123,36 +123,36 @@ boolean isEmptyList (Skill pS);
 /*
 	Mereturn True jika pS kosong
 */
-boolean getTeleportedConditionOfPlayer (pIsTeleported pT, pUserName pU, char *uname);
+boolean getTeleportedConditionOfPlayer (pIsTeleported pT, int idx);
 /*
 	Fungsi untuk mendapatkan informasi kondisi pemain dengan username uname, apakah
 sebelumnya terkena portal (teleported) atau tidak
 */
-boolean getImmunityConditionOfPlayer (pIsImune pI, pUserName pU, char *uname);
+boolean getImmunityConditionOfPlayer (pIsImune pI, int idx);
 /*
 	Fungsi untuk mendapatkan informasi kondisi pemain dengan username uname, apakah
 	Sedang imune terhadap efek apapun atau tidak
 */
 
-boolean getCerminConditionOfPlayer (pIsCermin pC, pUserName pU, char *uname);
+boolean getCerminConditionOfPlayer (pIsCermin pC, int idx);
 /*
 	Fungsi untuk mendapatkan informasi kondisi pemain dengan username uname, apakah
 	Sedang memiliki buff cermin ganda atau tidak
 */
 
-boolean getSenterBesarConditionOfPlayer (pIsSenterBesar pSB, pUserName pU, char *uname);
+boolean getSenterBesarConditionOfPlayer (pIsSenterBesar pSB, int idx);
 /*
 	Fungsi untuk mendapatkan informasi kondisi pemain dengan username uname, apakah
 	Sedang memiliki buff senter pembesar atau tidak
 */
 
-boolean getSenterKecilConditionOfPlayer (pIsSenterKecil pSK, pUserName pU, char *uname);
+boolean getSenterKecilConditionOfPlayer (pIsSenterKecil pSK, int idx);
 /*
 	Fungsi untuk mendapatkan informasi kondisi pemain dengan username uname, apakah
 	Sedang memiliki buff senter pengecil atau tidak
 */
 
-int getPositionOfPlayer (pPosition pP, pUserName pU, char *uname);
+int getPositionOfPlayer (pPosition pP, int idx);
 /*
 	Fungsi untuk mendapatkan informasi posisi terakhir dari pemain dengan username
 	uname;
