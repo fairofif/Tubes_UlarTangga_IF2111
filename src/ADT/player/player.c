@@ -2,6 +2,7 @@
 #include "../../boolean.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 void createEmptyPlayerList (pUserName *pU) {
     (*pU).Neff = 0;
@@ -36,6 +37,146 @@ void preparationSkillList (Skill *pS1, Skill *pS2, Skill *pS3, Skill *pS4, int n
         }
         else if (i == 4) {
             createEmptyPlayerSkillsList(pS4);
+        }
+    }
+}
+
+int banyaknyaSkill (Skill pS1, Skill pS2, Skill pS3, Skill pS4, int idxP) {
+    address P;
+    int count = 0;
+    if (idxP == 1) {
+        P = ADDR_HEADSKILL(pS1);
+    }
+    else if (idxP == 2) {
+        P = ADDR_HEADSKILL(pS2);
+    }
+    else if (idxP == 3) {
+        P = ADDR_HEADSKILL(pS3);
+    }
+    else if (idxP == 4) {
+        P = ADDR_HEADSKILL(pS4);
+    }
+    while (P != Nil) {
+        count++;
+        P = NEXTSKILL(P);
+    }
+    return count;
+}
+
+int returnIdxSkill (Skill pS1, Skill pS2, Skill pS3, Skill pS4, int idxP, char *skName) {
+    address P;
+    if (idxP == 1) {
+        P = ADDR_HEADSKILL(pS1);
+    }
+    else if (idxP == 2) {
+        P = ADDR_HEADSKILL(pS2);
+    }
+    else if (idxP == 3) {
+        P = ADDR_HEADSKILL(pS3);
+    }
+    else if (idxP == 4) {
+        P = ADDR_HEADSKILL(pS4);
+    }
+
+    char temp[30];
+    int idxS = 1;
+    strcpy(temp, skName);
+    boolean found = FALSE;
+    while ((P != Nil) && (!found)) {
+        if (strcmp(SKILLNAME(P), temp) == 0) {
+            found = TRUE;
+        }
+        else {
+            idxS++;
+            P = NEXTSKILL(P);
+        }
+    }
+    if (found) {
+        return idxS;
+    }
+    else {
+        return IdxUndef;
+    }
+}
+
+boolean isSkillExists (Skill pS1, Skill pS2, Skill pS3, Skill pS4, int idxP, char *skName) {
+    address P;
+    if (idxP == 1) {
+        P = ADDR_HEADSKILL(pS1);
+    }
+    else if (idxP == 2) {
+        P = ADDR_HEADSKILL(pS2);
+    }
+    else if (idxP == 3) {
+        P = ADDR_HEADSKILL(pS3);
+    }
+    else if (idxP == 4) {
+        P = ADDR_HEADSKILL(pS4);
+    }
+
+    char temp[30];
+    strcpy(temp, skName);
+    boolean found = FALSE;
+    while ((P != Nil) && (!found)) {
+        if (strcmp(SKILLNAME(P), temp) == 0) {
+            found = TRUE;
+        }
+        else {
+            P = NEXTSKILL(P);
+        }
+    }
+    return found;
+}
+
+void deleteSkill (Skill *pS1, Skill *pS2, Skill *pS3, Skill *pS4, int idxP, int idxS) {
+    address P;
+    address Prec;
+    if (idxP == 1) {
+        P = ADDR_HEADSKILL(*pS1);
+    }
+    else if (idxP == 2) {
+        P = ADDR_HEADSKILL(*pS2);
+    }
+    else if (idxP == 3) {
+        P = ADDR_HEADSKILL(*pS3);
+    }
+    else if (idxP == 4) {
+        P = ADDR_HEADSKILL(*pS4);
+    }
+    
+    if (idxS != 1) {
+        Prec = P;
+        P = NEXTSKILL(P);
+        int idx = 2;
+        while ((idx != idxS) && (P != Nil)) {
+            idx++;
+            Prec = NEXTSKILL(Prec);
+            P = NEXTSKILL(P);
+        }
+        NEXTSKILL(Prec) = NEXTSKILL(P);
+        NEXTSKILL(P) = Nil;
+        free(P);
+    }
+    else {
+        if (idxP == 1) {
+            ADDR_HEADSKILL(*pS1) = NEXTSKILL(P);
+            NEXTSKILL(P) = Nil;
+            free(P);
+        }
+        else if (idxP == 2) {
+            ADDR_HEADSKILL(*pS2) = NEXTSKILL(P);
+            NEXTSKILL(P) = Nil;
+            free(P);
+        }
+        else if (idxP == 3) {
+            ADDR_HEADSKILL(*pS3) = NEXTSKILL(P);
+            NEXTSKILL(P) = Nil;
+            free(P);
+        }
+        else if (idxP == 4) {
+            ADDR_HEADSKILL(*pS4) = NEXTSKILL(P);
+            NEXTSKILL(P) = Nil;
+            free(P);
         }
     }
 }
