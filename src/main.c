@@ -35,12 +35,11 @@ int main () {
 
 
 
-
     /* loop program */
     stopProgram = FALSE;
     while (!stopProgram) {
         /* Prosedur UI Main Menu */
-
+            welcome();
         /* input command */
         strcpy(command, "");
         scanf("%s", &command);
@@ -183,6 +182,7 @@ int main () {
 
             /* Kalo Commandnya MAP */
             else if (strcmp(command, "MAP") == 0) {
+              showMap(pU.uname[idxCurrentPlayer], pP.pos[idxCurrentPlayer]);
                 // showMap(array of char username, idx posisi player);
 
             }

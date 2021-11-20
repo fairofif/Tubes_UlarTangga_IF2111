@@ -65,7 +65,8 @@ void printConfig()
 
 }
 
-void showMap(char array[],int pPos) {
+void showMap(char array[],int pPos) 
+{
     printf("%c%c%c%c : ", array[0], array[1], array [2], array[3]);
     for(int i = 1; i <= MAP_LENGTH(CurrentMap); i++) {
         if (pPos == i) {
@@ -75,4 +76,18 @@ void showMap(char array[],int pPos) {
         }
     }
     printf("\n");
+}
+
+int rollDice(int max) 
+{
+    int num = 0;  
+    time_t t1;
+      
+    srand ( (unsigned) time (&t1));
+
+    while (num == 0) {
+        num = rand() % (max+1);
+    };
+    printf( "%d \n", num);
+    return num;
 }

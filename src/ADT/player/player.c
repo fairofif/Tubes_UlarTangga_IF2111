@@ -1,9 +1,10 @@
 #include "player.h"
-#include "../../boolean.h"
+#include "../boolean.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+
 
 void createEmptyPlayerList (pUserName *pU) {
     (*pU).Neff = 0;
@@ -265,6 +266,7 @@ void deleteSkill (Skill *pS1, Skill *pS2, Skill *pS3, Skill *pS4, int idxP, int 
 void summonPlayer (pUserName *pU, pIsTeleported *pT, pPosition *pP, pIsImune *pI, pIsCermin *pC, 
 pIsSenterBesar *pSB, pIsSenterKecil *pSK, pIsMesinWaktu *pMW, 
 pIsBalingBaling *pB, pIsPenukar *pPen, pIsTeknologiGagal *pTG, int n) {
+
     for (int i = 1 ; i <= n ; i++) {
         printf("coba masukin uname\n");
         scanf("%s", &((*pU).uname[i]));
@@ -274,10 +276,6 @@ pIsBalingBaling *pB, pIsPenukar *pPen, pIsTeknologiGagal *pTG, int n) {
         (*pC).isCermin[i] = FALSE;
         (*pSB).isSenterBesar[i] = FALSE;
         (*pSK).isSenterKecil[i] = FALSE;
-        (*pMW).isMesin[i] = FALSE;
-        (*pB).isBaling[i] = FALSE;
-        (*pPen).isTukar[i] = FALSE;
-        (*pTG).isTek[i] = FALSE;
     }
     (*pU).Neff = n;
 }
@@ -324,62 +322,44 @@ void insertVSkill (Skill *pS, char *skname) {
     }
 }
 
-boolean getTeleportedConditionOfPlayer(pIsTeleported pT, int idx) {
+boolean getTeleportedConditionOfPlayer(pIsTeleported pT, pUserName pU, char *uname) {
+    int idx = getIdxOfPlayer(pU, uname);
     if (idx != IdxUndef) {
         return (pT.isTele[idx]);
     }
 }
 
-boolean getImmunityConditionOfPlayer (pIsImune pI, int idx) {
+boolean getImmunityConditionOfPlayer (pIsImune pI, pUserName pU, char *uname) {
+    int idx = getIdxOfPlayer(pU, uname);
     if (idx != IdxUndef) {
         return (pI.isImun[idx]);
     }
 }
 
-int getPositionOfPlayer (pPosition pP, int idx) {
+int getPositionOfPlayer (pPosition pP, pUserName pU, char *uname) {
+    int idx = getIdxOfPlayer(pU, uname);
     if (idx != IdxUndef) {
         return (pP.pos[idx]);
     }
 }
 
-boolean getCerminConditionOfPlayer (pIsCermin pC, int idx) {
+boolean getCerminConditionOfPlayer (pIsCermin pC, pUserName pU, char *uname) {
+    int idx = getIdxOfPlayer(pU, uname);
     if (idx != IdxUndef) {
         return (pC.isCermin[idx]);
     }
 }
 
-boolean getSenterBesarConditionOfPlayer (pIsSenterBesar pSB, int idx) {
+boolean getSenterBesarConditionOfPlayer (pIsSenterBesar pSB, pUserName pU, char *uname) {
+    int idx = getIdxOfPlayer(pU, uname);
     if (idx != IdxUndef) {
         return (pSB.isSenterBesar[idx]);
     }
 }
 
-boolean getSenterKecilConditionOfPlayer (pIsSenterKecil pSK, int idx) {
+boolean getSenterKecilConditionOfPlayer (pIsSenterKecil pSK, pUserName pU, char *uname) {
+    int idx = getIdxOfPlayer(pU, uname);
     if (idx != IdxUndef) {
         return (pSK.isSenterKecil[idx]);
-    }
-}
-
-boolean getMesinWaktuConditionOfPlayer (pIsMesinWaktu pMW, int idx) {
-    if (idx != IdxUndef) {
-        return (pMW.isMesin[idx]);
-    }
-}
-
-boolean getBalingBalingConditionOfPlayer (pIsBalingBaling pB, int idx) {
-    if (idx != IdxUndef) {
-        return (pB.isBaling[idx]);
-    }
-}
-
-boolean getPenukarConditionOfPlayer (pIsPenukar pPen, int idx) {
-    if (idx != IdxUndef) {
-        return (pPen.isTukar[idx]);
-    }
-}
-
-boolean getTeknologiGagalConditionOfPlayer (pIsTeknologiGagal pTG, int idx) {
-    if (idx != IdxUndef) {
-        return (pTG.isTek[idx]);
     }
 }
