@@ -130,7 +130,7 @@ int main () {
                     
             
             /* Kalo Commandnya MAP */
-                // showMap(array of char username, idx posisi player);
+                showMap(pU.uname[idxCurrentPlayer], pP.pos[idxCurrentPlayer]);
 
             /* Kalo Commandnya BUFF */
 

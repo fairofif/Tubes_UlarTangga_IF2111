@@ -49,7 +49,6 @@ typedef struct {
 	boolean isSenterKecil[IdxMax+1];
 } pIsSenterKecil;
 
-<<<<<<< HEAD:src/ADT/player/player.h
 typedef struct {
 	boolean isMesin[IdxMax+1];
 } pIsMesinWaktu;
@@ -66,8 +65,6 @@ typedef struct {
 	boolean isTek[IdxMax+1];
 } pIsTeknologiGagal;
 
-=======
->>>>>>> 657affc (update ADT player, dah ada buff beberapa):src/ADT/player.h
 /*
 	pIsMesinWaktu
 	pIsBalingBaling
@@ -101,7 +98,6 @@ void preparationSkillList (Skill *pS1, Skill *pS2, Skill *pS3, Skill *pS4, int n
 	I.S 	sembarang
 	F.S	semua list player skill kosong
 */
-<<<<<<< HEAD:src/ADT/player/player.h
 
 int banyaknyaSkill (Skill pS1, Skill pS2, Skill pS3, Skill pS4, int idxP);
 
@@ -114,9 +110,6 @@ void deleteSkill (Skill *pS1, Skill *pS2, Skill *pS3, Skill *pS4, int idxP, int 
 void summonPlayer(pUserName *pU, pIsTeleported *pT, pPosition *pP, pIsImune *pI, pIsCermin *pC, 
 pIsSenterBesar *pSB, pIsSenterKecil *pSK, pIsMesinWaktu *pMW, 
 pIsBalingBaling *pB, pIsPenukar *pPen, pIsTeknologiGagal *pTG, int n);
-=======
-void summonPlayer(pUserName *pU, pIsTeleported *pT, pPosition *pP, pIsImune *pI, pIsCermin *pC, pIsSenterBesar *pSB, pIsSenterKecil *pSK, int n);
->>>>>>> 657affc (update ADT player, dah ada buff beberapa):src/ADT/player.h
 /*
 	Prosedur untuk membuat list pemain sebanyak n pemain
 	I.S	array pU, pT, pP, pI kosong
@@ -150,41 +143,25 @@ boolean getImmunityConditionOfPlayer (pIsImune pI, int idx);
 	Sedang imune terhadap efek apapun atau tidak
 */
 
-<<<<<<< HEAD:src/ADT/player/player.h
 boolean getCerminConditionOfPlayer (pIsCermin pC, int idx);
-=======
-boolean getCerminConditionOfPlayer (pIsCermin pC, pUserName pU, char *uname);
->>>>>>> 657affc (update ADT player, dah ada buff beberapa):src/ADT/player.h
 /*
 	Fungsi untuk mendapatkan informasi kondisi pemain dengan username uname, apakah
 	Sedang memiliki buff cermin ganda atau tidak
 */
 
-<<<<<<< HEAD:src/ADT/player/player.h
 boolean getSenterBesarConditionOfPlayer (pIsSenterBesar pSB, int idx);
-=======
-boolean getSenterBesarConditionOfPlayer (pIsSenterBesar pSB, pUserName pU, char *uname);
->>>>>>> 657affc (update ADT player, dah ada buff beberapa):src/ADT/player.h
 /*
 	Fungsi untuk mendapatkan informasi kondisi pemain dengan username uname, apakah
 	Sedang memiliki buff senter pembesar atau tidak
 */
 
-<<<<<<< HEAD:src/ADT/player/player.h
 boolean getSenterKecilConditionOfPlayer (pIsSenterKecil pSK, int idx);
-=======
-boolean getSenterKecilConditionOfPlayer (pIsSenterKecil pSK, pUserName pU, char *uname);
->>>>>>> 657affc (update ADT player, dah ada buff beberapa):src/ADT/player.h
 /*
 	Fungsi untuk mendapatkan informasi kondisi pemain dengan username uname, apakah
 	Sedang memiliki buff senter pengecil atau tidak
 */
 
-<<<<<<< HEAD:src/ADT/player/player.h
 int getPositionOfPlayer (pPosition pP, int idx);
-=======
-int getPositionOfPlayer (pPosition pP, pUserName pU, char *uname);
->>>>>>> 657affc (update ADT player, dah ada buff beberapa):src/ADT/player.h
 /*
 	Fungsi untuk mendapatkan informasi posisi terakhir dari pemain dengan username
 	uname;
