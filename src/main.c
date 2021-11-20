@@ -28,7 +28,9 @@ int main () {
     boolean stopProgram;
     boolean stopGame;
     boolean nextPlayer;
+    boolean validMove = FALSE;
     int banyakPemain;
+    int roll;
     int idxCurrentPlayer;
     char command[20];
     char *getSkill;
@@ -197,7 +199,31 @@ int main () {
             }
             /* Kalo Commandnya ROLL */
             else if (strcmp(command, "ROLL") == 0) {
-
+                strcpy(command, "");
+                roll = rollDice(MAP_MAXROLL(CurrentMap));
+                if (MAP_LAYOUT(CurrentMap)[pP.pos[idxCurrentPlayer] + roll] == '#') {
+                    if (MAP_LAYOUT(CurrentMap)[pP.pos[idxCurrentPlayer] - roll] == '#') {
+                        printf("tidak bisa bergerak!\n");
+                    }
+                    pP.pos[idxCurrentPlayer] = pP.pos[idxCurrentPlayer] - roll;
+                } else if (MAP_LAYOUT(CurrentMap)[pP.pos[idxCurrentPlayer] - roll] == '#') {
+                    pP.pos[idxCurrentPlayer] = pP.pos[idxCurrentPlayer] + roll;
+                } else {
+                    printf("pilih F untuk Forward dan B untuk Back (F/B) : ");
+                    while(!validMove) {
+                        scanf("%c", &command);
+                        printf("\n");
+                        if (command[0] == 'F') {
+                            pP.pos[idxCurrentPlayer] = pP.pos[idxCurrentPlayer] + roll;
+                            validMove = TRUE;
+                        } else if (command[0] == 'B') {
+                            pP.pos[idxCurrentPlayer] = pP.pos[idxCurrentPlayer] - roll;
+                            validMove = TRUE;
+                        } else {
+                            printf("pilih (F/B) : ");
+                        }
+                    }
+                }
             }
             /* Kalo Commandnya SAVE */
             else if (strcmp(command, "SAVE") == 0) {
