@@ -161,6 +161,14 @@ boolean getSenterKecilConditionOfPlayer (pIsSenterKecil pSK, int idx);
 	Sedang memiliki buff senter pengecil atau tidak
 */
 
+boolean getMesinWaktuConditionOfPlayer (pIsMesinWaktu pMW, int idx);
+
+boolean getBalingBalingConditionOfPlayer (pIsBalingBaling pB, int idx);
+
+boolean getPenukarConditionOfPlayer (pIsPenukar pPen, int idx);
+
+boolean getTeknologiGagalConditionOfPlayer (pIsTeknologiGagal pTG, int idx);
+
 int getPositionOfPlayer (pPosition pP, int idx);
 /*
 	Fungsi untuk mendapatkan informasi posisi terakhir dari pemain dengan username
