@@ -11,6 +11,7 @@ int main () {
 
 
     /* Declare variable map */
+    Map CurrentMap;
 
     /* Declare main variable */
     boolean stopProgram;
@@ -33,6 +34,10 @@ int main () {
             /* Tunjukin command2 yang ada di Main Menu */
 
         /* Kalo new game */
+            /* Input file konfigurasi map yang mau dipake */
+            inputConfig();
+
+
             /* masukinn jumlah pemain & username pemain2nya */
 
             /* kasih skill pertama buat para pemain */
@@ -125,6 +130,8 @@ int main () {
                     
             
             /* Kalo Commandnya MAP */
+                // showMap(array of char username, idx posisi player);
+
 
             /* Kalo Commandnya BUFF */
 
