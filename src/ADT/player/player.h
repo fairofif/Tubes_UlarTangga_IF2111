@@ -99,6 +99,8 @@ void preparationSkillList (Skill *pS1, Skill *pS2, Skill *pS3, Skill *pS4, int n
 	F.S	semua list player skill kosong
 */
 
+void printSkill (Skill pS1, Skill pS2, Skill pS3, Skill pS4, int idxP, int *nSkill);
+
 int banyaknyaSkill (Skill pS1, Skill pS2, Skill pS3, Skill pS4, int idxP);
 
 int returnIdxSkill (Skill pS1, Skill pS2, Skill pS3, Skill pS4, int idxP, char *skName);
@@ -174,6 +176,10 @@ int getPositionOfPlayer (pPosition pP, int idx);
 	Fungsi untuk mendapatkan informasi posisi terakhir dari pemain dengan username
 	uname;
 */
+
+int randomInt07();
+
+void randomSkillGenerator(char *(*skname));
 
 
 #endif
