@@ -71,4 +71,7 @@ void showMap(char array[], int pPos);
 /* Mencetak peta yang akan/sedang dimainkan.
    F.S. : output berupa layout map yang sedang dimainkan */
 
+int rollDice(int max);
+/* Mengembalikan roll dadu random yang tidak sama dengan */
+
 #endif
