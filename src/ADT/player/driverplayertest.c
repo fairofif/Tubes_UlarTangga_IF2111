@@ -1,5 +1,9 @@
 #include "player.h"
+<<<<<<< HEAD
 #include "../../boolean.h"
+=======
+#include "../boolean.h"
+>>>>>>> 657affc (update ADT player, dah ada buff beberapa)
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -11,10 +15,13 @@ int main () {
     pIsCermin pC;
     pIsSenterBesar pSB;
     pIsSenterKecil pSK;
+<<<<<<< HEAD
     pIsMesinWaktu pMW;
     pIsBalingBaling pB;
     pIsPenukar pPen;
     pIsTeknologiGagal pTG;
+=======
+>>>>>>> 657affc (update ADT player, dah ada buff beberapa)
     Skill pS1, pS2, pS3, pS4;
     
 
@@ -23,7 +30,11 @@ int main () {
     scanf("%d", &n);
     preparationSkillList(&pS1, &pS2, &pS3, &pS4, n);    
     createEmptyPlayerList(&pU);
+<<<<<<< HEAD
     summonPlayer(&pU,&pT,&pP,&pI,&pC,&pSB,&pSK,&pMW, &pB, &pPen, &pTG, n);
+=======
+    summonPlayer(&pU,&pT,&pP,&pI,&pC,&pSB,&pSK,n);
+>>>>>>> 657affc (update ADT player, dah ada buff beberapa)
 
     char uname[16];
     char skname[25];
@@ -58,8 +69,13 @@ int main () {
 
         printf("masih mau nyoba ngisi skill (ya/no) ? ");
         scanf("%s", &pilihan);
+<<<<<<< HEAD
         if (strcmp(pilihan, "no")==0) { 
             stopisi = 1;                 
+=======
+        if (strcmp(pilihan, "no")==0) {
+            stopisi = 1;
+>>>>>>> 657affc (update ADT player, dah ada buff beberapa)
         }
         strcpy(pilihan, "");
         strcpy(uname, "");
@@ -101,7 +117,10 @@ int main () {
                 P = NEXTSKILL(P);
             }
         }
+<<<<<<< HEAD
         printf("Anda sekarang berada pada posisi ", pP.pos[idxP], "\n");
+=======
+>>>>>>> 657affc (update ADT player, dah ada buff beberapa)
         printf("masih mau nyoba print skill (ya/no) ? ");
         scanf("%s", &pilihan);
         if (strcmp(pilihan, "no")== 0) {
@@ -111,6 +130,7 @@ int main () {
         strcpy(uname, "");
     }    
 
+<<<<<<< HEAD
     // Ini main buat di teleport
     char s[15];
     int count = 0;
@@ -170,4 +190,7 @@ void teleport (pPosition pP, pUserName pU, char *uname){
         pP.pos[idxP] = 89;
     }
     printf("Anda sekarang berada pada posisi ", pP.pos[idxP], "\n");
+=======
+    
+>>>>>>> 657affc (update ADT player, dah ada buff beberapa)
 }
