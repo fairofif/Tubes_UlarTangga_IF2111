@@ -67,7 +67,7 @@ void printConfig();
 /* Melakukan pencetakan semua input yang ada pada file konfigurasi yang telah ditunjuk pointer.
    F.S. : output berupa semua setup map yang ingin dimainkan */
 
-void showMap();
+void showMap(char array[], int pPos);
 /* Mencetak peta yang akan/sedang dimainkan.
    F.S. : output berupa layout map yang sedang dimainkan */
 

@@ -6,8 +6,9 @@
 
 
 int main()
-{  
+{   
+    char dummy[] = "Dito";
     inputConfig(); 
-    showMap();
+    showMap(dummy ,4);
     return 0;
 }

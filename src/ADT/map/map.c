@@ -65,10 +65,14 @@ void printConfig()
 
 }
 
-void showMap() {
-    printf("Layout map : ");
+void showMap(char array[],int pPos) {
+    printf("%c%c%c%c : ", array[0], array[1], array [2], array[3]);
     for(int i = 1; i <= MAP_LENGTH(CurrentMap); i++) {
-        printf("%c", MAP_LAYOUT(CurrentMap)[i]);
+        if (pPos == i) {
+            printf("*");
+        } else {
+            printf("%c", MAP_LAYOUT(CurrentMap)[i]);
+        }
     }
     printf("\n");
 }
