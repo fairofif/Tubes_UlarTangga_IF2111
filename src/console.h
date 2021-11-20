@@ -3,6 +3,7 @@
  
 // **punya thoriq**
 #include "boolean.h"
+#include "ADT/welcome.c"
 #include "ADT/map/map.h"
 #include "ADT/mesinkar/mesin_kar.h"
 #include "ADT/mesinkata/mesin_kata.h"

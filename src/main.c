@@ -19,6 +19,7 @@ int main () {
     boolean nextPlayer;
     int banyakPemain;
     int idxCurrentPlayer;
+    char command[20];
 
 
 
@@ -27,22 +28,22 @@ int main () {
     stopProgram = FALSE;
     while (!stopProgram) {
         /* Prosedur UI Main Menu */
-
+            welcome();
         /* input command */
-
+            scanf("%s", command);
         /* Kalo commandnya HELP */
             /* Tunjukin command2 yang ada di Main Menu */
 
         /* Kalo new game */
             /* Input file konfigurasi map yang mau dipake */
-            inputConfig();
+                inputConfig();
 
             /* masukinn jumlah pemain & username pemain2nya */
 
             /* kasih skill pertama buat para pemain */
 
             /* set idxPlayer ke 1 */
-            idxCurrentPlayer = 1;
+                idxCurrentPlayer = 1;
 
         /* Kalo Exit */
             /* stopProgram jadi TRUE */
