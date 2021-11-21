@@ -76,4 +76,6 @@ int rollDice(int max);
 
 void movePlayer(int roll, int idxCurrentPlayer, Map layout);
 
+void inspectMap(Map CurrentMap);
+
 #endif

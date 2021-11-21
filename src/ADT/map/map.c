@@ -123,3 +123,25 @@ void movePlayer(int roll, int idxCurrentPlayer, Map CurrentMap)
         }
     }
 }
+
+void inspectMap(Map CurrentMap) 
+{
+    int n,i;
+    int length;
+    printf("Masukkan petak: ");
+    scanf("%d", &n);
+
+    length = MAP_LENGTH(CurrentMap);
+    for(i = 0; i < length; i+=2) {
+        if(TELEPORT_LAYOUT(CurrentMap)[i] == n) {
+            printf("Petak %d memiliki teleporter menuju %d.\n", n, TELEPORT_LAYOUT(CurrentMap)[i+1]);
+        }
+    }
+
+    if(MAP_LAYOUT(CurrentMap)[n] == '.') {
+        printf("Petak %d merupakan petak kosong.\n", n);
+    } else if(MAP_LAYOUT(CurrentMap)[n] == '#') {
+        printf("Petak %d merupakan petak terlarang.\n", n);
+    }
+
+}

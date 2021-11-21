@@ -197,7 +197,7 @@ int main () {
             }
             /* Kalo Commandnya INSPECT */
             else if (strcmp(command, "INSPECT") == 0) {
-
+                inspectMap(CurrentMap);
             }
             /* Kalo Commandnya ROLL */
             else if (strcmp(command, "ROLL") == 0) {
