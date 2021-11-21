@@ -74,4 +74,6 @@ void showMap(char array[], int pPos);
 int rollDice(int max);
 /* Mengembalikan roll dadu random yang tidak sama dengan */
 
+void movePlayer(int roll, int idxCurrentPlayer, Map layout);
+
 #endif

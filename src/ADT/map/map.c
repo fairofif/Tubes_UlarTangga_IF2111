@@ -1,6 +1,8 @@
 #include "map.h"
 
 Map CurrentMap;
+pPosition pP;
+
 int inputIndicator = 1; //teleport indikator (mengindikasikan input berupa telport)
 
 void inputConfig() 
@@ -90,4 +92,34 @@ int rollDice(int max)
     };
     printf( "%d \n", num);
     return num;
+}
+
+void movePlayer(int roll, int idxCurrentPlayer, Map CurrentMap)
+{
+    boolean validMove = FALSE;
+    char input[1];
+    if (MAP_LAYOUT(CurrentMap)[pP.pos[idxCurrentPlayer] + roll] == '#') {
+        if (MAP_LAYOUT(CurrentMap)[pP.pos[idxCurrentPlayer] - roll] == '#') {
+            printf("tidak bisa bergerak!\n");
+        }
+        pP.pos[idxCurrentPlayer] = pP.pos[idxCurrentPlayer] - roll;
+    } else if (MAP_LAYOUT(CurrentMap)[pP.pos[idxCurrentPlayer] - roll] == '#') {
+        pP.pos[idxCurrentPlayer] = pP.pos[idxCurrentPlayer] + roll;
+    } else {
+        printf("pilih F untuk Forward dan B untuk Back (F/B) : ");
+        while(!validMove) {
+            strcpy(input, "");
+            scanf("%c", &input);
+            printf("\n");
+            if (input[0] == 'F') {
+                pP.pos[idxCurrentPlayer] = pP.pos[idxCurrentPlayer] + roll;
+                validMove = TRUE;
+            } else if (input[0] == 'B') {
+                pP.pos[idxCurrentPlayer] = pP.pos[idxCurrentPlayer] - roll;
+                validMove = TRUE;
+            } else {
+                printf("pilih (F/B) : ");
+            }
+        }
+    }
 }
