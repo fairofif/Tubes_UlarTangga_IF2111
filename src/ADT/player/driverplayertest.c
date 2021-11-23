@@ -12,10 +12,6 @@ int main () {
     pIsCermin pC;
     pIsSenterBesar pSB;
     pIsSenterKecil pSK;
-    pIsMesinWaktu pMW;
-    pIsBalingBaling pB;
-    pIsPenukar pPen;
-    pIsTeknologiGagal pTG;
     Skill pS1, pS2, pS3, pS4;
    
  
@@ -24,7 +20,7 @@ int main () {
     scanf("%d", &n);
     preparationSkillList(&pS1, &pS2, &pS3, &pS4, n);    
     createEmptyPlayerList(&pU);
-    summonPlayer(&pU,&pT,&pP,&pI,&pC,&pSB,&pSK,&pMW, &pB, &pPen, &pTG, n);
+    summonPlayer(&pU,&pT,&pP,&pI,&pC,&pSB,&pSK, n);
  
     char uname[16];
     char skname[30];

@@ -32,7 +32,8 @@ typedef struct {
 typedef struct {
     boolean isTele[IdxMax+1];
 } pIsTeleported;
- 
+
+/* array BUFF semua 4 typedef dibawah ini */
 typedef struct {
     boolean isImun[IdxMax+1];
 } pIsImune;
@@ -48,29 +49,6 @@ typedef struct {
 typedef struct {
     boolean isSenterKecil[IdxMax+1];
 } pIsSenterKecil;
- 
-typedef struct {
-    boolean isMesin[IdxMax+1];
-} pIsMesinWaktu;
- 
-typedef struct {
-    boolean isBaling[IdxMax+1];
-} pIsBalingBaling;
- 
-typedef struct {
-    boolean isTukar[IdxMax+1];
-} pIsPenukar;
- 
-typedef struct {
-    boolean isTek[IdxMax+1];
-} pIsTeknologiGagal;
- 
-/*
-    pIsMesinWaktu
-    pIsBalingBaling
-    pIsPenukar
-    pIsTeknologiGagal
-*/
  
 #define ADDR_HEADSKILL(p) (p).addrFirstSkill
 #define NEXTSKILL(p) (p)->nextskill
@@ -110,8 +88,7 @@ boolean isSkillExists (Skill pS1, Skill pS2, Skill pS3, Skill pS4, int idxP, cha
 void deleteSkill (Skill *pS1, Skill *pS2, Skill *pS3, Skill *pS4, int idxP, int idxS);
  
 void summonPlayer(pUserName *pU, pIsTeleported *pT, pPosition *pP, pIsImune *pI, pIsCermin *pC,
-pIsSenterBesar *pSB, pIsSenterKecil *pSK, pIsMesinWaktu *pMW,
-pIsBalingBaling *pB, pIsPenukar *pPen, pIsTeknologiGagal *pTG, int n);
+pIsSenterBesar *pSB, pIsSenterKecil *pSK, int n);
 /*
     Prosedur untuk membuat list pemain sebanyak n pemain
     I.S array pU, pT, pP, pI kosong
@@ -163,13 +140,6 @@ boolean getSenterKecilConditionOfPlayer (pIsSenterKecil pSK, int idx);
     Sedang memiliki buff senter pengecil atau tidak
 */
  
-boolean getMesinWaktuConditionOfPlayer (pIsMesinWaktu pMW, int idx);
- 
-boolean getBalingBalingConditionOfPlayer (pIsBalingBaling pB, int idx);
- 
-boolean getPenukarConditionOfPlayer (pIsPenukar pPen, int idx);
- 
-boolean getTeknologiGagalConditionOfPlayer (pIsTeknologiGagal pTG, int idx);
  
 int getPositionOfPlayer (pPosition pP, int idx);
 /*
@@ -180,6 +150,7 @@ int getPositionOfPlayer (pPosition pP, int idx);
 int randomInt07();
  
 void randomSkillGenerator(char *skname);
- 
+
+void copySkillName (Skill pS1, Skill pS2, Skill pS3, Skill pS4, int idxP, int idxSkill, char *skname);
  
 #endif

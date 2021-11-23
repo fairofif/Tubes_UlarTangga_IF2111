@@ -263,8 +263,7 @@ void deleteSkill (Skill *pS1, Skill *pS2, Skill *pS3, Skill *pS4, int idxP, int 
 }
  
 void summonPlayer (pUserName *pU, pIsTeleported *pT, pPosition *pP, pIsImune *pI, pIsCermin *pC,
-pIsSenterBesar *pSB, pIsSenterKecil *pSK, pIsMesinWaktu *pMW,
-pIsBalingBaling *pB, pIsPenukar *pPen, pIsTeknologiGagal *pTG, int n) {
+pIsSenterBesar *pSB, pIsSenterKecil *pSK, int n) {
     for (int i = 1 ; i <= n ; i++) {
         printf("coba masukin uname\n");
         scanf("%s", &((*pU).uname[i]));
@@ -274,10 +273,6 @@ pIsBalingBaling *pB, pIsPenukar *pPen, pIsTeknologiGagal *pTG, int n) {
         (*pC).isCermin[i] = FALSE;
         (*pSB).isSenterBesar[i] = FALSE;
         (*pSK).isSenterKecil[i] = FALSE;
-        (*pMW).isMesin[i] = FALSE;
-        (*pB).isBaling[i] = FALSE;
-        (*pPen).isTukar[i] = FALSE;
-        (*pTG).isTek[i] = FALSE;
     }
     (*pU).Neff = n;
 }
@@ -359,27 +354,25 @@ boolean getSenterKecilConditionOfPlayer (pIsSenterKecil pSK, int idx) {
         return (pSK.isSenterKecil[idx]);
     }
 }
- 
-boolean getMesinWaktuConditionOfPlayer (pIsMesinWaktu pMW, int idx) {
-    if (idx != IdxUndef) {
-        return (pMW.isMesin[idx]);
+
+void copySkillName (Skill pS1, Skill pS2, Skill pS3, Skill pS4, int idxP, int idxSkill, char *skname) {
+    address P;
+    if (idxP == 1) {
+        P = ADDR_HEADSKILL(pS1);
     }
-}
- 
-boolean getBalingBalingConditionOfPlayer (pIsBalingBaling pB, int idx) {
-    if (idx != IdxUndef) {
-        return (pB.isBaling[idx]);
+    else if (idxP == 2) {
+        P = ADDR_HEADSKILL(pS2);
     }
-}
- 
-boolean getPenukarConditionOfPlayer (pIsPenukar pPen, int idx) {
-    if (idx != IdxUndef) {
-        return (pPen.isTukar[idx]);
+    else if (idxP == 3) {
+        P = ADDR_HEADSKILL(pS3);
     }
-}
- 
-boolean getTeknologiGagalConditionOfPlayer (pIsTeknologiGagal pTG, int idx) {
-    if (idx != IdxUndef) {
-        return (pTG.isTek[idx]);
+    else if (idxP == 4) {
+        P = ADDR_HEADSKILL(pS4);
     }
+    int i = 1;
+    while (i != idxSkill) {
+        P = NEXTSKILL(P);
+        i++;
+    }
+    strcpy(skname, SKILLNAME(P));
 }
