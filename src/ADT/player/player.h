@@ -1,7 +1,7 @@
 #ifndef _PLAYER_H
 #define _PLAYER_H
-#include "../../boolean.h"
-#include <stdlib.h>
+
+#include "../../console.h"
 #define Nil NULL
  
 typedef int ElType;
@@ -153,4 +153,6 @@ void randomSkillGenerator(char *skname);
 
 void copySkillName (Skill pS1, Skill pS2, Skill pS3, Skill pS4, int idxP, int idxSkill, char *skname);
  
+int randomInt99();
+
 #endif

@@ -1,6 +1,4 @@
-#include "../map/map.h"
 #include "mesin_kata.h"
-#include <stdio.h>
 
 boolean EndKata;
 Kata CKata;
