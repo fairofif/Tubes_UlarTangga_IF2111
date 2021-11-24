@@ -78,4 +78,6 @@ void movePlayer(int roll, int idxCurrentPlayer, Map layout);
 
 void inspectMap(Map CurrentMap);
 
+void forceMove(int roll, int idxCurrentPlayer, Map CurrentMap);
+
 #endif

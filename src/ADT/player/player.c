@@ -1,10 +1,5 @@
 #include "player.h"
-#include "../../boolean.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <time.h>
- 
+
 void createEmptyPlayerList (pUserName *pU) {
     (*pU).Neff = 0;
 }
@@ -265,8 +260,8 @@ void deleteSkill (Skill *pS1, Skill *pS2, Skill *pS3, Skill *pS4, int idxP, int 
 void summonPlayer (pUserName *pU, pIsTeleported *pT, pPosition *pP, pIsImune *pI, pIsCermin *pC,
 pIsSenterBesar *pSB, pIsSenterKecil *pSK, int n) {
     for (int i = 1 ; i <= n ; i++) {
-        printf("coba masukin uname\n");
-        scanf("%s", &((*pU).uname[i]));
+        printf("Masukkan nama pemain ke-%d: ", i);
+        scanf("%s", ((*pU).uname[i]));
         (*pT).isTele[i] = FALSE;
         (*pP).pos[i] = 1;
         (*pI).isImun[i] = FALSE;
@@ -323,36 +318,42 @@ boolean getTeleportedConditionOfPlayer(pIsTeleported pT, int idx) {
     if (idx != IdxUndef) {
         return (pT.isTele[idx]);
     }
+    return 0;
 }
  
 boolean getImmunityConditionOfPlayer (pIsImune pI, int idx) {
     if (idx != IdxUndef) {
         return (pI.isImun[idx]);
     }
+    return 0;
 }
  
 int getPositionOfPlayer (pPosition pP, int idx) {
     if (idx != IdxUndef) {
         return (pP.pos[idx]);
     }
+    return IdxUndef;
 }
  
 boolean getCerminConditionOfPlayer (pIsCermin pC, int idx) {
     if (idx != IdxUndef) {
         return (pC.isCermin[idx]);
     }
+    return 0;
 }
  
 boolean getSenterBesarConditionOfPlayer (pIsSenterBesar pSB, int idx) {
     if (idx != IdxUndef) {
         return (pSB.isSenterBesar[idx]);
     }
+    return 0;
 }
  
 boolean getSenterKecilConditionOfPlayer (pIsSenterKecil pSK, int idx) {
     if (idx != IdxUndef) {
         return (pSK.isSenterKecil[idx]);
     }
+    return 0;
 }
 
 void copySkillName (Skill pS1, Skill pS2, Skill pS3, Skill pS4, int idxP, int idxSkill, char *skname) {

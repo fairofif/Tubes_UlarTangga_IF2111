@@ -7,6 +7,7 @@ int inputIndicator = 1; //teleport indikator (mengindikasikan input berupa telpo
 
 void inputConfig() 
 {
+    printf("masuk config");
     char namafile[254];
     char *dummy = "map1.txt";
     boolean valid = FALSE;
@@ -109,7 +110,7 @@ void movePlayer(int roll, int idxCurrentPlayer, Map CurrentMap)
         printf("pilih F untuk Forward dan B untuk Back (F/B) : ");
         while(!validMove) {
             strcpy(input, "");
-            scanf("%c", &input);
+            scanf("%c", input);
             printf("\n");
             if (input[0] == 'F') {
                 pP.pos[idxCurrentPlayer] = pP.pos[idxCurrentPlayer] + roll;
@@ -143,5 +144,11 @@ void inspectMap(Map CurrentMap)
     } else if(MAP_LAYOUT(CurrentMap)[n] == '#') {
         printf("Petak %d merupakan petak terlarang.\n", n);
     }
+}
 
+void forceMove(int roll, int idxCurrentPlayer, Map CurrentMap) {
+    int forcedIdx = pP.pos[idxCurrentPlayer] + roll;
+    if(MAP_LAYOUT(CurrentMap)[forcedIdx] != '#') {
+        pP.pos[idxCurrentPlayer] = forcedIdx;
+    }
 }

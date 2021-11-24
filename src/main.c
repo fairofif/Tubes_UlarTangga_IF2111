@@ -1,9 +1,5 @@
 #include "console.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 int main () {
     /*********** PREPARATION **********/
 
@@ -43,28 +39,38 @@ int main () {
     
 
 
+/* CATATAN BUG 
+1. kalo HELP di awal, nanti dia bakal loop ke while line +-122.
+2. kalo ROLL masih error.
+
+*/
+
+
 
     /* loop program */
     stopProgram = FALSE;
     while (!stopProgram) {
         /* Prosedur UI Main Menu */
         welcome();
-            
         /* input command */
+        printf("Masukkan Command: ");
         strcpy(command, "");
-        scanf("%s", &command);
+        scanf("%s", command);
 
         /* Kalo commandnya HELP */
         if (strcmp(command, "HELP") == 0) {
             /* Tunjukin command2 yang ada di Main Menu */
-
+            help();
         }
         /* Kalo new game */
         else if (strcmp(command, "NEWGAME") == 0) {
             /* Input file konfigurasi map yang mau dipake */
             inputConfig();
+            start();
+            printConfig();
             
             /* masukinn jumlah pemain & username pemain2nya */
+            printf("Masukkan jumlah pemain: ");
             scanf("%d", &banyakPemain);
             preparationSkillList(&pS1,&pS2,&pS3,&pS4, banyakPemain);
             createEmptyPlayerList(&pU);
@@ -73,7 +79,7 @@ int main () {
             /* kasih skill pertama buat para pemain */
             for (int i = 1; i <= banyakPemain; i++) {
                 strcpy(getSkill, "");
-                randomSkillGenerator(&getSkill);
+                randomSkillGenerator(getSkill);
                 if (i == 1) {
                     insertVSkill(&pS1, getSkill);
                 }
@@ -113,15 +119,15 @@ int main () {
         
         
         stopGame = FALSE;
-        start();
         while ((!stopGame) && (!stopProgram)) {
             nextPlayer = FALSE;
             
             /* Prosedur UI In Game */
 
             /* input command */
+            printf("Masukkan Command: ");
             strcpy(command, "");
-            scanf("%s", &command);
+            scanf("%s", command);
 
             /* Kalo commandnya HELP */
             if (strcmp(command, "HELP") == 0) {
@@ -143,7 +149,7 @@ int main () {
             
                     /* salin nama skill yang dipake ke variable */
                     strcpy(skname, "");
-                    copySkillName(pS1, pS2, pS3, pS4, idxCurrentPlayer, pilihanskill, &skname);
+                    copySkillName(pS1, pS2, pS3, pS4, idxCurrentPlayer, pilihanskill, skname);
 
                     /* Kalo SKILL == "Pintu Ga Ke Mana Mana" */
                     if (strcmp(skname, "Pintu Ga Ke Mana Mana") == 0) {
@@ -163,11 +169,11 @@ int main () {
                         /* Masukin username yang mau dimundurin */
                         printf("Masukkan username pemain untuk dimundurin: ");
                         strcpy(uname, "");
-                        scanf("%s", &uname);
+                        scanf("%s", uname);
                         idxPKenaSkill = getIdxOfPlayer(pU, uname);
                         
                         /* roll dadu dulu */
-                        roll = roll = rollDice(MAP_MAXROLL(CurrentMap));
+                        roll = rollDice(MAP_MAXROLL(CurrentMap));
                         roll = roll * (-1);
 
                         /* Perubahan kondisi player yang dimundurin */
@@ -185,11 +191,11 @@ int main () {
                         /* Masukin username yang mau dimajuin */
                         printf("Masukkan username pemain untuk dimajuin: ");
                         strcpy(uname, "");
-                        scanf("%s", &uname);
+                        scanf("%s", uname);
                         idxPKenaSkill = getIdxOfPlayer(pU, uname);
 
                         /* roll dulu gan */
-                        roll = roll = rollDice(MAP_MAXROLL(CurrentMap));
+                        roll = rollDice(MAP_MAXROLL(CurrentMap));
 
                         /* Perubahan kondisi player yang dimajuin */
                         movePlayer(roll, idxPKenaSkill, CurrentMap);
@@ -213,15 +219,15 @@ int main () {
                                     printf("Skill maksimal 8 untuk menggunakan skill ini, harap hapus skill.\n");
                                     printSkill(pS1, pS2, pS3, pS4, idxCurrentPlayer, &nSkill);
                                     printf("Masukan nomor Skill yang ingin di hapus: ");
-                                    scanf("%d", &deleteSkill);
-                                    deleteSkill(&pS1, &pS2, &pS3, &pS4, idxCurrentPlayer, deleteSkill);
+                                    scanf("%d", &skillDelete);
+                                    deleteSkill(&pS1, &pS2, &pS3, &pS4, idxCurrentPlayer, skillDelete);
                                 }
                             } 
                             
                             /* Perubahan kondisi di player */
                             for (int i = 1; i <= 2 ; i++) {
                                 strcpy(getSkill, "");
-                                randomSkillGenerator(&getSkill);
+                                randomSkillGenerator(getSkill);
                                 if (idxCurrentPlayer == 1) {
                                     insertVSkill(&pS1, getSkill);
                                 }
@@ -268,7 +274,7 @@ int main () {
                         /* Masukin username yang mau dimajuin */
                         printf("Masukkan username pemain untuk ditukar posisi: ");
                         strcpy(uname, "");
-                        scanf("%s", &uname);
+                        scanf("%s", uname);
                         idxPKenaSkill = getIdxOfPlayer(pU, uname);
 
                         /* Perubahan kondisi player yang ditukar posisi */
@@ -346,7 +352,5 @@ int main () {
             }
 
         }
-
-
     }
 }
