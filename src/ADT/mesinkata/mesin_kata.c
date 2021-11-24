@@ -9,7 +9,7 @@ void IgnoreBlank() { //untuk input teleport
     }
 }
 
-void SalinKata() { //untuk input semua ke array
+void SalinKata(Map CurrentMap) { //untuk input semua ke array
     int i = 1; //tinggal diubah ke 1 kl mau kepisah2
     while((CC != MARK) && (CC != NEWLINE)) {
         CKata.TabKata[i] = CC;
@@ -17,10 +17,10 @@ void SalinKata() { //untuk input semua ke array
         i++;
     }
     CKata.Length = i - 1;
-    assignConfig();
+    assignConfig(CurrentMap);
 }
 
-void STARTKATA() { //untuk nerima input dari semua isi file
+void STARTKATA(Map CurrentMap) { //untuk nerima input dari semua isi file
     START();
     IgnoreBlank();
     if (CC == MARK) {
@@ -28,16 +28,16 @@ void STARTKATA() { //untuk nerima input dari semua isi file
     }
     else {
         EndKata = FALSE;
-        SalinKata();
+        SalinKata(CurrentMap);
     }
 }
 
-void ADVKATA() {
+void ADVKATA(Map CurrentMap) {
     IgnoreBlank(); 
     if (CC == MARK) {
         EndKata = TRUE;
     }
     else {
-        SalinKata();
+        SalinKata(CurrentMap);
     }
 }

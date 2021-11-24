@@ -1,6 +1,6 @@
 #include "chartoint.h"
 
-int chartoint(char a[], int len)
+int chartoint(char a[], int len, Map CurrentMap)
 {   
     int tel1, tel2;
     int n = 0;
@@ -22,6 +22,7 @@ int chartoint(char a[], int len)
         TELEPORT_LAYOUT(CurrentMap)[TELEPORT_NEFF(CurrentMap) + 1] = tel2;
         TELEPORT_NEFF(CurrentMap) += 2;
     } else {
+        printf("VALUE ADALAH == %d \n", value);
         if(inputIndicator == 1) {
             MAP_LENGTH(CurrentMap) = value;
         } else if(inputIndicator == 3) {
