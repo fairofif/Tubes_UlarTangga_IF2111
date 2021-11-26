@@ -357,7 +357,12 @@ int main () {
 
             /* Kalo Commandnya ENDTURN */
             else if (strcmp(command, "ENDTURN") == 0) {
-                nextPlayer = TRUE;
+                if (ableToRoll) {
+                    printf("ERROR!! anda belom melakukan roll! -> ROLL\n");
+                }
+                else {
+                    nextPlayer = TRUE;
+                }
             }
 
             /* Kalo Commandnya UNDO */
