@@ -1,6 +1,6 @@
 #include "chartoint.h"
 
-int chartoint(char a[], int len)
+int chartoint(char a[], int len, Map *CurrentMap)
 {   
     int tel1, tel2;
     int n = 0;
@@ -18,16 +18,16 @@ int chartoint(char a[], int len)
     }
     if(inputIndicator > 4) {
         tel1 = value;
-        TELEPORT_LAYOUT(CurrentMap)[TELEPORT_NEFF(CurrentMap)] = tel1;
-        TELEPORT_LAYOUT(CurrentMap)[TELEPORT_NEFF(CurrentMap) + 1] = tel2;
-        TELEPORT_NEFF(CurrentMap) += 2;
+        TELEPORT_LAYOUT(*CurrentMap)[TELEPORT_NEFF(*CurrentMap)] = tel1;
+        TELEPORT_LAYOUT(*CurrentMap)[TELEPORT_NEFF(*CurrentMap) + 1] = tel2;
+        TELEPORT_NEFF(*CurrentMap) += 2;
     } else {
         if(inputIndicator == 1) {
-            MAP_LENGTH(CurrentMap) = value;
+            MAP_LENGTH(*CurrentMap) = value;
         } else if(inputIndicator == 3) {
-            MAP_MAXROLL(CurrentMap) = value;
+            MAP_MAXROLL(*CurrentMap) = value;
         } else if(inputIndicator == 4) {
-            TELEPORT_COUNT(CurrentMap) = value;
+            TELEPORT_COUNT(*CurrentMap) = value;
         }
     }
     return 0;

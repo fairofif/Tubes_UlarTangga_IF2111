@@ -33,53 +33,44 @@ typedef struct {
 #define TELEPORT_NEFF(m) (m).Teleport.Neff
 #define TELEPORT_COUNT(m) (m).Teleport.Count
 
-
-extern Map CurrentMap;
 extern int inputIndicator;
 
-void inputConfig();
+void inputConfig(Map *CurrentMap);
 /* Memasukkan input berupa nama file konfigurasi map yang akan dimainkan.
    I.S. : tidak ada map yang diinput/dipilih
    F.S. : fpointer menunjuk pada file yang akan digunakan sebagai file konfigurasi
           input */
 
-void readConfig();
+void readConfig(Map *CurrentMap);
 /* Membaca teks pada file txt dari nama file konfigurasi yang dipilih.
     I.S. : tidak ada nilai yang disimpan
     F.S. : map yang diinput akan menghasilkan panjang map yang akan dimainkan, 
            layout mapnya, roll maksimal yang ditentukan, dan jumlah teleport yang 
            ada */
 
-void charToInt();
-/* Mengubah char ke int untuk input yang merupakan integer seharusnya.
-    I.S. : input dari file konfigurasi yang merupakan integer tapi dituliskan dalam char
-           pada array
-    F.S. : input berupa array of char menjadi int */
-
-
-void assignConfig();
+void assignConfig(Map *CurrentMap);
 /* Memasukkan input bacaan dari file konfigurasi ke dalam variabel pointer yang digunakan
    selama permainan.
    I.S. : pointer currentMap tidak menunjuk kemana-mana
    F.S. : pointer menunjuk input sesuai dengan format yang ada */
 
-void printConfig();
+void printConfig(Map *CurrentMap);
 /* Melakukan pencetakan semua input yang ada pada file konfigurasi yang telah ditunjuk pointer.
    F.S. : output berupa semua setup map yang ingin dimainkan */
 
-void showMap(char array[], int pPos);
+void showMap(pPosition (*pP), pUserName (*pU), int idxCurrentPlayer, Map *CurrentMap);
 /* Mencetak peta yang akan/sedang dimainkan.
    F.S. : output berupa layout map yang sedang dimainkan */
 
 int rollDice(int max);
 /* Mengembalikan roll dadu random yang tidak sama dengan */
 
-void movePlayer(int roll, int idxCurrentPlayer, Map layout);
+void movePlayer(int roll, int idxCurrentPlayer, Map *CurrentMap, pPosition (*pP));
 
-void inspectMap(Map CurrentMap);
+void inspectMap(Map *CurrentMap);
 
-void forceMove(int roll, int idxCurrentPlayer, Map CurrentMap);
+void forceMove(int roll, int idxCurrentPlayer, Map *CurrentMap, pPosition (*pP), pIsImune (*pI));
 
-void teleport (int idxCurrentPlayer, Map CurrentMap, int count_tele);
+void teleport (int idxCurrentPlayer, Map *CurrentMap, pPosition (*pP), pIsImune (*pI), pIsTeleported (*pT));
 
 #endif

@@ -1,1 +1,1 @@
-                printf("%d\n", pP.pos[idxCurrentPlayer]);
+    Map CurrentMap;
