@@ -84,9 +84,6 @@ void showMap(pPosition (*pP), pUserName (*pU), int playerCount, Map *CurrentMap)
 int rollDice(int max) 
 {
     int num = 0;  
-    time_t t1;
-      
-    srand ( (unsigned) time (&t1));
 
     while (num == 0) {
         num = rand() % (max+1);

@@ -64,10 +64,7 @@ void randomSkillGenerator(char *skname) {
  
 int randomInt99() {
     int idx;
-    time_t t1;
- 
-    srand ( (unsigned) time (&t1));
- 
+
     idx = rand() % 100;
    
     return idx;

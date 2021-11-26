@@ -38,13 +38,16 @@ int main () {
     int pilihanskill;
     int tempPos;
     int skillDelete;
+    int currPos;
+    int loopSkill;
+    int buff;
     
 
 
-/* CATATAN BUG 
-1. kalo HELP di awal, nanti dia bakal loop ke while line +-122.
-2. kalo ROLL masih error.
-*/
+    /* CATATAN BUG 
+    1. kalo HELP di awal, nanti dia bakal loop ke while line +-122.
+    2. kalo ROLL masih error.
+    */
 
 
 
@@ -82,19 +85,21 @@ int main () {
                 summonPlayer(&pU, &pT, &pP, &pI, &pC, &pSB, &pSK, banyakPemain);
 
                 /* kasih skill pertama buat para pemain */
-                for (int i = 1; i <= banyakPemain; i++) {
+                srand(time(0));
+                for (int i = 1; i <= (banyakPemain*10); i++) {
+                    loopSkill = (i%banyakPemain) + 1;
                     strcpy(getSkill, "");
                     randomSkillGenerator(getSkill);
-                    if (i == 1) {
+                    if (loopSkill == 1) {
                         insertVSkill(&pS1, getSkill);
                     }
-                    else if (i == 2) {
+                    else if (loopSkill == 2) {
                         insertVSkill(&pS2, getSkill);
                     }
-                    else if (i == 3) {
+                    else if (loopSkill == 3) {
                         insertVSkill(&pS3, getSkill);
                     }
-                    else if (i == 4) {
+                    else if (loopSkill == 4) {
                         insertVSkill(&pS4, getSkill);
                     }
                 }
@@ -157,156 +162,178 @@ int main () {
 
                 /* input (int) SKILL yang mau dipake (kalo punya SKILL) */
                 if (nSkill >= 1) {
-                    printf("Ingin menggunakan skill No: ");
-                    scanf("%d", &pilihanskill);
-            
-                    /* salin nama skill yang dipake ke variable */
-                    strcpy(skname, "");
-                    copySkillName(pS1, pS2, pS3, pS4, idxCurrentPlayer, pilihanskill, skname);
+                    strcpy(command, "");
+                    printf("Jadi menggunakan SKILL? (ya/no): ");
+                    scanf("%s", &command);
 
-                    /* Kalo SKILL == "Pintu Ga Ke Mana Mana" */
-                    if (strcmp(skname, "Pintu Ga Ke Mana Mana") == 0) {
-                        /* CEK DULU UDAH ADA EFEK BUFFNYA BELOM */
-                        if (pI.isImun[idxCurrentPlayer]) {
-                            printf("Anda masih memiliki efek Imune, tidak bisa menggunakan Skill ini.\n");
+                    if (strcmp(command, "ya") == 0) {
+                        printf("Ingin menggunakan skill No: ");
+                        scanf("%d", &pilihanskill);
+                
+                        /* salin nama skill yang dipake ke variable */
+                        strcpy(skname, "");
+                        copySkillName(pS1, pS2, pS3, pS4, idxCurrentPlayer, pilihanskill, skname);
+
+                        /* Kalo SKILL == "Pintu Ga Ke Mana Mana" */
+                        if (strcmp(skname, "Pintu Ga Ke Mana Mana") == 0) {
+                            /* CEK DULU UDAH ADA EFEK BUFFNYA BELOM */
+                            if (pI.isImun[idxCurrentPlayer]) {
+                                printf("Anda masih memiliki efek Imune, tidak bisa menggunakan Skill ini.\n");
+                            }
+                            else {
+                                /* Perubahan kondisi di player */
+                                pI.isImun[idxCurrentPlayer] = TRUE;
+                                printf("Skill diaktifkan, Anda sekarang Memiliki efek Imune Teleport.\n");
+                                deleteSkill(&pS1, &pS2, &pS3, &pS4, idxCurrentPlayer, pilihanskill);
+                            }
                         }
-                        else {
+
+                        /* Kalo SKILL == "Mesin Waktu" */
+                        else if (strcmp(skname, "Mesin Waktu") == 0) {
+                            /* Masukin username yang mau dimundurin */
+                            printf("Masukkan username pemain untuk dimundurin: ");
+                            strcpy(uname, "");
+                            scanf("%s", uname);
+                            idxPKenaSkill = getIdxOfPlayer(pU, uname);
+                            
+                            /* roll dadu dulu */
+                            srand(time(0));
+                            roll = rollDice(MAP_MAXROLL(CurrentMap));
+                            roll = roll * (-1);
+
+                            /* Perubahan kondisi player yang dimundurin */
+                            forceMove(roll, idxPKenaSkill, &CurrentMap, &pP, &pI);
+                            if (getPositionOfPlayer(pP, idxPKenaSkill) < 1) {
+                                forceMove((1 - getPositionOfPlayer(pP,idxPKenaSkill)), idxPKenaSkill, &CurrentMap, &pP, &pI);
+                            }
+
                             /* Perubahan kondisi di player */
-                            pI.isImun[idxCurrentPlayer] = TRUE;
-                            printf("Skill diaktifkan, Anda sekarang Memiliki efek Imune Teleport.\n");
                             deleteSkill(&pS1, &pS2, &pS3, &pS4, idxCurrentPlayer, pilihanskill);
+
+                            /* Perbuahan turn */
+                            nextPlayer = TRUE;
+
                         }
-                    }
-                    /* Kalo SKILL == "Mesin Waktu" */
-                    else if (strcmp(skname, "Mesin Waktu") == 0) {
-                        /* Masukin username yang mau dimundurin */
-                        printf("Masukkan username pemain untuk dimundurin: ");
-                        strcpy(uname, "");
-                        scanf("%s", uname);
-                        idxPKenaSkill = getIdxOfPlayer(pU, uname);
-                        
-                        /* roll dadu dulu */
-                        roll = rollDice(MAP_MAXROLL(CurrentMap));
-                        roll = roll * (-1);
+                        /* Kalo SKILL == "Baling Baling Jambu" */
+                        else if (strcmp(skname, "Baling Baling Jambu") == 0) {
+                            /* Masukin username yang mau dimajuin */
+                            printf("Masukkan username pemain untuk dimajuin: ");
+                            strcpy(uname, "");
+                            scanf("%s", uname);
+                            idxPKenaSkill = getIdxOfPlayer(pU, uname);
 
-                        /* Perubahan kondisi player yang dimundurin */
-                        forceMove(roll, idxPKenaSkill, &CurrentMap, &pP, &pI);
+                            /* roll dulu gan */
+                            srand(time(0));
+                            roll = rollDice(MAP_MAXROLL(CurrentMap));
 
-                        /* Perubahan kondisi di player */
-                        deleteSkill(&pS1, &pS2, &pS3, &pS4, idxCurrentPlayer, pilihanskill);
-
-                        /* Perbuahan turn */
-                        nextPlayer = TRUE;
-
-                    }
-                    /* Kalo SKILL == "Baling Baling Jambu" */
-                    else if (strcmp(skname, "Baling Baling Jambu") == 0) {
-                        /* Masukin username yang mau dimajuin */
-                        printf("Masukkan username pemain untuk dimajuin: ");
-                        strcpy(uname, "");
-                        scanf("%s", uname);
-                        idxPKenaSkill = getIdxOfPlayer(pU, uname);
-
-                        /* roll dulu gan */
-                        roll = rollDice(MAP_MAXROLL(CurrentMap));
-
-                        /* Perubahan kondisi player yang dimajuin */
-                        forceMove(roll, idxPKenaSkill, &CurrentMap, &pP, &pI);
-                        
-                        /* Perubahan kondisi di player */
-                        deleteSkill(&pS1, &pS2, &pS3, &pS4, idxCurrentPlayer, pilihanskill);
-
-                        /* Perbuahan turn */
-                        nextPlayer = TRUE;
-                    }
-
-                    /* Kalo SKILL == "Cermin Pengganda" */
-                    else if (strcmp(skname, "Cermin Pengganda") == 0) {
-                        /* CEK DULU UDAH ADA EFEK BUFFNYA BELOM */
-                        if (pC.isCermin[idxCurrentPlayer]) {
-                            printf("Anda sudah menggunakan Cermin Pengganda di giliran ini, tidak bisa menggunakan Skill ini.\n");
-                        }
-                        else {
-                            deleteSkill(&pS1, &pS2, &pS3, &pS4, idxCurrentPlayer, pilihanskill);
-                            if (banyaknyaSkill(pS1, pS2, pS3, pS4, idxCurrentPlayer) > 8) {
-                                while (banyaknyaSkill(pS1, pS2, pS3, pS4, idxCurrentPlayer) > 8) {
-                                    printf("Skill maksimal 8 untuk menggunakan skill ini, harap hapus skill.\n");
-                                    printSkill(pS1, pS2, pS3, pS4, idxCurrentPlayer, &nSkill);
-                                    printf("Masukan nomor Skill yang ingin di hapus: ");
-                                    scanf("%d", &skillDelete);
-                                    printf("\n");
-                                    deleteSkill(&pS1, &pS2, &pS3, &pS4, idxCurrentPlayer, skillDelete);
-                                }
-                            } 
+                            /* Perubahan kondisi player yang dimajuin */
+                            forceMove(roll, idxPKenaSkill, &CurrentMap, &pP, &pI);
                             
                             /* Perubahan kondisi di player */
-                            for (int i = 1; i <= 2 ; i++) {
-                                strcpy(getSkill, "");
-                                randomSkillGenerator(getSkill);
-                                if (idxCurrentPlayer == 1) {
-                                    insertVSkill(&pS1, getSkill);
-                                }
-                                else if (idxCurrentPlayer == 2) {
-                                    insertVSkill(&pS2, getSkill);
-                                }
-                                else if (idxCurrentPlayer == 3) {
-                                    insertVSkill(&pS3, getSkill);
-                                }
-                                else if (idxCurrentPlayer == 4) {
-                                    insertVSkill(&pS4, getSkill);
-                                }
-                                printf("Skill %s sudah ditambahkan!\n", getSkill);
-                            }
-                            pC.isCermin[idxCurrentPlayer] = TRUE;
-                        }
-                    }    
-                    /* Kalo SKILL == "Senter Pembesar Hoki" */
-                    else if (strcmp(skname, "Senter Pembesar Hoki") == 0) {
-                        /* CEK DULU UDAH ADA EFEK BUFFNYA BELOM */
-                        if ((pSB.isSenterBesar[idxCurrentPlayer]) || (pSK.isSenterKecil[idxCurrentPlayer])) {
-                            printf("Anda masih memiliki efek Senter Besar/Kecil, tidak bisa menggunakan Skill ini.\n");
-                        }
-                        else {
-                            /* Perubahan kondisi di player */
-                            pSB.isSenterBesar[idxCurrentPlayer] = TRUE;
                             deleteSkill(&pS1, &pS2, &pS3, &pS4, idxCurrentPlayer, pilihanskill);
-                        }
-                    } 
-                    /* Kalo SKILL == "Senter Pengecil Hoki" */
-                    else if (strcmp(skname, "Senter Pengecil Hoki") == 0) {
-                        /* CEK DULU UDAH ADA EFEK BUFFNYA BELOM */
-                        if ((pSB.isSenterBesar[idxCurrentPlayer]) || (pSK.isSenterKecil[idxCurrentPlayer])) {
-                            printf("Anda masih memiliki efek Senter Besar/Kecil, tidak bisa menggunakan Skill ini.\n");
-                        }
-                        else {
-                            /* Perubahan kondisi di player */
-                            pSK.isSenterKecil[idxCurrentPlayer] = TRUE;
-                            deleteSkill(&pS1, &pS2, &pS3, &pS4, idxCurrentPlayer, pilihanskill);
-                        }
-                    }
-                    /* Kalo SKILL == "Mesin Penukar Posisi" */
-                    else if (strcmp(skname, "Mesin Penukar Posisi") == 0) {
-                        /* Masukin username yang mau dimajuin */
-                        printf("Masukkan username pemain untuk ditukar posisi: ");
-                        strcpy(uname, "");
-                        scanf("%s", uname);
-                        idxPKenaSkill = getIdxOfPlayer(pU, uname);
 
-                        /* Perubahan kondisi player yang ditukar posisi */
-                        tempPos = pP.pos[idxPKenaSkill];
-                        forceMove((pP.pos[idxCurrentPlayer] - pP.pos[idxPKenaSkill]), idxPKenaSkill, &CurrentMap, &pP, &pI);
+                            /* Perbuahan turn */
+                            nextPlayer = TRUE;
+                        }
+
+                        /* Kalo SKILL == "Cermin Pengganda" */
                         
-                        /* Perubahan kondisi di player */
-                        forceMove((tempPos - pP.pos[idxCurrentPlayer]), idxCurrentPlayer, &CurrentMap, &pP, &pI);
+                        else if (strcmp(skname, "Cermin Pengganda") == 0) {
+                            /* CEK DULU UDAH ADA EFEK BUFFNYA BELOM */
+                            if (pC.isCermin[idxCurrentPlayer]) {
+                                printf("Anda sudah menggunakan Cermin Pengganda di giliran ini, tidak bisa menggunakan Skill ini.\n");
+                            }
+                            else {
+                                deleteSkill(&pS1, &pS2, &pS3, &pS4, idxCurrentPlayer, pilihanskill);
+                                if (banyaknyaSkill(pS1, pS2, pS3, pS4, idxCurrentPlayer) > 8) {
+                                    while (banyaknyaSkill(pS1, pS2, pS3, pS4, idxCurrentPlayer) > 8) {
+                                        printf("Skill maksimal 8 untuk menggunakan skill ini, harap hapus skill.\n");
+                                        printSkill(pS1, pS2, pS3, pS4, idxCurrentPlayer, &nSkill);
+                                        printf("Masukan nomor Skill yang ingin di hapus: ");
+                                        scanf("%d", &skillDelete);
+                                        printf("\n");
+                                        deleteSkill(&pS1, &pS2, &pS3, &pS4, idxCurrentPlayer, skillDelete);
+                                    }
+                                } 
+                                
+                                /* Perubahan kondisi di player */
+                                srand(time(0));
+                                for (int i = 1; i <= 2 ; i++) {
+                                    
+                                    strcpy(getSkill, "");
+                                    randomSkillGenerator(getSkill);
+                                    if (idxCurrentPlayer == 1) {
+                                        insertVSkill(&pS1, getSkill);
+                                    }
+                                    else if (idxCurrentPlayer == 2) {
+                                        insertVSkill(&pS2, getSkill);
+                                    }
+                                    else if (idxCurrentPlayer == 3) {
+                                        insertVSkill(&pS3, getSkill);
+                                    }
+                                    else if (idxCurrentPlayer == 4) {
+                                        insertVSkill(&pS4, getSkill);
+                                    }
+                                    printf("Skill %s sudah ditambahkan!\n", getSkill);
+                                }
+                                pC.isCermin[idxCurrentPlayer] = TRUE;
+                            }
+                        }    
+                        /* Kalo SKILL == "Senter Pembesar Hoki" */
+                        else if (strcmp(skname, "Senter Pembesar Hoki") == 0) {
+                            /* CEK DULU UDAH ADA EFEK BUFFNYA BELOM */
+                            if ((pSB.isSenterBesar[idxCurrentPlayer]) || (pSK.isSenterKecil[idxCurrentPlayer])) {
+                                printf("Anda masih memiliki efek Senter Besar/Kecil, tidak bisa menggunakan Skill ini.\n");
+                            }
+                            else {
+                                /* Perubahan kondisi di player */
+                                pSB.isSenterBesar[idxCurrentPlayer] = TRUE;
+                                deleteSkill(&pS1, &pS2, &pS3, &pS4, idxCurrentPlayer, pilihanskill);
+                            }
+                        } 
+                        /* Kalo SKILL == "Senter Pengecil Hoki" */
+                        else if (strcmp(skname, "Senter Pengecil Hoki") == 0) {
+                            /* CEK DULU UDAH ADA EFEK BUFFNYA BELOM */
+                            if ((pSB.isSenterBesar[idxCurrentPlayer]) || (pSK.isSenterKecil[idxCurrentPlayer])) {
+                                printf("Anda masih memiliki efek Senter Besar/Kecil, tidak bisa menggunakan Skill ini.\n");
+                            }
+                            else {
+                                /* Perubahan kondisi di player */
+                                pSK.isSenterKecil[idxCurrentPlayer] = TRUE;
+                                deleteSkill(&pS1, &pS2, &pS3, &pS4, idxCurrentPlayer, pilihanskill);
+                            }
+                        }
+                        /* Kalo SKILL == "Mesin Penukar Posisi" */
+                        else if (strcmp(skname, "Mesin Penukar Posisi") == 0) {
+                            /* Masukin username yang mau dimajuin */
+                            printf("Masukkan username pemain untuk ditukar posisi: ");
+                            strcpy(uname, "");
+                            scanf("%s", uname);
+                            idxPKenaSkill = getIdxOfPlayer(pU, uname);
 
-                        deleteSkill(&pS1, &pS2, &pS3, &pS4, idxCurrentPlayer, pilihanskill);
+                            /* Perubahan kondisi player yang ditukar posisi */
+                            tempPos = pP.pos[idxPKenaSkill];
+                            forceMove((pP.pos[idxCurrentPlayer] - tempPos), idxPKenaSkill, &CurrentMap, &pP, &pI);
+                            
+                            /* Perubahan kondisi di player */
+                            forceMove((tempPos - pP.pos[idxCurrentPlayer]), idxCurrentPlayer, &CurrentMap, &pP, &pI);
 
-                        /* Perbuahan turn */
-                        nextPlayer = TRUE;
+                            deleteSkill(&pS1, &pS2, &pS3, &pS4, idxCurrentPlayer, pilihanskill);
 
+                            /* Perbuahan turn */
+                            nextPlayer = TRUE;
+
+                        }
+                        /* Kalo SKILL == "Teknologi Gagal" */
+                        else if (strcmp(skname, "Teknologi Gagal") == 0) {
+                            /* NOTHING HAPPEN */
+                            deleteSkill(&pS1, &pS2, &pS3, &pS4, idxCurrentPlayer, pilihanskill);
+                        }
                     }
-                    /* Kalo SKILL == "Teknologi Gagal" */
-                        /* NOTHING HAPPEN */
+                    else {
+                        printf("Anda tidak jadi menggunakan hak SKILL.\n");
+                    }
+                    
                 }
                 else {
                     printf("Anda tidak memiliki Skill apa pun untuk digunakan.\n");
@@ -323,7 +350,27 @@ int main () {
 
             /* Kalo Commandnya BUFF */
             else if (strcmp(command, "BUFF") == 0) {
-            
+                buff = 0;
+                if (getImmunityConditionOfPlayer(pI, idxCurrentPlayer)) {
+                    buff++;
+                    printf("%d. Imunitas Teleport\n", buff);
+                }
+                if (getCerminConditionOfPlayer(pC, idxCurrentPlayer)) {
+                    buff++;
+                    printf("%d. Cermin Pengganda\n", buff);
+                }
+                if (getSenterBesarConditionOfPlayer(pSB, idxCurrentPlayer)) {
+                    buff++;
+                    printf("%d. Senter Pembesar Hoki\n", buff);
+                }
+                if (getSenterKecilConditionOfPlayer(pSK, idxCurrentPlayer)) {
+                    buff++;
+                    printf("%d. Senter Pengecil Hoki\n", buff);
+                }
+                if (buff == 0) {
+                    printf("Anda tidak memiliki efek BUFF, aktifkan salah satu BUFF dengan menggunakan SKILL.\n");
+                }
+                
             }
 
             /* Kalo Commandnya INSPECT */
@@ -335,11 +382,12 @@ int main () {
             else if (strcmp(command, "ROLL") == 0) {
                 /*  yang ini dicek dulu Lagi ada efek Buff yang
                     ngaruh ke roll apa enggak.
-                    pSB.isSenterBesar[idxCurrentPlayer]
-                    pSK.isSenterKecil[idxCurrentPlayer]
+                    getSenterBesarConditionOfPlayer(pSB, idxCurrentPlayer)
+                    getSenterKecilConditionOfPlayer(pSB, idxCurrentPlayer)
                     kalo salah satunya aktif ntar ngaruh ke rollnya
                 */
                 if(ableToRoll) {
+                    srand(time(0));
                     roll = rollDice(MAP_MAXROLL(CurrentMap));
                     movePlayer(roll, idxCurrentPlayer, &CurrentMap, &pP);
                     ableToRoll = FALSE;
