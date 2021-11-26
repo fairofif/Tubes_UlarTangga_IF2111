@@ -23,6 +23,8 @@ int main () {
     boolean stopProgram;
     boolean stopGame;
     boolean nextPlayer;
+    boolean inputValid;
+    boolean ableToRoll;
     int banyakPemain;
     int roll;
     int idxCurrentPlayer;
@@ -52,73 +54,85 @@ int main () {
     while (!stopProgram) {
         /* Prosedur UI Main Menu */
         welcome();
+
         /* input command */
-        printf("Masukkan Command: ");
-        strcpy(command, "");
-        scanf("%s", command);
+        /* loop sampe input valid */
+        inputValid = FALSE;
+        while(!inputValid) {
+            printf("Masukkan Command: ");
+            strcpy(command, "");
+            scanf("%s", command);
+        
+            /* Kalo commandnya HELP */
+            if (strcmp(command, "HELP") == 0) {
+                /* Tunjukin command2 yang ada di Main Menu */
+                help();
+            }
+            /* Kalo new game */
+            else if (strcmp(command, "NEWGAME") == 0) {
+                /* Input file konfigurasi map yang mau dipake */
+                inputConfig(&CurrentMap);
+                printConfig(&CurrentMap);
+                start();
+                
+                /* masukinn jumlah pemain & username pemain2nya */
+                printf("Masukkan jumlah pemain: ");
+                scanf("%d", &banyakPemain);
+                preparationSkillList(&pS1,&pS2,&pS3,&pS4, banyakPemain);
+                createEmptyPlayerList(&pU);
+                summonPlayer(&pU, &pT, &pP, &pI, &pC, &pSB, &pSK, banyakPemain);
 
-        /* Kalo commandnya HELP */
-        if (strcmp(command, "HELP") == 0) {
-            /* Tunjukin command2 yang ada di Main Menu */
-            help();
-        }
-        /* Kalo new game */
-        else if (strcmp(command, "NEWGAME") == 0) {
-            /* Input file konfigurasi map yang mau dipake */
-            inputConfig(&CurrentMap);
-            printConfig(&CurrentMap);
-            start();
-            
-            /* masukinn jumlah pemain & username pemain2nya */
-            printf("Masukkan jumlah pemain: ");
-            scanf("%d", &banyakPemain);
-            preparationSkillList(&pS1,&pS2,&pS3,&pS4, banyakPemain);
-            createEmptyPlayerList(&pU);
-            summonPlayer(&pU, &pT, &pP, &pI, &pC, &pSB, &pSK, banyakPemain);
+                /* kasih skill pertama buat para pemain */
+                for (int i = 1; i <= banyakPemain; i++) {
+                    strcpy(getSkill, "");
+                    randomSkillGenerator(getSkill);
+                    if (i == 1) {
+                        insertVSkill(&pS1, getSkill);
+                    }
+                    else if (i == 2) {
+                        insertVSkill(&pS2, getSkill);
+                    }
+                    else if (i == 3) {
+                        insertVSkill(&pS3, getSkill);
+                    }
+                    else if (i == 4) {
+                        insertVSkill(&pS4, getSkill);
+                    }
+                }
 
-            /* kasih skill pertama buat para pemain */
-            for (int i = 1; i <= banyakPemain; i++) {
-                strcpy(getSkill, "");
-                randomSkillGenerator(getSkill);
-                if (i == 1) {
-                    insertVSkill(&pS1, getSkill);
-                }
-                else if (i == 2) {
-                    insertVSkill(&pS2, getSkill);
-                }
-                else if (i == 3) {
-                    insertVSkill(&pS3, getSkill);
-                }
-                else if (i == 4) {
-                    insertVSkill(&pS4, getSkill);
-                }
+                /* set idxPlayer ke 1 */
+                idxCurrentPlayer = 1;
+                round = 1;
+                inputValid = TRUE;
             }
 
-            /* set idxPlayer ke 1 */
-            idxCurrentPlayer = 1;
-            round = 1;
-        }
+            /* Kalo Exit */
+            else if (strcmp(command, "EXIT") == 0) {
+                /* stopProgram jadi TRUE */
+                stopProgram = TRUE;
+                inputValid = TRUE;
+            }
 
-        /* Kalo Exit */
-        else if (strcmp(command, "EXIT") == 0) {
-            /* stopProgram jadi TRUE */
-            stopProgram = TRUE;
-        }
+            /* Kalo load game */
+            else if (strcmp(command, "LOAD") == 0) {
 
-        /* Kalo load game */
-        else if (strcmp(command, "LOAD") == 0) {
+                /* Load player data ke variable2 player */
 
-            /* Load player data ke variable2 player */
+                /* Load map data ke variable2 map */
 
-            /* Load map data ke variable2 map */
+                /* Load jumlah pemain dari Neff */
 
-            /* Load jumlah pemain dari Neff */
+                /* Load idxCurrentPlayer terakhir */
+                inputValid = TRUE;
+            }
 
-            /* Load idxCurrentPlayer terakhir */
-        }
-        
+            else {
+                printf("ERROR!! masukkan input command yang benar\n<HELP/NEWGAME/EXIT/LOAD>\n");
+            }
+        }      
         
         stopGame = FALSE;
+        ableToRoll = TRUE;
         while ((!stopGame) && (!stopProgram)) {
             nextPlayer = FALSE;
             
@@ -133,7 +147,6 @@ int main () {
             if (strcmp(command, "HELP") == 0) {
                 help();
                 /* Tunjukin command2 yang ada di In Game */
-
             }
             
             /* Kalo commandnya SKILL */
@@ -206,6 +219,7 @@ int main () {
                         /* Perbuahan turn */
                         nextPlayer = TRUE;
                     }
+
                     /* Kalo SKILL == "Cermin Pengganda" */
                     else if (strcmp(skname, "Cermin Pengganda") == 0) {
                         /* CEK DULU UDAH ADA EFEK BUFFNYA BELOM */
@@ -220,6 +234,7 @@ int main () {
                                     printSkill(pS1, pS2, pS3, pS4, idxCurrentPlayer, &nSkill);
                                     printf("Masukan nomor Skill yang ingin di hapus: ");
                                     scanf("%d", &skillDelete);
+                                    printf("\n");
                                     deleteSkill(&pS1, &pS2, &pS3, &pS4, idxCurrentPlayer, skillDelete);
                                 }
                             } 
@@ -300,7 +315,7 @@ int main () {
 
             /* Kalo Commandnya MAP */
             else if (strcmp(command, "MAP") == 0) {
-              showMap(&pP, &pU, idxCurrentPlayer, &CurrentMap);
+              showMap(&pP, &pU, banyakPemain, &CurrentMap);
                 // showMap(array of char username, idx posisi player);
 
             }
@@ -309,10 +324,12 @@ int main () {
             else if (strcmp(command, "BUFF") == 0) {
             
             }
+
             /* Kalo Commandnya INSPECT */
             else if (strcmp(command, "INSPECT") == 0) {
                 inspectMap(&CurrentMap);
             }
+
             /* Kalo Commandnya ROLL */
             else if (strcmp(command, "ROLL") == 0) {
                 /*  yang ini dicek dulu Lagi ada efek Buff yang
@@ -321,27 +338,40 @@ int main () {
                     pSK.isSenterKecil[idxCurrentPlayer]
                     kalo salah satunya aktif ntar ngaruh ke rollnya
                 */
-                printf("MAXROLLNYA %d\n", MAP_MAXROLL(CurrentMap));
-                roll = rollDice(MAP_MAXROLL(CurrentMap));
-                movePlayer(roll, idxCurrentPlayer, &CurrentMap, &pP);
+                if(ableToRoll) {
+                    roll = rollDice(MAP_MAXROLL(CurrentMap));
+                    movePlayer(roll, idxCurrentPlayer, &CurrentMap, &pP);
+                    ableToRoll = FALSE;
+                } else {
+                    printf("ERROR!! anda sudah melakukan roll, silahkan input command yang lain!\n<HELP/SKILL/MAP/BUFF/INSPECT/SAVE/UNDO/ENDTURN>\n");
+                }
             }
+
             /* Kalo Commandnya SAVE */
             else if (strcmp(command, "SAVE") == 0) {
                 /* Update semua player txt */
 
                 /* Update semua map txt */
             }
+
             /* Kalo Commandnya ENDTURN */
             else if (strcmp(command, "ENDTURN") == 0) {
                 nextPlayer = TRUE;
             }
+
             /* Kalo Commandnya UNDO */
             else if (strcmp(command, "UNDO") == 0) {
                 /* ini kita yang meninggal sebagai developer */
 
             }
+
+            else {
+                printf("ERROR!! masukkan input command yang benar\n<HELP/SKILL/MAP/BUFF/INSPECT/ROLL/SAVE/UNDO/ENDTURN>\n");
+            }
+
             /* ini buat gantian giliran player */
             if (nextPlayer) {
+                ableToRoll = TRUE;
                 pC.isCermin[idxCurrentPlayer] = FALSE;
                 if (idxCurrentPlayer == banyakPemain) {
                     idxCurrentPlayer = 1;
@@ -351,7 +381,6 @@ int main () {
                     idxCurrentPlayer++;
                 }
             }
-
         }
     }
 }

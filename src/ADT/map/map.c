@@ -58,23 +58,27 @@ void printConfig(Map *CurrentMap)
     printf("Maksimal dadu : %d\n", MAP_MAXROLL(*CurrentMap));
     printf("Jumlah teleport : %d\n", TELEPORT_COUNT(*CurrentMap));
     printf("List teleport : \n");
-    for(int i = 0; i < TELEPORT_COUNT(*CurrentMap); i++) {
-        printf("%d %d\n", TELEPORT_LAYOUT(*CurrentMap)[i], TELEPORT_LAYOUT(*CurrentMap)[i+1]);
+    printf("| ");
+    for(int i = 0; i < TELEPORT_COUNT(*CurrentMap)*2; i+=2) {
+        printf("%d -> %d | ", TELEPORT_LAYOUT(*CurrentMap)[i], TELEPORT_LAYOUT(*CurrentMap)[i+1]);
     }
+    printf("\n");
 
 }
 
-void showMap(pPosition (*pP), pUserName (*pU), int idxCurrentPlayer, Map *CurrentMap) 
+void showMap(pPosition (*pP), pUserName (*pU), int playerCount, Map *CurrentMap) 
 {
-    printf("%s: ", (*pU).uname[idxCurrentPlayer]);
-    for(int i = 1; i <= MAP_LENGTH(*CurrentMap); i++) {
-        if ((*pP).pos[idxCurrentPlayer] == i) {
-            printf("*");
-        } else {
-            printf("%c", MAP_LAYOUT(*CurrentMap)[i]);
+    for(int idxCurrentPlayer = 1; idxCurrentPlayer <= playerCount; idxCurrentPlayer++ ) {
+        printf("%s: ", (*pU).uname[idxCurrentPlayer]);
+        for(int i = 1; i <= MAP_LENGTH(*CurrentMap); i++) {
+            if ((*pP).pos[idxCurrentPlayer] == i) {
+                printf("*");
+            } else {
+                printf("%c", MAP_LAYOUT(*CurrentMap)[i]);
+            }
         }
+        printf("\n");
     }
-    printf("\n");
 }
 
 int rollDice(int max) 
@@ -134,7 +138,7 @@ void movePlayer(int roll, int idxCurrentPlayer, Map *CurrentMap, pPosition (*pP)
         if (MAP_LAYOUT(*CurrentMap)[depan] == '#') {
             printf("tidak bisa bergerak! karena ke belakang kurang dari 0 dan ke depan ada pagar!\n");
         } else {
-            (*pP).pos[idxCurrentPlayer] = belakang;
+            (*pP).pos[idxCurrentPlayer] = depan;
         }
     } else {
         printf("ERROR! kasus anomali\n");
