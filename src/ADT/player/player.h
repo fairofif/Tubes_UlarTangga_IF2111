@@ -59,7 +59,7 @@ void createEmptyPlayerList (pUserName *pU);
     I.S. array pU sembarang
     F.S. array pU kosong
 */
-void createEmptyPlayerSkillslList (Skill *S);
+void createEmptyPlayerSkillsList (Skill *S);
 /*
     S adalah Sebuah linked list yang dapat diakses dari array pSkill dengan cara
     (*S).sk[idxPlayer]

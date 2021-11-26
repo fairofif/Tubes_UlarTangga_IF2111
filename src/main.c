@@ -19,6 +19,9 @@ int main () {
     /* Declare variable map */
     Map CurrentMap;
 
+    // Declare variable round //
+    Round R;
+
     /* Declare main variable */
     boolean stopProgram;
     boolean stopGame;
@@ -54,6 +57,7 @@ int main () {
 
 
     /* loop program */
+    stopGame = TRUE;
     stopProgram = FALSE;
     while (!stopProgram) {
         /* Prosedur UI Main Menu */
@@ -106,10 +110,16 @@ int main () {
                     }
                 }
 
+                
                 /* set idxPlayer ke 1 */
                 idxCurrentPlayer = 1;
+                createEmptyRound(&R);
+                pushRound(&R,pP,pT,pI,pC,pSB,pSK,pS1,pS2,pS3,pS4,banyakPemain);
                 round = 1;
                 inputValid = TRUE;
+                stopGame = FALSE;
+                printf("\n||| ROUND %d  |||\n\n", round);
+                printf("Silahkan bermain %s!\n", pU.uname[idxCurrentPlayer]);
             }
 
             /* Kalo Exit */
@@ -130,6 +140,7 @@ int main () {
 
                 /* Load idxCurrentPlayer terakhir */
                 inputValid = TRUE;
+                stopGame = FALSE;
             }
 
             else {
@@ -137,14 +148,12 @@ int main () {
             }
         }      
         
-        stopGame = FALSE;
         ableToRoll = TRUE;
-        printf("Silahkan bermain %s!\n", pU.uname[idxCurrentPlayer]);
         while ((!stopGame) && (!stopProgram)) {
             nextPlayer = FALSE;
             
             /* Prosedur UI In Game */
-
+            
             /* input command */
             printf("Masukkan Command: ");
             strcpy(command, "");
@@ -443,8 +452,17 @@ int main () {
 
             /* Kalo Commandnya UNDO */
             else if (strcmp(command, "UNDO") == 0) {
-                /* ini kita yang meninggal sebagai developer */
-
+                if (round > 1) {    
+                    undoRound(&R,&pP,&pT,&pI,&pC,&pSB,&pSK,&pS1,&pS2,&pS3,&pS4,banyakPemain);
+                    idxCurrentPlayer = 1;
+                    nextPlayer = FALSE;
+                    round--;
+                    printf("\n||| ROUND %d  |||\n\n", round);
+                    printf("Silahkan bermain %s!\n", pU.uname[idxCurrentPlayer]);
+                }
+                else {
+                    printf("Minimal berada di Round 2 untuk melakukan UNDO.\n");
+                }
             }
 
             else {
@@ -461,7 +479,9 @@ int main () {
                 pC.isCermin[idxCurrentPlayer] = FALSE;
                 if (idxCurrentPlayer == banyakPemain) {
                     idxCurrentPlayer = 1;
+                    pushRound(&R,pP,pT,pI,pC,pSB,pSK,pS1,pS2,pS3,pS4,banyakPemain);
                     round++;
+                    printf("\n||| ROUND %d  |||\n\n", round);
                 }
                 else {
                     idxCurrentPlayer++;
