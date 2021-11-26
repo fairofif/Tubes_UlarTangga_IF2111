@@ -2,12 +2,12 @@
 
 int inputIndicator = 1; //teleport indikator (mengindikasikan input berupa telport)
 
-void inputConfig(Map CurrentMap) 
+void inputConfig(Map *CurrentMap) 
 {
     char namafile[254];
     char *dummy = "map1.txt";
     boolean valid = FALSE;
-    TELEPORT_NEFF(CurrentMap) = 0;
+    TELEPORT_NEFF(*CurrentMap) = 0;
 
     while(!valid){
         printf("Masukkan file config txt : ");
@@ -22,7 +22,7 @@ void inputConfig(Map CurrentMap)
     readConfig(CurrentMap);
 }
 
-void readConfig(Map CurrentMap)
+void readConfig(Map *CurrentMap)
 {
     STARTKATA(CurrentMap); 
     while(!EndKata) {
@@ -32,13 +32,13 @@ void readConfig(Map CurrentMap)
     printf("Input file konfigurasi berhasil..\nSelamat bermain!\n");
 }
 
-void assignConfig(Map CurrentMap)
+void assignConfig(Map *CurrentMap)
 {
     if(inputIndicator == 2) {
-        MAP_LENGTH(CurrentMap) = CKata.Length;
+        MAP_LENGTH(*CurrentMap) = CKata.Length;
         for(int i = 1; i <= CKata.Length; i++) {
-            MAP_LAYOUT(CurrentMap)[i] = CKata.TabKata[i];
-            MAP_NEFF(CurrentMap) += 1;
+            MAP_LAYOUT(*CurrentMap)[i] = CKata.TabKata[i];
+            MAP_NEFF(*CurrentMap) += 1;
         }
         printf("\n");
         //CEK DULU IF C.LENGTHNYA SAMA KAYA LENGTH
@@ -47,31 +47,31 @@ void assignConfig(Map CurrentMap)
     }
 }
 
-void printConfig(Map CurrentMap) 
+void printConfig(Map *CurrentMap) 
 {
-    printf("Panjang map : %d\n", MAP_LENGTH(CurrentMap));
+    printf("Panjang map : %d\n", MAP_LENGTH(*CurrentMap));
     printf("Layout map : ");
-    for(int i = 0; i < MAP_LENGTH(CurrentMap); i++) {
-        printf("%c", MAP_LAYOUT(CurrentMap)[i]);
+    for(int i = 0; i < MAP_LENGTH(*CurrentMap); i++) {
+        printf("%c", MAP_LAYOUT(*CurrentMap)[i]);
     }
     printf("\n");
-    printf("Maksimal dadu : %d\n", MAP_MAXROLL(CurrentMap));
-    printf("Jumlah teleport : %d\n", TELEPORT_COUNT(CurrentMap));
+    printf("Maksimal dadu : %d\n", MAP_MAXROLL(*CurrentMap));
+    printf("Jumlah teleport : %d\n", TELEPORT_COUNT(*CurrentMap));
     printf("List teleport : \n");
-    for(int i = 0; i < TELEPORT_COUNT(CurrentMap); i++) {
-        printf("%d %d\n", TELEPORT_LAYOUT(CurrentMap)[i], TELEPORT_LAYOUT(CurrentMap)[i+1]);
+    for(int i = 0; i < TELEPORT_COUNT(*CurrentMap); i++) {
+        printf("%d %d\n", TELEPORT_LAYOUT(*CurrentMap)[i], TELEPORT_LAYOUT(*CurrentMap)[i+1]);
     }
 
 }
 
-void showMap(char array[], int pPos, Map CurrentMap) 
+void showMap(char array[], int pPos, Map *CurrentMap) 
 {
     printf("%c%c%c%c : ", array[0], array[1], array [2], array[3]);
-    for(int i = 1; i <= MAP_LENGTH(CurrentMap); i++) {
+    for(int i = 1; i <= MAP_LENGTH(*CurrentMap); i++) {
         if (pPos == i) {
             printf("*");
         } else {
-            printf("%c", MAP_LAYOUT(CurrentMap)[i]);
+            printf("%c", MAP_LAYOUT(*CurrentMap)[i]);
         }
     }
     printf("\n");
@@ -91,17 +91,17 @@ int rollDice(int max)
     return num;
 }
 
-void movePlayer(int roll, int idxCurrentPlayer, Map CurrentMap, pPosition pP)
+void movePlayer(int roll, int idxCurrentPlayer, Map *CurrentMap, pPosition pP)
 {
     boolean validMove = FALSE;
     char input[1];
-    if (MAP_LAYOUT(CurrentMap)[pP.pos[idxCurrentPlayer] + roll] == '#') {
-        if (MAP_LAYOUT(CurrentMap)[pP.pos[idxCurrentPlayer] - roll] == '#') {
+    if (MAP_LAYOUT(*CurrentMap)[pP.pos[idxCurrentPlayer] + roll] == '#') {
+        if (MAP_LAYOUT(*CurrentMap)[pP.pos[idxCurrentPlayer] - roll] == '#') {
             printf("tidak bisa bergerak!\n");
         } else {
             pP.pos[idxCurrentPlayer] = pP.pos[idxCurrentPlayer] - roll; 
         }
-    } else if (MAP_LAYOUT(CurrentMap)[pP.pos[idxCurrentPlayer] - roll] == '#') {
+    } else if (MAP_LAYOUT(*CurrentMap)[pP.pos[idxCurrentPlayer] - roll] == '#') {
         pP.pos[idxCurrentPlayer] = pP.pos[idxCurrentPlayer] + roll;
     } else {
         printf("pilih F untuk Forward dan B untuk Back (F/B) : ");
@@ -122,23 +122,23 @@ void movePlayer(int roll, int idxCurrentPlayer, Map CurrentMap, pPosition pP)
     }
 }
 
-void inspectMap(Map CurrentMap) 
+void inspectMap(Map *CurrentMap) 
 {
     int n,i;
     int length;
     printf("Masukkan petak: ");
     scanf("%d", &n);
 
-    length = MAP_LENGTH(CurrentMap);
+    length = MAP_LENGTH(*CurrentMap);
     for(i = 0; i < length; i+=2) {
-        if(TELEPORT_LAYOUT(CurrentMap)[i] == n) {
-            printf("Petak %d memiliki teleporter menuju %d.\n", n, TELEPORT_LAYOUT(CurrentMap)[i+1]);
+        if(TELEPORT_LAYOUT(*CurrentMap)[i] == n) {
+            printf("Petak %d memiliki teleporter menuju %d.\n", n, TELEPORT_LAYOUT(*CurrentMap)[i+1]);
         }
     }
 
-    if(MAP_LAYOUT(CurrentMap)[n] == '.') {
+    if(MAP_LAYOUT(*CurrentMap)[n] == '.') {
         printf("Petak %d merupakan petak kosong.\n", n);
-    } else if(MAP_LAYOUT(CurrentMap)[n] == '#') {
+    } else if(MAP_LAYOUT(*CurrentMap)[n] == '#') {
         printf("Petak %d merupakan petak terlarang.\n", n);
     }
 }

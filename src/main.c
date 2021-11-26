@@ -65,23 +65,9 @@ int main () {
         /* Kalo new game */
         else if (strcmp(command, "NEWGAME") == 0) {
             /* Input file konfigurasi map yang mau dipake */
-            inputConfig(CurrentMap);
-            // printConfig(CurrentMap);
+            inputConfig(&CurrentMap);
+            printConfig(&CurrentMap);
             start();
-            printf("\n");
-            printf("Panjang map : %d\n", MAP_LENGTH(CurrentMap));
-            // printf("Layout map : ");
-            // for(int i = 0; i < MAP_LENGTH(CurrentMap); i++) {
-            //     printf("%c", MAP_LAYOUT(CurrentMap)[i]);
-            // }
-            printf("\n");
-            printf("Maksimal dadu : %d\n", MAP_MAXROLL(CurrentMap));
-            printf("Jumlah teleport : %d\n", TELEPORT_COUNT(CurrentMap));
-            printf("List teleport : \n");
-            for(int i = 0; i < TELEPORT_COUNT(CurrentMap); i++) {
-                printf("%d %d\n", TELEPORT_LAYOUT(CurrentMap)[i], TELEPORT_LAYOUT(CurrentMap)[i+1]);
-            }
-            printf("MAXROLLNYA 2 %d\n", MAP_MAXROLL(CurrentMap));
             
             /* masukinn jumlah pemain & username pemain2nya */
             printf("Masukkan jumlah pemain: ");
@@ -191,7 +177,7 @@ int main () {
                         roll = roll * (-1);
 
                         /* Perubahan kondisi player yang dimundurin */
-                        movePlayer(roll, idxPKenaSkill, CurrentMap, pP);
+                        movePlayer(roll, idxPKenaSkill, &CurrentMap, pP);
 
                         /* Perubahan kondisi di player */
                         deleteSkill(&pS1, &pS2, &pS3, &pS4, idxCurrentPlayer, pilihanskill);
@@ -212,7 +198,7 @@ int main () {
                         roll = rollDice(MAP_MAXROLL(CurrentMap));
 
                         /* Perubahan kondisi player yang dimajuin */
-                        movePlayer(roll, idxPKenaSkill, CurrentMap, pP);
+                        movePlayer(roll, idxPKenaSkill, &CurrentMap, pP);
                         
                         /* Perubahan kondisi di player */
                         deleteSkill(&pS1, &pS2, &pS3, &pS4, idxCurrentPlayer, pilihanskill);
@@ -293,10 +279,10 @@ int main () {
 
                         /* Perubahan kondisi player yang ditukar posisi */
                         tempPos = pP.pos[idxPKenaSkill];
-                        movePlayer((pP.pos[idxCurrentPlayer] - pP.pos[idxPKenaSkill]), idxPKenaSkill, CurrentMap, pP);
+                        movePlayer((pP.pos[idxCurrentPlayer] - pP.pos[idxPKenaSkill]), idxPKenaSkill, &CurrentMap, pP);
                         
                         /* Perubahan kondisi di player */
-                        movePlayer((tempPos - pP.pos[idxCurrentPlayer]), idxCurrentPlayer, CurrentMap, pP);
+                        movePlayer((tempPos - pP.pos[idxCurrentPlayer]), idxCurrentPlayer, &CurrentMap, pP);
                         deleteSkill(&pS1, &pS2, &pS3, &pS4, idxCurrentPlayer, pilihanskill);
 
                         /* Perbuahan turn */
@@ -314,7 +300,7 @@ int main () {
 
             /* Kalo Commandnya MAP */
             else if (strcmp(command, "MAP") == 0) {
-              showMap(pU.uname[idxCurrentPlayer], pP.pos[idxCurrentPlayer], CurrentMap);
+              showMap(pU.uname[idxCurrentPlayer], pP.pos[idxCurrentPlayer], &CurrentMap);
                 // showMap(array of char username, idx posisi player);
 
             }
@@ -325,7 +311,7 @@ int main () {
             }
             /* Kalo Commandnya INSPECT */
             else if (strcmp(command, "INSPECT") == 0) {
-                inspectMap(CurrentMap);
+                inspectMap(&CurrentMap);
             }
             /* Kalo Commandnya ROLL */
             else if (strcmp(command, "ROLL") == 0) {
@@ -337,7 +323,7 @@ int main () {
                 */
                 printf("MAXROLLNYA %d\n", MAP_MAXROLL(CurrentMap));
                 roll = rollDice(MAP_MAXROLL(CurrentMap));
-                movePlayer(roll, idxCurrentPlayer, CurrentMap, pP);
+                movePlayer(roll, idxCurrentPlayer, &CurrentMap, pP);
             }
             /* Kalo Commandnya SAVE */
             else if (strcmp(command, "SAVE") == 0) {
