@@ -1,4 +1,6 @@
 #include "map.h"
+#include "array.h"
+#include "array.c"
 
 Map CurrentMap;
 pPosition pP;
@@ -7,6 +9,7 @@ int inputIndicator = 1; //teleport indikator (mengindikasikan input berupa telpo
 
 void inputConfig() 
 {
+    printf("masuk config");
     char namafile[254];
     char *dummy = "map1.txt";
     boolean valid = FALSE;
@@ -61,8 +64,12 @@ void printConfig()
     printf("Maksimal dadu : %d\n", MAP_MAXROLL(CurrentMap));
     printf("Jumlah teleport : %d\n", TELEPORT_COUNT(CurrentMap));
     printf("List teleport : \n");
+    int IdxTeleIn = 0;
+    int IdxTeleOut = 1;
     for(int i = 0; i < TELEPORT_COUNT(CurrentMap); i++) {
-        printf("%d %d\n", TELEPORT_LAYOUT(CurrentMap)[i], TELEPORT_LAYOUT(CurrentMap)[i+1]);
+        printf("%d %d\n", TELEPORT_LAYOUT(CurrentMap)[IdxTeleIn], TELEPORT_LAYOUT(CurrentMap)[IdxTeleOut]);
+        IdxTeleIn = IdxTeleIn + 2;
+        IdxTeleOut = IdxTeleOut + 2;
     }
 
 }
@@ -96,29 +103,34 @@ int rollDice(int max)
 
 void movePlayer(int roll, int idxCurrentPlayer, Map CurrentMap)
 {
+    char input[5];
     boolean validMove = FALSE;
-    char input[1];
-    if (MAP_LAYOUT(CurrentMap)[pP.pos[idxCurrentPlayer] + roll] == '#') {
-        if (MAP_LAYOUT(CurrentMap)[pP.pos[idxCurrentPlayer] - roll] == '#') {
-            printf("tidak bisa bergerak!\n");
-        }
+    if ((MAP_LAYOUT(CurrentMap)[pP.pos[idxCurrentPlayer] + roll] == '#') && (pP.pos[idxCurrentPlayer] == 1)) {
+        printf("tidak bisa bergerak!\n");
+    }
+    else if ((MAP_LAYOUT(CurrentMap)[pP.pos[idxCurrentPlayer] + roll] == '#') && (MAP_LAYOUT(CurrentMap)[pP.pos[idxCurrentPlayer] - roll] == '#')) {
+        printf("tidak bisa bergerak!\n");
+    }
+    else if (MAP_LAYOUT(CurrentMap)[pP.pos[idxCurrentPlayer] + roll] == '#') {
+        printf("Oops ada area terlarang! Kamu hanya dapat bergerak mundur ke belakang! \n");
         pP.pos[idxCurrentPlayer] = pP.pos[idxCurrentPlayer] - roll;
-    } else if (MAP_LAYOUT(CurrentMap)[pP.pos[idxCurrentPlayer] - roll] == '#') {
+    }
+    else if (MAP_LAYOUT(CurrentMap)[pP.pos[idxCurrentPlayer] - roll] == '#') {
+        printf("Oops ada area terlarang! Kamu hanya dapat bergerak maju ke depan! \n");
         pP.pos[idxCurrentPlayer] = pP.pos[idxCurrentPlayer] + roll;
     } else {
         printf("pilih F untuk Forward dan B untuk Back (F/B) : ");
+        scanf("%s", input);
         while(!validMove) {
-            strcpy(input, "");
-            scanf("%c", &input);
-            printf("\n");
-            if (input[0] == 'F') {
+            if (strcmp(input, "F") == 0) {
                 pP.pos[idxCurrentPlayer] = pP.pos[idxCurrentPlayer] + roll;
                 validMove = TRUE;
-            } else if (input[0] == 'B') {
+            } else if (strcmp(input, "B") == 0) {
                 pP.pos[idxCurrentPlayer] = pP.pos[idxCurrentPlayer] - roll;
                 validMove = TRUE;
             } else {
                 printf("pilih (F/B) : ");
+                scanf("%c", input);
             }
         }
     }
@@ -143,5 +155,59 @@ void inspectMap(Map CurrentMap)
     } else if(MAP_LAYOUT(CurrentMap)[n] == '#') {
         printf("Petak %d merupakan petak terlarang.\n", n);
     }
+}
 
+void forceMove(int roll, int idxCurrentPlayer, Map CurrentMap) {
+    int forcedIdx = pP.pos[idxCurrentPlayer] + roll;
+    if(MAP_LAYOUT(CurrentMap)[forcedIdx] != '#') {
+        pP.pos[idxCurrentPlayer] = forcedIdx;
+    }
+}
+
+void teleport (int idxCurrentPlayer, Map CurrentMap, int count_tele){
+    printf("Anda sekarang berada pada posisi ");
+    printf("%d ", pP.pos[idxCurrentPlayer]);
+    printf("\n");
+
+    boolean isTeleport = FALSE;
+    int IdxTeleIn = 0;
+    for(int i = 0; i < TELEPORT_COUNT(CurrentMap); i++){
+        if ((pP.pos[idxCurrentPlayer]) == (TELEPORT_LAYOUT(CurrentMap)[IdxTeleIn])){
+            isTeleport = TRUE;
+        }
+        IdxTeleIn += 2;
+    }
+
+    if (isTeleport == TRUE){
+        printf("Oops, kamu berada pada teleport!\n");
+        char s[15];
+        if(getImmunityConditionOfPlayer){
+            printf("Apakah ingin menggunakan imun (yes/no)? \n");
+            scanf("%s",s);
+            if (strcmp(s, "no") == 0){
+                count_tele++;
+            }
+        }
+        else if (!getImmunityConditionOfPlayer){
+            count_tele++;
+        }
+
+        if (count_tele == 1){
+            int IdxTeleIn = 0;
+            int IdxTeleOut = 1;
+            for(int i = 0; i < TELEPORT_COUNT(CurrentMap); i++){
+                if ((pP.pos[idxCurrentPlayer]) == (TELEPORT_LAYOUT(CurrentMap)[IdxTeleIn])){
+                    pP.pos[idxCurrentPlayer] = TELEPORT_LAYOUT(CurrentMap)[IdxTeleOut];
+                }
+                IdxTeleIn += 2;
+                IdxTeleOut += 2;
+            }
+            printf("Anda sekarang berada pada posisi ");
+            printf("%d ", pP.pos[idxCurrentPlayer]);
+            printf("\n");
+        } 
+    }
+    else{
+        printf("Tidak ada teleport pada petak tersebut\n");
+    }
 }

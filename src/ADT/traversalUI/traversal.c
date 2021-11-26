@@ -1,5 +1,5 @@
-#include <stdio.h>;
-#include "traversal.h";
+#include "traversal.h"
+
 
 void welcome()
 {

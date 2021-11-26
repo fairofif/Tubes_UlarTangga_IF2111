@@ -1,19 +1,13 @@
 #include "player.h"
-#include "../boolean.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <time.h>
-
 
 void createEmptyPlayerList (pUserName *pU) {
     (*pU).Neff = 0;
 }
-
+ 
 void createEmptyPlayerSkillsList (Skill *S) {
     ADDR_HEADSKILL(*S) = Nil;
 }
-
+ 
 address newSkillNode () {
     lsNode *P = (lsNode *)malloc(sizeof(lsNode));
     if (P != Nil) {
@@ -25,9 +19,9 @@ address newSkillNode () {
         return Nil;
     }
 }
-
-void randomSkillGenerator(char *(*skname)) {
-    char skill[7][30] = {"Pintu Ga Ke Mana Mana",
+ 
+void randomSkillGenerator(char *skname) {
+    char skill[8][30] = {"Pintu Ga Ke Mana Mana",
                         "Mesin Waktu",
                         "Baling Baling Jambu",
                         "Cermin Pengganda",
@@ -62,23 +56,23 @@ void randomSkillGenerator(char *(*skname)) {
             arrIDX[i] = 7;
         }
     }
-
-    int idx = randomInt99;
+ 
+    int idx = randomInt99();
     int idxSkill = arrIDX[idx];
-    strcpy(*skname, skill[idxSkill]);
+    strcpy(skname, skill[idxSkill]);
 }
-
+ 
 int randomInt99() {
     int idx;
     time_t t1;
-
+ 
     srand ( (unsigned) time (&t1));
-
+ 
     idx = rand() % 100;
-    
+   
     return idx;
 }
-
+ 
 void preparationSkillList (Skill *pS1, Skill *pS2, Skill *pS3, Skill *pS4, int n) {
     for (int i = 1; i <= n ; i ++) {
         if (i == 1) {
@@ -95,7 +89,7 @@ void preparationSkillList (Skill *pS1, Skill *pS2, Skill *pS3, Skill *pS4, int n
         }
     }
 }
-
+ 
 void printSkill (Skill pS1, Skill pS2, Skill pS3, Skill pS4, int idxP, int *nSkill) {
     /* nSkill itu output, secara ga langsung dia ngitung jumlah skill */
     address P;
@@ -122,7 +116,7 @@ void printSkill (Skill pS1, Skill pS2, Skill pS3, Skill pS4, int idxP, int *nSki
         biar ga usah pake 2 prosedur */
     *nSkill = i;
 }
-
+ 
 int banyaknyaSkill (Skill pS1, Skill pS2, Skill pS3, Skill pS4, int idxP) {
     address P;
     int count = 0;
@@ -144,7 +138,7 @@ int banyaknyaSkill (Skill pS1, Skill pS2, Skill pS3, Skill pS4, int idxP) {
     }
     return count;
 }
-
+ 
 int returnIdxSkill (Skill pS1, Skill pS2, Skill pS3, Skill pS4, int idxP, char *skName) {
     address P;
     if (idxP == 1) {
@@ -159,7 +153,7 @@ int returnIdxSkill (Skill pS1, Skill pS2, Skill pS3, Skill pS4, int idxP, char *
     else if (idxP == 4) {
         P = ADDR_HEADSKILL(pS4);
     }
-
+ 
     char temp[30];
     int idxS = 1;
     strcpy(temp, skName);
@@ -180,7 +174,7 @@ int returnIdxSkill (Skill pS1, Skill pS2, Skill pS3, Skill pS4, int idxP, char *
         return IdxUndef;
     }
 }
-
+ 
 boolean isSkillExists (Skill pS1, Skill pS2, Skill pS3, Skill pS4, int idxP, char *skName) {
     address P;
     if (idxP == 1) {
@@ -195,7 +189,7 @@ boolean isSkillExists (Skill pS1, Skill pS2, Skill pS3, Skill pS4, int idxP, cha
     else if (idxP == 4) {
         P = ADDR_HEADSKILL(pS4);
     }
-
+ 
     char temp[30];
     strcpy(temp, skName);
     boolean found = FALSE;
@@ -209,7 +203,7 @@ boolean isSkillExists (Skill pS1, Skill pS2, Skill pS3, Skill pS4, int idxP, cha
     }
     return found;
 }
-
+ 
 void deleteSkill (Skill *pS1, Skill *pS2, Skill *pS3, Skill *pS4, int idxP, int idxS) {
     address P;
     address Prec;
@@ -225,7 +219,7 @@ void deleteSkill (Skill *pS1, Skill *pS2, Skill *pS3, Skill *pS4, int idxP, int 
     else if (idxP == 4) {
         P = ADDR_HEADSKILL(*pS4);
     }
-    
+   
     if (idxS != 1) {
         Prec = P;
         P = NEXTSKILL(P);
@@ -262,14 +256,12 @@ void deleteSkill (Skill *pS1, Skill *pS2, Skill *pS3, Skill *pS4, int idxP, int 
         }
     }
 }
-
-void summonPlayer (pUserName *pU, pIsTeleported *pT, pPosition *pP, pIsImune *pI, pIsCermin *pC, 
-pIsSenterBesar *pSB, pIsSenterKecil *pSK, pIsMesinWaktu *pMW, 
-pIsBalingBaling *pB, pIsPenukar *pPen, pIsTeknologiGagal *pTG, int n) {
-
+ 
+void summonPlayer (pUserName *pU, pIsTeleported *pT, pPosition *pP, pIsImune *pI, pIsCermin *pC,
+pIsSenterBesar *pSB, pIsSenterKecil *pSK, int n) {
     for (int i = 1 ; i <= n ; i++) {
-        printf("coba masukin uname\n");
-        scanf("%s", &((*pU).uname[i]));
+        printf("Masukkan nama pemain ke-%d: ", i);
+        scanf("%s", ((*pU).uname[i]));
         (*pT).isTele[i] = FALSE;
         (*pP).pos[i] = 1;
         (*pI).isImun[i] = FALSE;
@@ -279,7 +271,7 @@ pIsBalingBaling *pB, pIsPenukar *pPen, pIsTeknologiGagal *pTG, int n) {
     }
     (*pU).Neff = n;
 }
-
+ 
 int getIdxOfPlayer(pUserName pU, char *name) {
     int i = IdxMin;
     char temp[16];
@@ -294,11 +286,11 @@ int getIdxOfPlayer(pUserName pU, char *name) {
         return IdxUndef;
     }
 }
-
+ 
 boolean isEmptyList (Skill pS) {
     return ((ADDR_HEADSKILL(pS)) == Nil);
 }
-
+ 
 void insertVSkill (Skill *pS, char *skname) {
     if (isEmptyList(*pS)) {
         address P = newSkillNode();
@@ -321,45 +313,67 @@ void insertVSkill (Skill *pS, char *skname) {
         }
     }
 }
-
-boolean getTeleportedConditionOfPlayer(pIsTeleported pT, pUserName pU, char *uname) {
-    int idx = getIdxOfPlayer(pU, uname);
+ 
+boolean getTeleportedConditionOfPlayer(pIsTeleported pT, int idx) {
     if (idx != IdxUndef) {
         return (pT.isTele[idx]);
     }
+    return 0;
 }
-
-boolean getImmunityConditionOfPlayer (pIsImune pI, pUserName pU, char *uname) {
-    int idx = getIdxOfPlayer(pU, uname);
+ 
+boolean getImmunityConditionOfPlayer (pIsImune pI, int idx) {
     if (idx != IdxUndef) {
         return (pI.isImun[idx]);
     }
+    return 0;
 }
-
-int getPositionOfPlayer (pPosition pP, pUserName pU, char *uname) {
-    int idx = getIdxOfPlayer(pU, uname);
+ 
+int getPositionOfPlayer (pPosition pP, int idx) {
     if (idx != IdxUndef) {
         return (pP.pos[idx]);
     }
+    return IdxUndef;
 }
-
-boolean getCerminConditionOfPlayer (pIsCermin pC, pUserName pU, char *uname) {
-    int idx = getIdxOfPlayer(pU, uname);
+ 
+boolean getCerminConditionOfPlayer (pIsCermin pC, int idx) {
     if (idx != IdxUndef) {
         return (pC.isCermin[idx]);
     }
+    return 0;
 }
-
-boolean getSenterBesarConditionOfPlayer (pIsSenterBesar pSB, pUserName pU, char *uname) {
-    int idx = getIdxOfPlayer(pU, uname);
+ 
+boolean getSenterBesarConditionOfPlayer (pIsSenterBesar pSB, int idx) {
     if (idx != IdxUndef) {
         return (pSB.isSenterBesar[idx]);
     }
+    return 0;
 }
-
-boolean getSenterKecilConditionOfPlayer (pIsSenterKecil pSK, pUserName pU, char *uname) {
-    int idx = getIdxOfPlayer(pU, uname);
+ 
+boolean getSenterKecilConditionOfPlayer (pIsSenterKecil pSK, int idx) {
     if (idx != IdxUndef) {
         return (pSK.isSenterKecil[idx]);
     }
+    return 0;
+}
+
+void copySkillName (Skill pS1, Skill pS2, Skill pS3, Skill pS4, int idxP, int idxSkill, char *skname) {
+    address P;
+    if (idxP == 1) {
+        P = ADDR_HEADSKILL(pS1);
+    }
+    else if (idxP == 2) {
+        P = ADDR_HEADSKILL(pS2);
+    }
+    else if (idxP == 3) {
+        P = ADDR_HEADSKILL(pS3);
+    }
+    else if (idxP == 4) {
+        P = ADDR_HEADSKILL(pS4);
+    }
+    int i = 1;
+    while (i != idxSkill) {
+        P = NEXTSKILL(P);
+        i++;
+    }
+    strcpy(skname, SKILLNAME(P));
 }
