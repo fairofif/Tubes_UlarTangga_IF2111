@@ -64,11 +64,11 @@ void printConfig(Map *CurrentMap)
 
 }
 
-void showMap(char array[], int pPos, Map *CurrentMap) 
+void showMap(pPosition (*pP), pUserName (*pU), int idxCurrentPlayer, Map *CurrentMap) 
 {
-    printf("%c%c%c%c : ", array[0], array[1], array [2], array[3]);
+    printf("%s: ", (*pU).uname[idxCurrentPlayer]);
     for(int i = 1; i <= MAP_LENGTH(*CurrentMap); i++) {
-        if (pPos == i) {
+        if ((*pP).pos[idxCurrentPlayer] == i) {
             printf("*");
         } else {
             printf("%c", MAP_LAYOUT(*CurrentMap)[i]);
@@ -91,34 +91,58 @@ int rollDice(int max)
     return num;
 }
 
-void movePlayer(int roll, int idxCurrentPlayer, Map *CurrentMap, pPosition pP)
+void movePlayer(int roll, int idxCurrentPlayer, Map *CurrentMap, pPosition (*pP))
 {
+    printf("POSISI PEMAIN SEKARANG --> %d\n", (*pP).pos[idxCurrentPlayer]);
+    printf("KALO DITAMBAH --> %c\n", MAP_LAYOUT(*CurrentMap)[(*pP).pos[idxCurrentPlayer] + roll]);
+    printf("KALO DIKURANG --> %c\n", MAP_LAYOUT(*CurrentMap)[(*pP).pos[idxCurrentPlayer] - roll]);
+    printf("KALO DITAMBAH ROLL JADI ANGKA --> %d\n", (*pP).pos[idxCurrentPlayer] + roll);
+    printf("KALO DIKURANGIN ROLL JADI ANGKA --> %d\n", (*pP).pos[idxCurrentPlayer] - roll);
+    printf("\n");
+
+
     boolean validMove = FALSE;
     char input[1];
-    if (MAP_LAYOUT(*CurrentMap)[pP.pos[idxCurrentPlayer] + roll] == '#') {
-        if (MAP_LAYOUT(*CurrentMap)[pP.pos[idxCurrentPlayer] - roll] == '#') {
-            printf("tidak bisa bergerak!\n");
-        } else {
-            pP.pos[idxCurrentPlayer] = pP.pos[idxCurrentPlayer] - roll; 
-        }
-    } else if (MAP_LAYOUT(*CurrentMap)[pP.pos[idxCurrentPlayer] - roll] == '#') {
-        pP.pos[idxCurrentPlayer] = pP.pos[idxCurrentPlayer] + roll;
-    } else {
-        printf("pilih F untuk Forward dan B untuk Back (F/B) : ");
-        while(!validMove) {
-            strcpy(input, "");
-            scanf("%c", input);
-            printf("\n");
-            if (input[0] == 'F') {
-                pP.pos[idxCurrentPlayer] = pP.pos[idxCurrentPlayer] + roll;
-                validMove = TRUE;
-            } else if (input[0] == 'B') {
-                pP.pos[idxCurrentPlayer] = pP.pos[idxCurrentPlayer] - roll;
-                validMove = TRUE;
+    if (((*pP).pos[idxCurrentPlayer] + roll) <= 20 && (*pP).pos[idxCurrentPlayer] - roll >= 1) {
+        if (MAP_LAYOUT(*CurrentMap)[(*pP).pos[idxCurrentPlayer] + roll] == '#') {
+            if (MAP_LAYOUT(*CurrentMap)[(*pP).pos[idxCurrentPlayer] - roll] == '#') {
+                printf("tidak bisa bergerak! karena di depan dan belakang ada pagar!\n");
             } else {
-                printf("pilih (F/B) : ");
+                (*pP).pos[idxCurrentPlayer] = (*pP).pos[idxCurrentPlayer] - roll; 
+            }
+        } else if (MAP_LAYOUT(*CurrentMap)[(*pP).pos[idxCurrentPlayer] - roll] == '#') {
+            (*pP).pos[idxCurrentPlayer] = (*pP).pos[idxCurrentPlayer] + roll;
+        } else {
+            printf("Pilih F untuk Forward dan B untuk Back (F/B) : ");
+            while(!validMove) {
+                strcpy(input, "");
+                scanf("%c", input);
+                printf("\n");
+                if (input[0] == 'F') {
+                    (*pP).pos[idxCurrentPlayer] = (*pP).pos[idxCurrentPlayer] + roll;
+                    validMove = TRUE;
+                } else if (input[0] == 'B') {
+                    (*pP).pos[idxCurrentPlayer] = (*pP).pos[idxCurrentPlayer] - roll;
+                    validMove = TRUE;
+                } else {
+                    printf("Pilih (F/B) : ");
+                }
             }
         }
+    } else if ((*pP).pos[idxCurrentPlayer] + roll > 20) {
+        if (MAP_LAYOUT(*CurrentMap)[(*pP).pos[idxCurrentPlayer] - roll] == '#') {
+            printf("tidak bisa bergerak! karena ke depan lebih dari 20 dan ke belakang ada pagar\n");
+        } else {
+            (*pP).pos[idxCurrentPlayer] = (*pP).pos[idxCurrentPlayer] - roll;
+        }
+    } else if ((*pP).pos[idxCurrentPlayer] - roll < 1) {
+        if (MAP_LAYOUT(*CurrentMap)[(*pP).pos[idxCurrentPlayer] + roll] == '#') {
+            printf("tidak bisa bergerak! karena ke belakang kurang dari 0 dan ke depan ada pagar!\n");
+        } else {
+            (*pP).pos[idxCurrentPlayer] = (*pP).pos[idxCurrentPlayer] + roll;
+        }
+    } else {
+        printf("ERROR! kasus anomali\n");
     }
 }
 
@@ -143,28 +167,28 @@ void inspectMap(Map *CurrentMap)
     }
 }
 
-void forceMove(int roll, int idxP, Map CurrentMap, pPosition pP, pIsImune pI) {
-    int forcedIdx = pP.pos[idxP] + roll;
-    int length = MAP_LENGTH(CurrentMap);
+void forceMove(int roll, int idxP, Map *CurrentMap, pPosition (*pP), pIsImune (*pI)) {
+    int forcedIdx = (*pP).pos[idxP] + roll;
+    int length = MAP_LENGTH(*CurrentMap);
     int i;
     char use[3];
 
-    if(MAP_LAYOUT(CurrentMap)[forcedIdx] != '#') {
+    if(MAP_LAYOUT(*CurrentMap)[forcedIdx] != '#') {
         for(i = 0; i < length; i+=2) {
-            if(TELEPORT_LAYOUT(CurrentMap)[i] == forcedIdx) {
-                if(pI.isImun[idxP] == TRUE) {
+            if(TELEPORT_LAYOUT(*CurrentMap)[i] == forcedIdx) {
+                if((*pI).isImun[idxP] == TRUE) {
                     printf("Pakai anti-teleport (Y/N): ");
                     scanf("%s", use);
                     if(strcmp(use, "N")) {
-                        pP.pos[idxP] = TELEPORT_LAYOUT(CurrentMap)[i+1];
+                        (*pP).pos[idxP] = TELEPORT_LAYOUT(*CurrentMap)[i+1];
                     } else if(strcmp(use, "Y")) {
-                        pI.isImun[idxP] = FALSE;
+                        (*pI).isImun[idxP] = FALSE;
                     }
                 } else {
-                    pP.pos[idxP] = TELEPORT_LAYOUT(CurrentMap)[i+1];
+                    (*pP).pos[idxP] = TELEPORT_LAYOUT(*CurrentMap)[i+1];
                 }
             }
         }
-        pP.pos[idxP] = forcedIdx;
+        (*pP).pos[idxP] = forcedIdx;
     }
 }
