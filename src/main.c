@@ -176,7 +176,11 @@ int main () {
                         roll = roll * (-1);
 
                         /* Perubahan kondisi player yang dimundurin */
+<<<<<<< HEAD
                         forceMove(roll, idxPKenaSkill, &CurrentMap, &pP, &pI);
+=======
+                        movePlayer(roll, idxPKenaSkill, &CurrentMap, &pP);
+>>>>>>> 8a2f51a22d492ad626c4f8d171f5e24b6a655a96
 
                         /* Perubahan kondisi di player */
                         deleteSkill(&pS1, &pS2, &pS3, &pS4, idxCurrentPlayer, pilihanskill);
@@ -197,7 +201,11 @@ int main () {
                         roll = rollDice(MAP_MAXROLL(CurrentMap));
 
                         /* Perubahan kondisi player yang dimajuin */
+<<<<<<< HEAD
                         forceMove(roll, idxPKenaSkill, &CurrentMap, &pP, &pI);
+=======
+                        // movePlayer(roll, idxPKenaSkill, &CurrentMap, pP); HARUSNYA FORCE MOVE
+>>>>>>> 8a2f51a22d492ad626c4f8d171f5e24b6a655a96
                         
                         /* Perubahan kondisi di player */
                         deleteSkill(&pS1, &pS2, &pS3, &pS4, idxCurrentPlayer, pilihanskill);
@@ -278,10 +286,17 @@ int main () {
 
                         /* Perubahan kondisi player yang ditukar posisi */
                         tempPos = pP.pos[idxPKenaSkill];
+<<<<<<< HEAD
                         forceMove((pP.pos[idxCurrentPlayer] - pP.pos[idxPKenaSkill]), idxPKenaSkill, &CurrentMap, &pP, &pI);
                         
                         /* Perubahan kondisi di player */
                         forceMove((tempPos - pP.pos[idxCurrentPlayer]), idxCurrentPlayer, &CurrentMap, &pP, &pI);
+=======
+                        // movePlayer((pP.pos[idxCurrentPlayer] - pP.pos[idxPKenaSkill]), idxPKenaSkill, &CurrentMap, pP); HARUSNYA FORCEMOVE
+                        
+                        /* Perubahan kondisi di player */
+                        // movePlayer((tempPos - pP.pos[idxCurrentPlayer]), idxCurrentPlayer, &CurrentMap, pP); HARUSNYA FORCEMOVE
+>>>>>>> 8a2f51a22d492ad626c4f8d171f5e24b6a655a96
                         deleteSkill(&pS1, &pS2, &pS3, &pS4, idxCurrentPlayer, pilihanskill);
 
                         /* Perbuahan turn */
@@ -323,7 +338,10 @@ int main () {
                 printf("MAXROLLNYA %d\n", MAP_MAXROLL(CurrentMap));
                 roll = rollDice(MAP_MAXROLL(CurrentMap));
                 movePlayer(roll, idxCurrentPlayer, &CurrentMap, &pP);
+<<<<<<< HEAD
                 nextPlayer = TRUE;
+=======
+>>>>>>> 8a2f51a22d492ad626c4f8d171f5e24b6a655a96
             }
             /* Kalo Commandnya SAVE */
             else if (strcmp(command, "SAVE") == 0) {
