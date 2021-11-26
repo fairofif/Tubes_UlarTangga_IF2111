@@ -28,6 +28,7 @@ int main () {
     boolean nextPlayer;
     boolean inputValid;
     boolean ableToRoll;
+    boolean undoLagi;
     int banyakPemain;
     int roll;
     int idxCurrentPlayer;
@@ -90,35 +91,38 @@ int main () {
                 createEmptyPlayerList(&pU);
                 summonPlayer(&pU, &pT, &pP, &pI, &pC, &pSB, &pSK, banyakPemain);
 
-                /* kasih skill pertama buat para pemain */
-                srand(time(0));
-                for (int i = 1; i <= (banyakPemain*10); i++) {
-                    loopSkill = (i%banyakPemain) + 1;
-                    strcpy(getSkill, "");
-                    randomSkillGenerator(getSkill);
-                    if (loopSkill == 1) {
-                        insertVSkill(&pS1, getSkill);
-                    }
-                    else if (loopSkill == 2) {
-                        insertVSkill(&pS2, getSkill);
-                    }
-                    else if (loopSkill == 3) {
-                        insertVSkill(&pS3, getSkill);
-                    }
-                    else if (loopSkill == 4) {
-                        insertVSkill(&pS4, getSkill);
-                    }
-                }
-
                 
                 /* set idxPlayer ke 1 */
                 idxCurrentPlayer = 1;
                 createEmptyRound(&R);
-                pushRound(&R,pP,pT,pI,pC,pSB,pSK,pS1,pS2,pS3,pS4,banyakPemain);
                 round = 1;
                 inputValid = TRUE;
                 stopGame = FALSE;
                 printf("\n||| ROUND %d  |||\n\n", round);
+
+                /* kasih skill pertama buat pemain 1 */
+                srand(time(0));
+                if (banyaknyaSkill(pS1,pS2,pS3,pS4, idxCurrentPlayer) < 10) {
+                    strcpy(getSkill, "");
+                    randomSkillGenerator(getSkill);
+                    if (idxCurrentPlayer == 1) {
+                        insertVSkill(&pS1, getSkill);
+                    }
+                    else if (idxCurrentPlayer == 2) {
+                        insertVSkill(&pS2, getSkill);
+                    }
+                    else if (idxCurrentPlayer == 3) {
+                        insertVSkill(&pS3, getSkill);
+                    }
+                    else if (idxCurrentPlayer == 4) {
+                        insertVSkill(&pS4, getSkill);
+                    }
+                    printf("Bonus Pre-Turn Round %d: ", round);
+                    printf("%s berhasil ditambahkan ke %s\n", getSkill, pU.uname[idxCurrentPlayer]);
+                }
+
+                
+
                 printf("Silahkan bermain %s!\n", pU.uname[idxCurrentPlayer]);
             }
 
@@ -454,11 +458,26 @@ int main () {
             else if (strcmp(command, "UNDO") == 0) {
                 if (round > 1) {    
                     undoRound(&R,&pP,&pT,&pI,&pC,&pSB,&pSK,&pS1,&pS2,&pS3,&pS4,banyakPemain);
-                    idxCurrentPlayer = 1;
-                    nextPlayer = FALSE;
+                    idxCurrentPlayer = banyakPemain;
+                    nextPlayer = TRUE;
                     round--;
-                    printf("\n||| ROUND %d  |||\n\n", round);
-                    printf("Silahkan bermain %s!\n", pU.uname[idxCurrentPlayer]);
+                    if (round > 1) {
+                        undoLagi = TRUE;
+                    }
+                    while ((round > 1) && (undoLagi)) {
+                        printf("Apakah ingin undo lagi ke round sebelumnya? (ya/no): ");
+                        strcpy(command, "");
+                        scanf("%s", command);
+                        if (strcmp(command, "ya")==0) {
+                            undoRound(&R,&pP,&pT,&pI,&pC,&pSB,&pSK,&pS1,&pS2,&pS3,&pS4,banyakPemain);
+                            idxCurrentPlayer = banyakPemain;
+                            nextPlayer = TRUE;
+                            round--;
+                        }
+                        else {
+                            undoLagi = FALSE;
+                        }
+                    }
                 }
                 else {
                     printf("Minimal berada di Round 2 untuk melakukan UNDO.\n");
@@ -470,7 +489,7 @@ int main () {
             }
 
             /* ini buat gantian giliran player */
-            if (getPositionOfPlayer(pP, idxCurrentPlayer) == 20) {
+            if (getPositionOfPlayer(pP, idxCurrentPlayer) == MAP_LENGTH(CurrentMap)) {
                 stopGame = TRUE;
                 stopProgram = TRUE;
             } 
@@ -482,9 +501,60 @@ int main () {
                     pushRound(&R,pP,pT,pI,pC,pSB,pSK,pS1,pS2,pS3,pS4,banyakPemain);
                     round++;
                     printf("\n||| ROUND %d  |||\n\n", round);
+
                 }
                 else {
                     idxCurrentPlayer++;
+                }
+                srand(time(0));
+                if (banyaknyaSkill(pS1,pS2,pS3,pS4, idxCurrentPlayer) < 10) {
+                    strcpy(getSkill, "");
+                    randomSkillGenerator(getSkill);
+                    if (idxCurrentPlayer == 1) {
+                        insertVSkill(&pS1, getSkill);
+                    }
+                    else if (idxCurrentPlayer == 2) {
+                        insertVSkill(&pS2, getSkill);
+                    }
+                    else if (idxCurrentPlayer == 3) {
+                        insertVSkill(&pS3, getSkill);
+                    }
+                    else if (idxCurrentPlayer == 4) {
+                        insertVSkill(&pS4, getSkill);
+                    }
+                    printf("Bonus Pre-Turn Round %d: ", round);
+                    printf("%s berhasil ditambahkan ke %s\n", getSkill, pU.uname[idxCurrentPlayer]);
+                }
+                else {
+                    printSkill(pS1,pS2,pS3,pS4, idxCurrentPlayer, &nSkill);
+                    printf("Inventory Skill penuh. Apakah mau menghapus salah satu skill untuk mendapat bonus round skill? (ya/no): ");
+                    strcpy(command, "");
+                    scanf("%s", command);
+                    if (strcmp(command, "ya") == 0) {
+                        printf("Pilih no skill yang akan dihapus: ");
+                        scanf("%d", &skillDelete);
+                        deleteSkill(&pS1,&pS2,&pS3,&pS4, idxCurrentPlayer, skillDelete);
+                        strcpy(getSkill, "");
+                        randomSkillGenerator(getSkill);
+                        if (idxCurrentPlayer == 1) {
+                            insertVSkill(&pS1, getSkill);
+                        }
+                        else if (idxCurrentPlayer == 2) {
+                            insertVSkill(&pS2, getSkill);
+                        }
+                        else if (idxCurrentPlayer == 3) {
+                            insertVSkill(&pS3, getSkill);
+                        }
+                        else if (idxCurrentPlayer == 4) {
+                            insertVSkill(&pS4, getSkill);
+                        }
+                        printf("Bonus Pre-Turn Round %d: ", round);
+                        printf("%s berhasil ditambahkan ke %s\n", getSkill, pU.uname[idxCurrentPlayer]);
+                    }
+                    else {
+                        printf("Tidak menerima bonus turn round.\n");
+                    }
+
                 }
                 printf("Silahkan bermain %s!\n", pU.uname[idxCurrentPlayer]);
             }

@@ -70,7 +70,7 @@ int lenArrSkill (addressRound P, int idxP) {
 void undoRound (Round *R, pPosition *pP, pIsTeleported *pT, pIsImune *pI,
 pIsCermin *pC, pIsSenterBesar *pSB, pIsSenterKecil *pSK, Skill *pS1,
 Skill *pS2, Skill *pS3, Skill *pS4, int nPlayer) {
-    addressRound P = NEXTROUND(LATESTROUND(*R));
+    addressRound P = LATESTROUND(*R);
     int nSkill;
     char skname[30];
     for (int i = 1; i <= nPlayer; i++) {
