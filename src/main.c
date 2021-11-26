@@ -164,7 +164,7 @@ int main () {
                 if (nSkill >= 1) {
                     strcpy(command, "");
                     printf("Jadi menggunakan SKILL? (ya/no): ");
-                    scanf("%s", &command);
+                    scanf("%s", command);
 
                     if (strcmp(command, "ya") == 0) {
                         printf("Ingin menggunakan skill No: ");
