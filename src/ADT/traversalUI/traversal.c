@@ -29,6 +29,7 @@ void help()
     printf("|                                       -Help-                                           | \n");
     printf("+----------------------------------------------------------------------------------------+ \n");
     printf("| NEWGAME : Memulai permainan baru dengan memasukkan kode map                            | \n");
+    printf("| LOAD	  : Memulai permainan dari penyimpanan terakhir                                  | \n");
     printf("| SKILL	  : Memakai dan membuang skill yang dimiliki                                     | \n");
     printf("| MAP	  : Menampilkan state peta saat ini                                              | \n");
     printf("| BUFF	  : Menampilkan daftar buff yang dimiliki pemain                                 | \n");
@@ -37,5 +38,6 @@ void help()
     printf("| SAVE	  : Menyimpan state permainan (Command ini hanya dapat digunakan setelah roll)   | \n");
     printf("| ENDTURN : Mengakhiri giliran pemain (Command ini hanya dapat digunakan setelah roll)   | \n");
     printf("| UNDO	  : Mengulang ke ronde sebelumnya                                                | \n");
+    printf("| EXIT	  : Keluar dari permainan                                                        | \n");
     printf("+----------------------------------------------------------------------------------------+ \n");
 };
