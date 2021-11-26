@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include "stack.h"
 #include "stack.c"
+#include "round.h"
+#include "round.c"
 
 void undo (Stack state){
     while (!IsEmpty(state)){
         char s [10];
-        // jadi setiap selesai melakukan ronde, info pada akhir rondenya tuh langsung disave ke state dalam bentuk last_state
-        // jadi nanti tinggal dipop last_statenya
         SEltype last_state;
+        last_state = undoRound();
         Pop(&state, &last_state);
         printf("Berhasil melakukan undo! State permainan berubah menjadi akhir pada ronde x \n");
         if (!IsEmpty(state)){

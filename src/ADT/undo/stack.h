@@ -11,6 +11,21 @@
 /* pInfo = Player*/
 /* SEltype = Sinfotype*/
 typedef struct {
+    pPosition pP;
+    pIsTeleported pT;
+    pIsImune pI;
+    pIsCermin pC;
+    pIsSenterBesar pSB;
+    pIsSenterKecil pSK;
+    Skill pS1;
+    Skill pS2;
+    Skill pS3;
+    Skill pS4; 
+    int nPlayer;
+    // info map (coming soon) 
+} pInfo ;   
+
+typedef struct {
     pInfo player1;
     pInfo player2;
     pInfo player3;
