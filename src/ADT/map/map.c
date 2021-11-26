@@ -219,23 +219,22 @@ void teleport (int idxCurrentPlayer, Map *CurrentMap, pPosition *pP, pIsImune *p
         printf("Oops, kamu berada pada teleport!\n");
         if ((*pT).isTele[idxCurrentPlayer] == TRUE){
             printf("Kamu tidak berpindah karena sudah terkena teleport sebelumnya!\n");
-        }
-        if ((*pT).isTele[idxCurrentPlayer] == FALSE){
-            char use[15];
+        } else if ((*pT).isTele[idxCurrentPlayer] == FALSE){
+            char use[2];
             if((*pI).isImun[idxCurrentPlayer] == TRUE) {
                 printf("Pakai anti-teleport (Y/N): \n");
                 scanf("%s", use);
                 if(strcmp(use, "N")) {
                     for(int i = 0; i < TELEPORT_COUNT(*CurrentMap); i++){
                         if (((*pP).pos[idxCurrentPlayer]) == (TELEPORT_LAYOUT(*CurrentMap)[IdxTeleIn])){
-                            (*pT).isTele[idxCurrentPlayer] == TRUE;
+                            (*pT).isTele[idxCurrentPlayer] = TRUE;
                             (*pP).pos[idxCurrentPlayer] = TELEPORT_LAYOUT(*CurrentMap)[IdxTeleOut];
                         }
-                    IdxTeleIn += 2;
-                    IdxTeleOut += 2;
+                        IdxTeleIn += 2;
+                        IdxTeleOut += 2;
                     }
                 } else if(strcmp(use, "Y")) {
-                    printf("Kamu memakai anti-teleport sehingga posisi Anda tidak berubah\n");
+                    printf("Kamu memakai anti-teleport sehingga posisi Anda tidak berubah.\n");
                     (*pI).isImun[idxCurrentPlayer] = FALSE;
                 } 
             }
@@ -243,7 +242,7 @@ void teleport (int idxCurrentPlayer, Map *CurrentMap, pPosition *pP, pIsImune *p
                 printf("Kamu tidak memiliki anti-teleport, posisi Anda akan dipindahkan \n");
                 for(int i = 0; i < TELEPORT_COUNT(*CurrentMap); i++){
                     if (((*pP).pos[idxCurrentPlayer]) == (TELEPORT_LAYOUT(*CurrentMap)[IdxTeleIn])){
-                        (*pT).isTele[idxCurrentPlayer] == TRUE;
+                        (*pT).isTele[idxCurrentPlayer] = TRUE;
                         (*pP).pos[idxCurrentPlayer] = TELEPORT_LAYOUT(*CurrentMap)[IdxTeleOut];
                     }
                     IdxTeleIn += 2;

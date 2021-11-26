@@ -379,6 +379,7 @@ int main () {
             /* ini buat gantian giliran player */
             if (nextPlayer) {
                 ableToRoll = TRUE;
+                pT.isTele[idxCurrentPlayer] = FALSE;
                 pC.isCermin[idxCurrentPlayer] = FALSE;
                 if (idxCurrentPlayer == banyakPemain) {
                     idxCurrentPlayer = 1;
@@ -390,5 +391,9 @@ int main () {
                 printf("Silahkan bermain %s!\n", pU.uname[idxCurrentPlayer]);
             }
         }
+        if(pP.pos[idxCurrentPlayer] == 20) {
+            stopProgram = TRUE;
+        }
     }
+    printf("SELAMAT %s MENANG!!!\n", pU.uname[idxCurrentPlayer]);
 }
