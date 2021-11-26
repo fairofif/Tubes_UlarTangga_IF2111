@@ -133,6 +133,7 @@ int main () {
         
         stopGame = FALSE;
         ableToRoll = TRUE;
+        printf("Silahkan bermain %s!\n", pU.uname[idxCurrentPlayer]);
         while ((!stopGame) && (!stopProgram)) {
             nextPlayer = FALSE;
             
@@ -380,6 +381,7 @@ int main () {
                 else {
                     idxCurrentPlayer++;
                 }
+                printf("Silahkan bermain %s!\n", pU.uname[idxCurrentPlayer]);
             }
         }
     }
