@@ -209,6 +209,11 @@ int main () {
                             printf("Masukkan username pemain untuk dimundurin: ");
                             strcpy(uname, "");
                             scanf("%s", uname);
+                            while (strcmp(uname, pU.uname[idxCurrentPlayer])==0) {
+                                printf("Hanya bisa memindahkan player lain.\nMasukkan username pemain untuk dimajuin: ");
+                                strcpy(uname, "");
+                                scanf("%s", uname);
+                            }
                             idxPKenaSkill = getIdxOfPlayer(pU, uname);
                             
                             /* roll dadu dulu */
@@ -236,6 +241,11 @@ int main () {
                             printf("Masukkan username pemain untuk dimajuin: ");
                             strcpy(uname, "");
                             scanf("%s", uname);
+                            while (strcmp(uname, pU.uname[idxCurrentPlayer])==0) {
+                                printf("Hanya bisa memindahkan player lain.\nMasukkan username pemain untuk dimajuin: ");
+                                strcpy(uname, "");
+                                scanf("%s", uname);
+                            }
                             idxPKenaSkill = getIdxOfPlayer(pU, uname);
                      
                             /* roll dulu gan */
@@ -330,6 +340,11 @@ int main () {
                             printf("Masukkan username pemain untuk ditukar posisi: ");
                             strcpy(uname, "");
                             scanf("%s", uname);
+                            while (strcmp(uname, pU.uname[idxCurrentPlayer])==0) {
+                                printf("Hanya bisa tukar tempat dengan player lain.\nMasukkan username pemain untuk dimajuin: ");
+                                strcpy(uname, "");
+                                scanf("%s", uname);
+                            }
                             idxPKenaSkill = getIdxOfPlayer(pU, uname);
 
                             /* Perubahan kondisi player yang ditukar posisi */
@@ -506,9 +521,10 @@ int main () {
                 else {
                     idxCurrentPlayer++;
                 }
-                srand(time(0));
+                
                 if (banyaknyaSkill(pS1,pS2,pS3,pS4, idxCurrentPlayer) < 10) {
                     strcpy(getSkill, "");
+                    srand(time(0));
                     randomSkillGenerator(getSkill);
                     if (idxCurrentPlayer == 1) {
                         insertVSkill(&pS1, getSkill);
@@ -535,6 +551,7 @@ int main () {
                         scanf("%d", &skillDelete);
                         deleteSkill(&pS1,&pS2,&pS3,&pS4, idxCurrentPlayer, skillDelete);
                         strcpy(getSkill, "");
+                        srand(time(0));
                         randomSkillGenerator(getSkill);
                         if (idxCurrentPlayer == 1) {
                             insertVSkill(&pS1, getSkill);
