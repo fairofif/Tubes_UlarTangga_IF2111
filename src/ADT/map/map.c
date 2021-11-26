@@ -93,25 +93,20 @@ int rollDice(int max)
 
 void movePlayer(int roll, int idxCurrentPlayer, Map *CurrentMap, pPosition (*pP))
 {
-    printf("POSISI PEMAIN SEKARANG --> %d\n", (*pP).pos[idxCurrentPlayer]);
-    printf("KALO DITAMBAH --> %c\n", MAP_LAYOUT(*CurrentMap)[(*pP).pos[idxCurrentPlayer] + roll]);
-    printf("KALO DIKURANG --> %c\n", MAP_LAYOUT(*CurrentMap)[(*pP).pos[idxCurrentPlayer] - roll]);
-    printf("KALO DITAMBAH ROLL JADI ANGKA --> %d\n", (*pP).pos[idxCurrentPlayer] + roll);
-    printf("KALO DIKURANGIN ROLL JADI ANGKA --> %d\n", (*pP).pos[idxCurrentPlayer] - roll);
-    printf("\n");
-
+    int depan = (*pP).pos[idxCurrentPlayer] + roll;
+    int belakang = (*pP).pos[idxCurrentPlayer] - roll;
 
     boolean validMove = FALSE;
     char input[1];
-    if (((*pP).pos[idxCurrentPlayer] + roll) <= 20 && (*pP).pos[idxCurrentPlayer] - roll >= 1) {
-        if (MAP_LAYOUT(*CurrentMap)[(*pP).pos[idxCurrentPlayer] + roll] == '#') {
-            if (MAP_LAYOUT(*CurrentMap)[(*pP).pos[idxCurrentPlayer] - roll] == '#') {
+    if (depan <= 20 && belakang >= 1) {
+        if (MAP_LAYOUT(*CurrentMap)[depan] == '#') {
+            if (MAP_LAYOUT(*CurrentMap)[belakang] == '#') {
                 printf("tidak bisa bergerak! karena di depan dan belakang ada pagar!\n");
             } else {
-                (*pP).pos[idxCurrentPlayer] = (*pP).pos[idxCurrentPlayer] - roll; 
+                (*pP).pos[idxCurrentPlayer] = belakang; 
             }
-        } else if (MAP_LAYOUT(*CurrentMap)[(*pP).pos[idxCurrentPlayer] - roll] == '#') {
-            (*pP).pos[idxCurrentPlayer] = (*pP).pos[idxCurrentPlayer] + roll;
+        } else if (MAP_LAYOUT(*CurrentMap)[belakang] == '#') {
+            (*pP).pos[idxCurrentPlayer] = depan;
         } else {
             printf("Pilih F untuk Forward dan B untuk Back (F/B) : ");
             while(!validMove) {
@@ -119,10 +114,10 @@ void movePlayer(int roll, int idxCurrentPlayer, Map *CurrentMap, pPosition (*pP)
                 scanf("%c", input);
                 printf("\n");
                 if (input[0] == 'F') {
-                    (*pP).pos[idxCurrentPlayer] = (*pP).pos[idxCurrentPlayer] + roll;
+                    (*pP).pos[idxCurrentPlayer] = depan;
                     validMove = TRUE;
                 } else if (input[0] == 'B') {
-                    (*pP).pos[idxCurrentPlayer] = (*pP).pos[idxCurrentPlayer] - roll;
+                    (*pP).pos[idxCurrentPlayer] = belakang;
                     validMove = TRUE;
                 } else {
                     printf("Pilih (F/B) : ");
@@ -130,16 +125,16 @@ void movePlayer(int roll, int idxCurrentPlayer, Map *CurrentMap, pPosition (*pP)
             }
         }
     } else if ((*pP).pos[idxCurrentPlayer] + roll > 20) {
-        if (MAP_LAYOUT(*CurrentMap)[(*pP).pos[idxCurrentPlayer] - roll] == '#') {
+        if (MAP_LAYOUT(*CurrentMap)[belakang] == '#') {
             printf("tidak bisa bergerak! karena ke depan lebih dari 20 dan ke belakang ada pagar\n");
         } else {
-            (*pP).pos[idxCurrentPlayer] = (*pP).pos[idxCurrentPlayer] - roll;
+            (*pP).pos[idxCurrentPlayer] = belakang;
         }
     } else if ((*pP).pos[idxCurrentPlayer] - roll < 1) {
-        if (MAP_LAYOUT(*CurrentMap)[(*pP).pos[idxCurrentPlayer] + roll] == '#') {
+        if (MAP_LAYOUT(*CurrentMap)[depan] == '#') {
             printf("tidak bisa bergerak! karena ke belakang kurang dari 0 dan ke depan ada pagar!\n");
         } else {
-            (*pP).pos[idxCurrentPlayer] = (*pP).pos[idxCurrentPlayer] + roll;
+            (*pP).pos[idxCurrentPlayer] = belakang;
         }
     } else {
         printf("ERROR! kasus anomali\n");
