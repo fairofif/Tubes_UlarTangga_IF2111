@@ -44,7 +44,6 @@ int main () {
 /* CATATAN BUG 
 1. kalo HELP di awal, nanti dia bakal loop ke while line +-122.
 2. kalo ROLL masih error.
-
 */
 
 
@@ -191,7 +190,7 @@ int main () {
                         roll = roll * (-1);
 
                         /* Perubahan kondisi player yang dimundurin */
-                        movePlayer(roll, idxPKenaSkill, &CurrentMap, &pP);
+                        forceMove(roll, idxPKenaSkill, &CurrentMap, &pP, &pI);
 
                         /* Perubahan kondisi di player */
                         deleteSkill(&pS1, &pS2, &pS3, &pS4, idxCurrentPlayer, pilihanskill);
@@ -212,7 +211,7 @@ int main () {
                         roll = rollDice(MAP_MAXROLL(CurrentMap));
 
                         /* Perubahan kondisi player yang dimajuin */
-                        // movePlayer(roll, idxPKenaSkill, &CurrentMap, pP); HARUSNYA FORCE MOVE
+                        forceMove(roll, idxPKenaSkill, &CurrentMap, &pP, &pI);
                         
                         /* Perubahan kondisi di player */
                         deleteSkill(&pS1, &pS2, &pS3, &pS4, idxCurrentPlayer, pilihanskill);
@@ -295,10 +294,11 @@ int main () {
 
                         /* Perubahan kondisi player yang ditukar posisi */
                         tempPos = pP.pos[idxPKenaSkill];
-                        // movePlayer((pP.pos[idxCurrentPlayer] - pP.pos[idxPKenaSkill]), idxPKenaSkill, &CurrentMap, pP); HARUSNYA FORCEMOVE
+                        forceMove((pP.pos[idxCurrentPlayer] - pP.pos[idxPKenaSkill]), idxPKenaSkill, &CurrentMap, &pP, &pI);
                         
                         /* Perubahan kondisi di player */
-                        // movePlayer((tempPos - pP.pos[idxCurrentPlayer]), idxCurrentPlayer, &CurrentMap, pP); HARUSNYA FORCEMOVE
+                        forceMove((tempPos - pP.pos[idxCurrentPlayer]), idxCurrentPlayer, &CurrentMap, &pP, &pI);
+
                         deleteSkill(&pS1, &pS2, &pS3, &pS4, idxCurrentPlayer, pilihanskill);
 
                         /* Perbuahan turn */

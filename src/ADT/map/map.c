@@ -172,7 +172,7 @@ void inspectMap(Map *CurrentMap)
     }
 }
 
-void forceMove(int roll, int idxP, Map *CurrentMap, pPosition (*pP), pIsImune (*pI)) {
+void forceMove(int roll, int idxP, Map *CurrentMap, pPosition *pP, pIsImune *pI) {
     int forcedIdx = (*pP).pos[idxP] + roll;
     int length = MAP_LENGTH(*CurrentMap);
     int i;
