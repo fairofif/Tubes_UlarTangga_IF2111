@@ -181,10 +181,12 @@ void forceMove(int roll, int idxP, Map *CurrentMap, pPosition *pP, pIsImune *pI)
                 if((*pI).isImun[idxP] == TRUE) {
                     printf("Pakai anti-teleport (Y/N): ");
                     scanf("%s", use);
-                    if(strcmp(use, "N")) {
+                    if(strcmp(use, "N") == 0) {
                         (*pP).pos[idxP] = TELEPORT_LAYOUT(*CurrentMap)[i+1];
-                    } else if(strcmp(use, "Y")) {
+                        printf("Anda tidak memanfaatkan Buff antiteleport, otomatis dipindahkan.\n");
+                    } else if(strcmp(use, "Y") == 0) {
                         (*pI).isImun[idxP] = FALSE;
+                        printf("Kamu memakai anti-teleport sehingga posisi Anda tidak berubah\n");
                     }
                 } else {
                     (*pP).pos[idxP] = TELEPORT_LAYOUT(*CurrentMap)[i+1];
@@ -192,5 +194,70 @@ void forceMove(int roll, int idxP, Map *CurrentMap, pPosition *pP, pIsImune *pI)
             }
         }
         (*pP).pos[idxP] = forcedIdx;
+    }
+    else {
+        printf("Titik tersebut merupakan #. Tidak Jadi dipindahkan paksa.\n");
+    }
+}
+
+void teleport (int idxCurrentPlayer, Map *CurrentMap, pPosition *pP, pIsImune *pI, pIsTeleported *pT){
+    printf("Anda sekarang berada pada posisi ");
+    printf("%d ", (*pP).pos[idxCurrentPlayer]);
+    printf("\n");
+
+    boolean isTeleport = FALSE;
+    int IdxTeleIn = 0;
+    for(int i = 0; i < TELEPORT_COUNT(*CurrentMap); i++){
+        if (((*pP).pos[idxCurrentPlayer]) == (TELEPORT_LAYOUT(*CurrentMap)[IdxTeleIn])){
+            isTeleport = TRUE;
+        }
+        IdxTeleIn += 2;
+    }
+
+    if (isTeleport == TRUE){
+        int IdxTeleIn = 0;
+        int IdxTeleOut = 1;
+        printf("Oops, kamu berada pada teleport!\n");
+        if ((*pT).isTele[idxCurrentPlayer] == TRUE){
+            printf("Kamu tidak berpindah karena sudah terkena teleport sebelumnya!\n");
+        }
+        if ((*pT).isTele[idxCurrentPlayer] == FALSE){
+            char use[15];
+            if((*pI).isImun[idxCurrentPlayer] == TRUE) {
+                printf("Pakai anti-teleport (Y/N): \n");
+                scanf("%s", use);
+                if(strcmp(use, "N")==0) {
+                    for(int i = 0; i < TELEPORT_COUNT(*CurrentMap); i++){
+                        if (((*pP).pos[idxCurrentPlayer]) == (TELEPORT_LAYOUT(*CurrentMap)[IdxTeleIn])){
+                            (*pT).isTele[idxCurrentPlayer] == TRUE;
+                            (*pP).pos[idxCurrentPlayer] = TELEPORT_LAYOUT(*CurrentMap)[IdxTeleOut];
+                        }
+                    IdxTeleIn += 2;
+                    IdxTeleOut += 2;
+                    }
+                } else if(strcmp(use, "Y")==0) {
+                    printf("Kamu memakai anti-teleport sehingga posisi Anda tidak berubah\n");
+                    (*pI).isImun[idxCurrentPlayer] = FALSE;
+                } 
+            }
+            else {
+                printf("Kamu tidak memiliki anti-teleport, posisi Anda akan dipindahkan \n");
+                for(int i = 0; i < TELEPORT_COUNT(*CurrentMap); i++){
+                    if (((*pP).pos[idxCurrentPlayer]) == (TELEPORT_LAYOUT(*CurrentMap)[IdxTeleIn])){
+                        (*pT).isTele[idxCurrentPlayer] == TRUE;
+                        (*pP).pos[idxCurrentPlayer] = TELEPORT_LAYOUT(*CurrentMap)[IdxTeleOut];
+                    }
+                    IdxTeleIn += 2;
+                    IdxTeleOut += 2;
+                };
+            }
+        }
+
+        printf("Anda sekarang berada pada posisi ");
+        printf("%d ", (*pP).pos[idxCurrentPlayer]);
+        printf("\n");
+    } 
+    else{
+        printf("Tidak ada teleport pada petak tersebut\n");
     }
 }

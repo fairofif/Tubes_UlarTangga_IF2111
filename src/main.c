@@ -33,6 +33,7 @@ int main () {
     char skname[30];
     char getSkill[30];
     char uname[30];
+    int prevPos;
     int round;
     int nSkill;
     int pilihanskill;
@@ -41,6 +42,7 @@ int main () {
     int currPos;
     int loopSkill;
     int buff;
+    int x1;
     
 
 
@@ -207,6 +209,7 @@ int main () {
                                 forceMove((1 - getPositionOfPlayer(pP,idxPKenaSkill)), idxPKenaSkill, &CurrentMap, &pP, &pI);
                             }
 
+
                             /* Perubahan kondisi di player */
                             deleteSkill(&pS1, &pS2, &pS3, &pS4, idxCurrentPlayer, pilihanskill);
 
@@ -221,14 +224,19 @@ int main () {
                             strcpy(uname, "");
                             scanf("%s", uname);
                             idxPKenaSkill = getIdxOfPlayer(pU, uname);
-
+                     
                             /* roll dulu gan */
                             srand(time(0));
                             roll = rollDice(MAP_MAXROLL(CurrentMap));
+                            x1 = getPositionOfPlayer(pP, idxPKenaSkill);
 
                             /* Perubahan kondisi player yang dimajuin */
                             forceMove(roll, idxPKenaSkill, &CurrentMap, &pP, &pI);
-                            
+                            if (getPositionOfPlayer(pP, idxPKenaSkill) > 20) {
+                                pP.pos[idxPKenaSkill] = x1;
+                                printf("Tidak bisa pindah, karena roll menghasilkan posisi > 20\n");
+                            }
+
                             /* Perubahan kondisi di player */
                             deleteSkill(&pS1, &pS2, &pS3, &pS4, idxCurrentPlayer, pilihanskill);
 
@@ -380,6 +388,7 @@ int main () {
 
             /* Kalo Commandnya ROLL */
             else if (strcmp(command, "ROLL") == 0) {
+                prevPos = getPositionOfPlayer(pP, idxCurrentPlayer);
                 if(ableToRoll) {
                     if (getSenterBesarConditionOfPlayer(pSB, idxCurrentPlayer)){
                         printf("Anda memiliki Buff Senter Besar, roll akan >= 5\n");
@@ -406,6 +415,9 @@ int main () {
                         roll = rollDice(MAP_MAXROLL(CurrentMap));
                     }
                     movePlayer(roll, idxCurrentPlayer, &CurrentMap, &pP);
+                    if (prevPos != getPositionOfPlayer(pP, idxCurrentPlayer)) {
+                        teleport(idxCurrentPlayer, &CurrentMap, &pP, &pI, &pT);
+                    }
                     ableToRoll = FALSE;
                 } else {
                     printf("ERROR!! anda sudah melakukan roll, silahkan input command yang lain!\n<HELP/SKILL/MAP/BUFF/INSPECT/SAVE/UNDO/ENDTURN>\n");
@@ -440,7 +452,11 @@ int main () {
             }
 
             /* ini buat gantian giliran player */
-            if (nextPlayer) {
+            if (getPositionOfPlayer(pP, idxCurrentPlayer) == 20) {
+                stopGame = TRUE;
+                stopProgram = TRUE;
+            } 
+            else if (nextPlayer) {
                 ableToRoll = TRUE;
                 pC.isCermin[idxCurrentPlayer] = FALSE;
                 if (idxCurrentPlayer == banyakPemain) {
@@ -454,4 +470,5 @@ int main () {
             }
         }
     }
+    printf("SELAMAT %s MENANG!!!\n", pU.uname[idxCurrentPlayer]);
 }

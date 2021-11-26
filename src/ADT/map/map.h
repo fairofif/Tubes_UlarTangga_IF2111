@@ -71,4 +71,5 @@ void inspectMap(Map *CurrentMap);
 
 void forceMove(int roll, int idxCurrentPlayer, Map *CurrentMap, pPosition (*pP), pIsImune (*pI));
 
+void teleport (int idxCurrentPlayer, Map *CurrentMap, pPosition *pP, pIsImune *pI, pIsTeleported *pT);
 #endif
