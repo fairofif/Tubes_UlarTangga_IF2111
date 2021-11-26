@@ -177,7 +177,7 @@ int main () {
                         roll = roll * (-1);
 
                         /* Perubahan kondisi player yang dimundurin */
-                        movePlayer(roll, idxPKenaSkill, &CurrentMap, pP);
+                        movePlayer(roll, idxPKenaSkill, &CurrentMap, &pP);
 
                         /* Perubahan kondisi di player */
                         deleteSkill(&pS1, &pS2, &pS3, &pS4, idxCurrentPlayer, pilihanskill);
@@ -198,7 +198,7 @@ int main () {
                         roll = rollDice(MAP_MAXROLL(CurrentMap));
 
                         /* Perubahan kondisi player yang dimajuin */
-                        movePlayer(roll, idxPKenaSkill, &CurrentMap, pP);
+                        // movePlayer(roll, idxPKenaSkill, &CurrentMap, pP); HARUSNYA FORCE MOVE
                         
                         /* Perubahan kondisi di player */
                         deleteSkill(&pS1, &pS2, &pS3, &pS4, idxCurrentPlayer, pilihanskill);
@@ -279,10 +279,10 @@ int main () {
 
                         /* Perubahan kondisi player yang ditukar posisi */
                         tempPos = pP.pos[idxPKenaSkill];
-                        movePlayer((pP.pos[idxCurrentPlayer] - pP.pos[idxPKenaSkill]), idxPKenaSkill, &CurrentMap, pP);
+                        // movePlayer((pP.pos[idxCurrentPlayer] - pP.pos[idxPKenaSkill]), idxPKenaSkill, &CurrentMap, pP); HARUSNYA FORCEMOVE
                         
                         /* Perubahan kondisi di player */
-                        movePlayer((tempPos - pP.pos[idxCurrentPlayer]), idxCurrentPlayer, &CurrentMap, pP);
+                        // movePlayer((tempPos - pP.pos[idxCurrentPlayer]), idxCurrentPlayer, &CurrentMap, pP); HARUSNYA FORCEMOVE
                         deleteSkill(&pS1, &pS2, &pS3, &pS4, idxCurrentPlayer, pilihanskill);
 
                         /* Perbuahan turn */
@@ -300,7 +300,7 @@ int main () {
 
             /* Kalo Commandnya MAP */
             else if (strcmp(command, "MAP") == 0) {
-              showMap(pU.uname[idxCurrentPlayer], pP.pos[idxCurrentPlayer], &CurrentMap);
+              showMap(&pP, &pU, idxCurrentPlayer, &CurrentMap);
                 // showMap(array of char username, idx posisi player);
 
             }
@@ -323,7 +323,7 @@ int main () {
                 */
                 printf("MAXROLLNYA %d\n", MAP_MAXROLL(CurrentMap));
                 roll = rollDice(MAP_MAXROLL(CurrentMap));
-                movePlayer(roll, idxCurrentPlayer, &CurrentMap, pP);
+                movePlayer(roll, idxCurrentPlayer, &CurrentMap, &pP);
             }
             /* Kalo Commandnya SAVE */
             else if (strcmp(command, "SAVE") == 0) {

@@ -58,17 +58,17 @@ void printConfig(Map *CurrentMap);
 /* Melakukan pencetakan semua input yang ada pada file konfigurasi yang telah ditunjuk pointer.
    F.S. : output berupa semua setup map yang ingin dimainkan */
 
-void showMap(char array[], int pPos, Map *CurrentMap);
+void showMap(pPosition (*pP), pUserName (*pU), int idxCurrentPlayer, Map *CurrentMap);
 /* Mencetak peta yang akan/sedang dimainkan.
    F.S. : output berupa layout map yang sedang dimainkan */
 
 int rollDice(int max);
 /* Mengembalikan roll dadu random yang tidak sama dengan */
 
-void movePlayer(int roll, int idxCurrentPlayer, Map *CurrentMap, pPosition pP);
+void movePlayer(int roll, int idxCurrentPlayer, Map *CurrentMap, pPosition (*pP));
 
 void inspectMap(Map *CurrentMap);
 
-void forceMove(int roll, int idxCurrentPlayer, Map CurrentMap, pPosition pP, pIsImune pI);
+void forceMove(int roll, int idxCurrentPlayer, Map *CurrentMap, pPosition (*pP), pIsImune (*pI));
 
 #endif
