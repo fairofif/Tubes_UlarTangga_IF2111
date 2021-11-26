@@ -58,23 +58,27 @@ void printConfig(Map *CurrentMap)
     printf("Maksimal dadu : %d\n", MAP_MAXROLL(*CurrentMap));
     printf("Jumlah teleport : %d\n", TELEPORT_COUNT(*CurrentMap));
     printf("List teleport : \n");
-    for(int i = 0; i < TELEPORT_COUNT(*CurrentMap); i++) {
-        printf("%d %d\n", TELEPORT_LAYOUT(*CurrentMap)[i], TELEPORT_LAYOUT(*CurrentMap)[i+1]);
+    printf("| ");
+    for(int i = 0; i < TELEPORT_COUNT(*CurrentMap)*2; i+=2) {
+        printf("%d -> %d | ", TELEPORT_LAYOUT(*CurrentMap)[i], TELEPORT_LAYOUT(*CurrentMap)[i+1]);
     }
+    printf("\n");
 
 }
 
-void showMap(pPosition (*pP), pUserName (*pU), int idxCurrentPlayer, Map *CurrentMap) 
+void showMap(pPosition (*pP), pUserName (*pU), int playerCount, Map *CurrentMap) 
 {
-    printf("%s: ", (*pU).uname[idxCurrentPlayer]);
-    for(int i = 1; i <= MAP_LENGTH(*CurrentMap); i++) {
-        if ((*pP).pos[idxCurrentPlayer] == i) {
-            printf("*");
-        } else {
-            printf("%c", MAP_LAYOUT(*CurrentMap)[i]);
+    for(int idxCurrentPlayer = 1; idxCurrentPlayer <= playerCount; idxCurrentPlayer++ ) {
+        printf("%s: ", (*pU).uname[idxCurrentPlayer]);
+        for(int i = 1; i <= MAP_LENGTH(*CurrentMap); i++) {
+            if ((*pP).pos[idxCurrentPlayer] == i) {
+                printf("*");
+            } else {
+                printf("%c", MAP_LAYOUT(*CurrentMap)[i]);
+            }
         }
+        printf("\n");
     }
-    printf("\n");
 }
 
 int rollDice(int max) 
@@ -87,7 +91,7 @@ int rollDice(int max)
     while (num == 0) {
         num = rand() % (max+1);
     };
-    printf( "%d \n", num);
+    printf( "Hasil roll adalah %d \n", num);
     return num;
 }
 
@@ -104,9 +108,11 @@ void movePlayer(int roll, int idxCurrentPlayer, Map *CurrentMap, pPosition (*pP)
                 printf("tidak bisa bergerak! karena di depan dan belakang ada pagar!\n");
             } else {
                 (*pP).pos[idxCurrentPlayer] = belakang; 
+                printf("anda berhasil mundur sebanyak %d petak ke petak %d\n", roll, belakang);
             }
         } else if (MAP_LAYOUT(*CurrentMap)[belakang] == '#') {
             (*pP).pos[idxCurrentPlayer] = depan;
+            printf("anda berhasil maju sebanyak %d petak ke petak %d\n", roll, depan);
         } else {
             printf("Pilih F untuk Forward dan B untuk Back (F/B) : ");
             while(!validMove) {
@@ -115,9 +121,11 @@ void movePlayer(int roll, int idxCurrentPlayer, Map *CurrentMap, pPosition (*pP)
                 printf("\n");
                 if (input[0] == 'F') {
                     (*pP).pos[idxCurrentPlayer] = depan;
+                    printf("anda berhasil maju sebanyak %d petak ke petak %d\n", roll, depan);
                     validMove = TRUE;
                 } else if (input[0] == 'B') {
                     (*pP).pos[idxCurrentPlayer] = belakang;
+                    printf("anda berhasil mundur sebanyak %d petak ke petak %d\n", roll, belakang);
                     validMove = TRUE;
                 } else {
                     printf("Pilih (F/B) : ");
@@ -129,12 +137,14 @@ void movePlayer(int roll, int idxCurrentPlayer, Map *CurrentMap, pPosition (*pP)
             printf("tidak bisa bergerak! karena ke depan lebih dari 20 dan ke belakang ada pagar\n");
         } else {
             (*pP).pos[idxCurrentPlayer] = belakang;
+            printf("anda berhasil mundur sebanyak %d petak ke petak %d\n", roll, belakang);
         }
     } else if ((*pP).pos[idxCurrentPlayer] - roll < 1) {
         if (MAP_LAYOUT(*CurrentMap)[depan] == '#') {
             printf("tidak bisa bergerak! karena ke belakang kurang dari 0 dan ke depan ada pagar!\n");
         } else {
-            (*pP).pos[idxCurrentPlayer] = belakang;
+            (*pP).pos[idxCurrentPlayer] = depan;
+            printf("anda berhasil maju sebanyak %d petak ke petak %d\n", roll, depan);
         }
     } else {
         printf("ERROR! kasus anomali\n");
