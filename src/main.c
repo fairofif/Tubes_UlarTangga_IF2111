@@ -42,7 +42,6 @@ int main () {
 /* CATATAN BUG 
 1. kalo HELP di awal, nanti dia bakal loop ke while line +-122.
 2. kalo ROLL masih error.
-
 */
 
 
@@ -65,9 +64,9 @@ int main () {
         /* Kalo new game */
         else if (strcmp(command, "NEWGAME") == 0) {
             /* Input file konfigurasi map yang mau dipake */
-            inputConfig();
+            inputConfig(&CurrentMap);
+            printConfig(&CurrentMap);
             start();
-            printConfig();
             
             /* masukinn jumlah pemain & username pemain2nya */
             printf("Masukkan jumlah pemain: ");
@@ -177,7 +176,7 @@ int main () {
                         roll = roll * (-1);
 
                         /* Perubahan kondisi player yang dimundurin */
-                        movePlayer(roll, idxPKenaSkill, CurrentMap);
+                        forceMove(roll, idxPKenaSkill, &CurrentMap, &pP, &pI);
 
                         /* Perubahan kondisi di player */
                         deleteSkill(&pS1, &pS2, &pS3, &pS4, idxCurrentPlayer, pilihanskill);
@@ -198,7 +197,7 @@ int main () {
                         roll = rollDice(MAP_MAXROLL(CurrentMap));
 
                         /* Perubahan kondisi player yang dimajuin */
-                        movePlayer(roll, idxPKenaSkill, CurrentMap);
+                        forceMove(roll, idxPKenaSkill, &CurrentMap, &pP, &pI);
                         
                         /* Perubahan kondisi di player */
                         deleteSkill(&pS1, &pS2, &pS3, &pS4, idxCurrentPlayer, pilihanskill);
@@ -279,10 +278,10 @@ int main () {
 
                         /* Perubahan kondisi player yang ditukar posisi */
                         tempPos = pP.pos[idxPKenaSkill];
-                        movePlayer((pP.pos[idxCurrentPlayer] - pP.pos[idxPKenaSkill]), idxPKenaSkill, CurrentMap);
+                        forceMove((pP.pos[idxCurrentPlayer] - pP.pos[idxPKenaSkill]), idxPKenaSkill, &CurrentMap, &pP, &pI);
                         
                         /* Perubahan kondisi di player */
-                        movePlayer((tempPos - pP.pos[idxCurrentPlayer]), idxCurrentPlayer, CurrentMap);
+                        forceMove((tempPos - pP.pos[idxCurrentPlayer]), idxCurrentPlayer, &CurrentMap, &pP, &pI);
                         deleteSkill(&pS1, &pS2, &pS3, &pS4, idxCurrentPlayer, pilihanskill);
 
                         /* Perbuahan turn */
@@ -300,7 +299,7 @@ int main () {
 
             /* Kalo Commandnya MAP */
             else if (strcmp(command, "MAP") == 0) {
-              showMap(pU.uname[idxCurrentPlayer], pP.pos[idxCurrentPlayer]);
+              showMap(&pP, &pU, idxCurrentPlayer, &CurrentMap);
                 // showMap(array of char username, idx posisi player);
 
             }
@@ -311,7 +310,7 @@ int main () {
             }
             /* Kalo Commandnya INSPECT */
             else if (strcmp(command, "INSPECT") == 0) {
-                inspectMap(CurrentMap);
+                inspectMap(&CurrentMap);
             }
             /* Kalo Commandnya ROLL */
             else if (strcmp(command, "ROLL") == 0) {
@@ -321,8 +320,10 @@ int main () {
                     pSK.isSenterKecil[idxCurrentPlayer]
                     kalo salah satunya aktif ntar ngaruh ke rollnya
                 */
+                printf("MAXROLLNYA %d\n", MAP_MAXROLL(CurrentMap));
                 roll = rollDice(MAP_MAXROLL(CurrentMap));
-                movePlayer(roll, idxCurrentPlayer, CurrentMap);
+                movePlayer(roll, idxCurrentPlayer, &CurrentMap, &pP);
+                nextPlayer = TRUE;
             }
             /* Kalo Commandnya SAVE */
             else if (strcmp(command, "SAVE") == 0) {
