@@ -380,15 +380,31 @@ int main () {
 
             /* Kalo Commandnya ROLL */
             else if (strcmp(command, "ROLL") == 0) {
-                /*  yang ini dicek dulu Lagi ada efek Buff yang
-                    ngaruh ke roll apa enggak.
-                    getSenterBesarConditionOfPlayer(pSB, idxCurrentPlayer)
-                    getSenterKecilConditionOfPlayer(pSB, idxCurrentPlayer)
-                    kalo salah satunya aktif ntar ngaruh ke rollnya
-                */
                 if(ableToRoll) {
-                    srand(time(0));
-                    roll = rollDice(MAP_MAXROLL(CurrentMap));
+                    if (getSenterBesarConditionOfPlayer(pSB, idxCurrentPlayer)){
+                        printf("Anda memiliki Buff Senter Besar, roll akan >= 5\n");
+                        srand(time(0));
+                        roll = rollDice(MAP_MAXROLL(CurrentMap));
+                        while (roll < (MAP_MAXROLL(CurrentMap)/2)) {
+                            printf("Karena roll < 5, maka roll diulang otomatis...\n");
+                            roll = rollDice(MAP_MAXROLL(CurrentMap));
+                        }
+                        pSB.isSenterBesar[idxCurrentPlayer] = FALSE;
+                    }
+                    else if (getSenterKecilConditionOfPlayer(pSK, idxCurrentPlayer)){
+                        printf("Anda memiliki Buff Senter Kecil, roll akan <= 5\n");
+                        srand(time(0));
+                        roll = rollDice(MAP_MAXROLL(CurrentMap));
+                        while (roll > (MAP_MAXROLL(CurrentMap)/2)) {
+                            printf("Karena roll > 5, maka roll diulang otomatis...\n");
+                            roll = rollDice(MAP_MAXROLL(CurrentMap));
+                        }
+                        pSK.isSenterKecil[idxCurrentPlayer] = FALSE;
+                    }
+                    else {
+                        srand(time(0));
+                        roll = rollDice(MAP_MAXROLL(CurrentMap));
+                    }
                     movePlayer(roll, idxCurrentPlayer, &CurrentMap, &pP);
                     ableToRoll = FALSE;
                 } else {
