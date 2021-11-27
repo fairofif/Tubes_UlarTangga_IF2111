@@ -87,10 +87,6 @@ int main () {
                 printConfig(&CurrentMap);
                 start();
 
-                
-                
-                
-
                 /* masukinn jumlah pemain & username pemain2nya */
                 printf("Masukkan jumlah pemain: ");
                 scanf("%d", &banyakPemain);
@@ -144,6 +140,36 @@ int main () {
             else if (strcmp(command, "LOAD") == 0) {
 
                 /* Load player data ke variable2 player */
+                // createEmptyRound(&R);
+                // Load(&banyakPemain, &round, &pU, &pT, &pP, &pI, &pC, &pSB, &pSK, &pS1, &pS2, &pS3, &pS4);
+                // printf("Banyak pemain >> %d\n", banyakPemain);
+                // printf("Round >> %d\n", round);
+                
+                // printSkill(pS1, pS2, pS3, pS4, 1, &nSkill);
+
+                idxCurrentPlayer = 1;
+                /* kasih skill pertama buat pemain 1 */
+                srand(time(0));
+                if (banyaknyaSkill(pS1,pS2,pS3,pS4, idxCurrentPlayer) < 10) {
+                    strcpy(getSkill, "");
+                    randomSkillGenerator(getSkill);
+                    if (idxCurrentPlayer == 1) {
+                        insertVSkill(&pS1, getSkill);
+                    }
+                    else if (idxCurrentPlayer == 2) {
+                        insertVSkill(&pS2, getSkill);
+                    }
+                    else if (idxCurrentPlayer == 3) {
+                        insertVSkill(&pS3, getSkill);
+                    }
+                    else if (idxCurrentPlayer == 4) {
+                        insertVSkill(&pS4, getSkill);
+                    }
+                    printf("Bonus Pre-Turn Round %d: ", round);
+                    printf("%s berhasil ditambahkan ke %s\n", getSkill, pU.uname[idxCurrentPlayer]);
+                }
+
+                printf("Silahkan bermain %s!\n", pU.uname[idxCurrentPlayer]);
 
                 /* Load map data ke variable2 map */
 
@@ -462,7 +488,7 @@ int main () {
             /* Kalo Commandnya SAVE */
             else if (strcmp(command, "SAVE") == 0) {
                 /* Update semua player txt */
-                Save(banyakPemain, mapname, pU, pT, pP, pI, pC, pSB, pSK, pS1, pS2, pS3, pS4);
+                //Save(banyakPemain, round, mapname, pU, pT, pP, pI, pC, pSB, pSK, pS1, pS2, pS3, pS4);
                 
                 /* Update semua map txt */
             }

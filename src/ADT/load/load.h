@@ -1,14 +1,15 @@
 #ifndef _LOAD_H
 #define _LOAD_H
 
-#include "../../boolean.h"
-#include "../player/player.h"
-#include "../mesinkata/mesin_kata.h"
-#include "../mesinkar/mesin_kar.h"
+#include "../../console.h"
 
-void Load(int n, pUserName *pU, pIsTeleported *pT, pPosition *pP, pIsImune *pI, pIsCermin *pC,
+void Load(int *banyakPemain, int *round, pUserName *pU, pIsTeleported *pT, pPosition *pP, pIsImune *pI, pIsCermin *pC,
 pIsSenterBesar *pSB, pIsSenterKecil *pSK, Skill *pS1, Skill *pS2, Skill *pS3, Skill *pS4);
 /*  Me-load kondisi game yang sudah disimpan sebelumnya
     n: jumlah player */
+
+int IsfFileExists(char *filename);
+
+void unshortenSkillName(char skillName[]);
 
 #endif

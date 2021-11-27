@@ -11,6 +11,7 @@
 #include "ADT/traversalUI/traversal.h"
 #include "ADT/round/round.h"
 #include "ADT/save/save.h"
+#include "ADT/load/load.h"
 
 // common used h
 #include <stdio.h>
@@ -28,5 +29,6 @@
 #include "ADT/chartoint/chartoint.c"
 #include "ADT/round/round.c"
 #include "ADT/save/save.c"
+#include "ADT/load/load.c"
 
 #endif

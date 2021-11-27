@@ -23,6 +23,16 @@ void inputConfig(Map *CurrentMap)
     readConfig(CurrentMap);
 }
 
+// void loadConfig(Map *CurrentMap, char filemap[]){
+//     TELEPORT_NEFF(*CurrentMap) = 0;
+//     fileconfig = ;
+//     readConfig(CurrentMap);
+// }
+
+void inputConfigFromLoad(Map *CurrentMap){
+    TELEPORT_NEFF(*CurrentMap) = 0;
+}
+
 void readConfig(Map *CurrentMap)
 {
     STARTKATA(CurrentMap); 

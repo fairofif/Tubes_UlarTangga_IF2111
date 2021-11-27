@@ -46,11 +46,17 @@ void ADVKATA(Map *CurrentMap);
    Proses : Akuisisi kata menggunakan procedure SalinKata */
 
 
-int KataToInt (Kata K);
-/* Mengubah Kata yang berisi tipe integer tapi dalam format teks(kata) menjadi integer */
 
-char KataToChar (Kata K);
-/* Mengubah Kata yang berisi tipe char tapi dalam format teks(kata) menjadi char */
+void STARTKATA2(char *namafile);
+
+void IgnoreBlank2();
+
+void ADVKATA2();
+/* I.S. : CC adalah karakter pertama kata yang akan diakuisisi
+   F.S. : CKata adalah kata terakhir yang sudah diakuisisi,
+          CC adalah karakter pertama dari kata berikutnya, mungkin MARK
+          Jika CC = MARK, EndKata = true.
+   Proses : Akuisisi kata menggunakan procedure SalinKata, digunakan untuk prosedur load */
 
 void SalinKata2();
 /* Mengakuisisi kata, menyimpan dalam CKata
@@ -61,12 +67,13 @@ void SalinKata2();
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" 
           Digunakan untuk prosedur load*/
 
-void ADVKATA2();
-/* I.S. : CC adalah karakter pertama kata yang akan diakuisisi
-   F.S. : CKata adalah kata terakhir yang sudah diakuisisi,
-          CC adalah karakter pertama dari kata berikutnya, mungkin MARK
-          Jika CC = MARK, EndKata = true.
-   Proses : Akuisisi kata menggunakan procedure SalinKata, digunakan untuk prosedur load */
- 
+int KataToInt (Kata K);
+/* Mengubah Kata yang berisi tipe integer tapi dalam format teks(kata) menjadi integer */
+
+char KataToChar (Kata K);
+/* Mengubah Kata yang berisi tipe char tapi dalam format teks(kata) menjadi char */
+
+int KatatoInt(char a[], int len);
+
 
 #endif
