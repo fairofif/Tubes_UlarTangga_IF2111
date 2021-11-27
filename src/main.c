@@ -81,15 +81,15 @@ int main () {
             else if (strcmp(command, "NEWGAME") == 0) {
                 /* Input file konfigurasi map yang mau dipake */
                 inputConfig(&CurrentMap);
-                printConfig(&CurrentMap);
-                start();
-
-                printf("\nNAMA MAPNYA -->> ");
-                printf("%s\n", (*fileconfig));
-                
                 for(int i = 0; i < 20; i++ ) {
                     mapname[i] = (*fileconfig)[i];
                 }
+                printConfig(&CurrentMap);
+                start();
+
+                
+                
+                
 
                 /* masukinn jumlah pemain & username pemain2nya */
                 printf("Masukkan jumlah pemain: ");
@@ -462,8 +462,8 @@ int main () {
             /* Kalo Commandnya SAVE */
             else if (strcmp(command, "SAVE") == 0) {
                 /* Update semua player txt */
-                // Save(banyakPemain, pU, pT, pP, pI, pC, pSB, pSK, pS1, pS2, pS3, pS4);
-                printf("%s", mapname);
+                Save(banyakPemain, mapname, pU, pT, pP, pI, pC, pSB, pSK, pS1, pS2, pS3, pS4);
+                
                 /* Update semua map txt */
             }
 

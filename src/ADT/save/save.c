@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "save.h"
 
-void Save(int n, pUserName pU, pIsTeleported pT, pPosition pP, pIsImune pI, pIsCermin pC,
+void Save(int n, char mapname[], pUserName pU, pIsTeleported pT, pPosition pP, pIsImune pI, pIsCermin pC,
 pIsSenterBesar pSB, pIsSenterKecil pSK, Skill pS1, Skill pS2, Skill pS3, Skill pS4){
 // KAMUS
     int i;
@@ -13,9 +13,9 @@ pIsSenterBesar pSB, pIsSenterKecil pSK, Skill pS1, Skill pS2, Skill pS3, Skill p
 
     FILE *pfile = fopen(filename, "wt");
 
-    // Save file map 
-    // printf("%s\n", mapfilename);
-    // fprintf(pfile, "%s\n", mapfilename);
+
+    printf("coba nama mapname %s\n", mapname);
+    fprintf(pfile, "%s\n", mapname);
 
     // Data status player
     for (i=1; i<=n; i++){
