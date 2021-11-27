@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "save.h"
 
-void Save(int n, char mapname[], pUserName pU, pIsTeleported pT, pPosition pP, pIsImune pI, pIsCermin pC,
+void Save(int n, int round, char mapname[], pUserName pU, pIsTeleported pT, pPosition pP, pIsImune pI, pIsCermin pC,
 pIsSenterBesar pSB, pIsSenterKecil pSK, Skill pS1, Skill pS2, Skill pS3, Skill pS4){
 // KAMUS
     int i;
@@ -17,8 +17,11 @@ pIsSenterBesar pSB, pIsSenterKecil pSK, Skill pS1, Skill pS2, Skill pS3, Skill p
     printf("coba nama mapname %s\n", mapname);
     fprintf(pfile, "%s\n", mapname);
 
+    fprintf(pfile, "%d\n", round);
+
     // Data status player
     for (i=1; i<=n; i++){
+        fprintf(pfile, "%s\n", pU.uname[i]);
         fprintf(pfile, "%d\n", getPositionOfPlayer(pP, i));
         fprintf(pfile, "%d\n", getTeleportedConditionOfPlayer(pT, i));
         fprintf(pfile, "%d\n", getImmunityConditionOfPlayer(pI, i));

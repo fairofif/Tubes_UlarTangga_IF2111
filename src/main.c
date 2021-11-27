@@ -87,10 +87,6 @@ int main () {
                 printConfig(&CurrentMap);
                 start();
 
-                
-                
-                
-
                 /* masukinn jumlah pemain & username pemain2nya */
                 printf("Masukkan jumlah pemain: ");
                 scanf("%d", &banyakPemain);
@@ -187,6 +183,12 @@ int main () {
                     strcpy(command, "");
                     printf("\nJadi menggunakan SKILL? (Y/N): ");
                     scanf("%s", command);
+                    while (strcmp(command, "Y") != 0 && strcmp(command, "N") != 0) {
+                        printf("Input salah, masukan Y/N.\n");
+                        strcpy(command, "");
+                        printf("\nJadi menggunakan SKILL? (Y/N): ");
+                        scanf("%s", command);
+                    }
 
                     if (strcmp(command, "Y") == 0) {
                         printf("\nIngin menggunakan skill No: ");
@@ -213,6 +215,10 @@ int main () {
                         /* Kalo SKILL == "Mesin Waktu" */
                         else if (strcmp(skname, "Mesin Waktu") == 0) {
                             /* Masukin username yang mau dimundurin */
+                            printf("Daftar Pemain: \n");
+                            for (int i = 1; i <= banyakPemain; i++) {
+                                printf("%d. %s\n", i, pU.uname[i]);
+                            }
                             printf("Masukkan username pemain untuk dimundurin: ");
                             strcpy(uname, "");
                             scanf("%s", uname);
@@ -245,6 +251,10 @@ int main () {
                         /* Kalo SKILL == "Baling Baling Jambu" */
                         else if (strcmp(skname, "Baling Baling Jambu") == 0) {
                             /* Masukin username yang mau dimajuin */
+                            printf("Daftar Pemain: \n");
+                            for (int i = 1; i <= banyakPemain; i++) {
+                                printf("%d. %s\n", i, pU.uname[i]);
+                            }
                             printf("Masukkan username pemain untuk dimajuin: ");
                             strcpy(uname, "");
                             scanf("%s", uname);
@@ -426,21 +436,21 @@ int main () {
                 prevPos = getPositionOfPlayer(pP, idxCurrentPlayer);
                 if(ableToRoll) {
                     if (getSenterBesarConditionOfPlayer(pSB, idxCurrentPlayer)){
-                        printf("Anda memiliki Buff Senter Besar, roll akan >= 5\n");
+                        printf("Anda memiliki Buff Senter Besar, roll akan >= %d\n", MAP_MAXROLL(CurrentMap)/2);
                         srand(time(0));
                         roll = rollDice(MAP_MAXROLL(CurrentMap));
                         while (roll < (MAP_MAXROLL(CurrentMap)/2)) {
-                            printf("Karena roll < 5, maka roll diulang otomatis...\n");
+                            printf("Karena roll < %d, maka roll diulang otomatis...\n", MAP_MAXROLL(CurrentMap)/2);
                             roll = rollDice(MAP_MAXROLL(CurrentMap));
                         }
                         pSB.isSenterBesar[idxCurrentPlayer] = FALSE;
                     }
                     else if (getSenterKecilConditionOfPlayer(pSK, idxCurrentPlayer)){
-                        printf("Anda memiliki Buff Senter Kecil, roll akan <= 5\n");
+                        printf("Anda memiliki Buff Senter Kecil, roll akan <= %d\n", MAP_MAXROLL(CurrentMap)/2);
                         srand(time(0));
                         roll = rollDice(MAP_MAXROLL(CurrentMap));
                         while (roll > (MAP_MAXROLL(CurrentMap)/2)) {
-                            printf("Karena roll > 5, maka roll diulang otomatis...\n");
+                            printf("Karena roll > %d, maka roll diulang otomatis...\n", MAP_MAXROLL(CurrentMap)/2);
                             roll = rollDice(MAP_MAXROLL(CurrentMap));
                         }
                         pSK.isSenterKecil[idxCurrentPlayer] = FALSE;
@@ -462,7 +472,7 @@ int main () {
             /* Kalo Commandnya SAVE */
             else if (strcmp(command, "SAVE") == 0) {
                 /* Update semua player txt */
-                Save(banyakPemain, mapname, pU, pT, pP, pI, pC, pSB, pSK, pS1, pS2, pS3, pS4);
+                Save(banyakPemain, round, mapname, pU, pT, pP, pI, pC, pSB, pSK, pS1, pS2, pS3, pS4);
                 
                 /* Update semua map txt */
             }
