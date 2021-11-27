@@ -46,7 +46,7 @@ void leaderBoard(pUserName pU, pPosition pP, int idxCurrentPlayer, int banyakPem
 {
     printf("\nCONGRATULATIONS!!\n");
     printf("%s telah mencapai petak terakhir!\n", pU.uname[idxCurrentPlayer]);
-    printf("\nLEADERBOARD\n");
+    printf("\nLEADERBOARD\n"); 
 
     for (int i = 1; i <= banyakPemain; i++) {     
         for (int j = i+1; j < banyakPemain; j++) {     
