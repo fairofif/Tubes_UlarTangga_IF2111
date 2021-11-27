@@ -47,6 +47,7 @@ int main () {
     int loopSkill;
     int buff;
     int x1;
+    char mapname[20];
 
 
     /* CATATAN BUG 
@@ -82,7 +83,14 @@ int main () {
                 inputConfig(&CurrentMap);
                 printConfig(&CurrentMap);
                 start();
+
+                printf("\nNAMA MAPNYA -->> ");
+                printf("%s\n", (*fileconfig));
                 
+                for(int i = 0; i < 20; i++ ) {
+                    mapname[i] = (*fileconfig)[i];
+                }
+
                 /* masukinn jumlah pemain & username pemain2nya */
                 printf("Masukkan jumlah pemain: ");
                 scanf("%d", &banyakPemain);
@@ -454,8 +462,8 @@ int main () {
             /* Kalo Commandnya SAVE */
             else if (strcmp(command, "SAVE") == 0) {
                 /* Update semua player txt */
-                Save(banyakPemain, pU, pT, pP, pI, pC, pSB, pSK, pS1, pS2, pS3, pS4);
-
+                // Save(banyakPemain, pU, pT, pP, pI, pC, pSB, pSK, pS1, pS2, pS3, pS4);
+                printf("%s", mapname);
                 /* Update semua map txt */
             }
 
