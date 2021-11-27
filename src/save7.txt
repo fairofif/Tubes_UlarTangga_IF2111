@@ -1,3 +1,4 @@
+ratrace.txt
 4
 1
 tiu
@@ -29,10 +30,10 @@ soa
 0
 0
 1
-TeknologiGagal
+SenterPengecilHoki
 1
-MesinWaktu
+MesinPenukarPosisi
 1
-TeknologiGagal
+CerminPengganda
 0
 !
