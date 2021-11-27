@@ -71,7 +71,6 @@ pIsSenterBesar pSB, pIsSenterKecil pSK, Skill pS1, Skill pS2, Skill pS3, Skill p
                 fprintf(pfile, "%s\n", skname);
                 P = NEXTSKILL(P);
             }
-            
         }
         else if (i == 2){
             address P = ADDR_HEADSKILL(pS2);

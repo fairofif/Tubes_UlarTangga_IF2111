@@ -23,14 +23,10 @@ void inputConfig(Map *CurrentMap)
     readConfig(CurrentMap);
 }
 
-// void loadConfig(Map *CurrentMap, char filemap[]){
-//     TELEPORT_NEFF(*CurrentMap) = 0;
-//     fileconfig = ;
-//     readConfig(CurrentMap);
-// }
-
-void inputConfigFromLoad(Map *CurrentMap){
+void loadConfig(Map *CurrentMap, char configmap[]){
     TELEPORT_NEFF(*CurrentMap) = 0;
+    fileconfig = &configmap;
+    readConfig(CurrentMap);
 }
 
 void readConfig(Map *CurrentMap)

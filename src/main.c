@@ -48,6 +48,8 @@ int main () {
     int buff;
     int x1;
     char mapname[20];
+    char configmap[20];
+    char hasilconfigmap[20];
 
 
     /* CATATAN BUG 
@@ -140,12 +142,12 @@ int main () {
             else if (strcmp(command, "LOAD") == 0) {
 
                 /* Load player data ke variable2 player */
-                // createEmptyRound(&R);
-                // Load(&banyakPemain, &round, &pU, &pT, &pP, &pI, &pC, &pSB, &pSK, &pS1, &pS2, &pS3, &pS4);
-                // printf("Banyak pemain >> %d\n", banyakPemain);
-                // printf("Round >> %d\n", round);
+                createEmptyRound(&R);
+                Load(&banyakPemain, configmap, &round, &pU, &pT, &pP, &pI, &pC, &pSB, &pSK, &pS1, &pS2, &pS3, &pS4);
+                printf("Banyak pemain >> %d\n", banyakPemain);
+                printf("Round >> %d\n", round);
                 
-                // printSkill(pS1, pS2, pS3, pS4, 1, &nSkill);
+                printSkill(pS1, pS2, pS3, pS4, 1, &nSkill);
 
                 idxCurrentPlayer = 1;
                 /* kasih skill pertama buat pemain 1 */
@@ -172,6 +174,8 @@ int main () {
                 printf("Silahkan bermain %s!\n", pU.uname[idxCurrentPlayer]);
 
                 /* Load map data ke variable2 map */
+                loadConfig(&CurrentMap, configmap);
+                printConfig(&CurrentMap);
 
                 /* Load jumlah pemain dari Neff */
 

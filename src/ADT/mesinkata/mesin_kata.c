@@ -82,59 +82,6 @@ void SalinKata2() { //untuk input semua ke array
 }
 
 int KataToInt (Kata K){
-    // printf("masuk KataToInt\n");
-    // int j = 1; 
-    // while((CC != MARK) && (CC != NEWLINE)) {
-    //     K.TabKata[j] = CC;
-    //     ADV();
-    //     j++;
-    // }
-    // K.Length = j - 1;
-
-    // int i = 0;
-    // int valueue = 0;
-
-    // while (i <= K.Length){
-    //     valueue = valueue * 10;
-    //     switch (K.TabKata[i]){
-    //         case '0' : 
-    //             printf("masuk switch (0)\n");
-    //             valueue += 0; 
-    //             break;
-    //         case '1' : 
-    //             valueue += 1; 
-    //             break;
-    //         case '2' : 
-    //             printf("masuk switch (2)\n");
-    //             valueue += 2; 
-    //             break;
-    //         case '3' : 
-    //             valueue += 3; 
-    //             break;
-    //         case '4' : 
-    //             valueue += 4; 
-    //             break;
-    //         case '5' : 
-    //             valueue += 5; 
-    //             break;
-    //         case '6' : 
-    //             valueue += 6; 
-    //             break;
-    //         case '7' : 
-    //             valueue += 7; 
-    //             break;
-    //         case '8' : 
-    //             valueue += 8; 
-    //             break;
-    //         case '9' : 
-    //             valueue += 9; 
-    //             break;
-    //     };
-    //     i++;
-    // }
-    // printf("berhasil katatoint\n");
-    // return valueue;
-
     int value = 0;
     int i = 0;
     while (i <= K.Length)

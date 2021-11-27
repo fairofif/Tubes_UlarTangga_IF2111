@@ -1,7 +1,7 @@
 #include <sys/stat.h>
 #include "load.h"
 
-int IsfFileExists(char *filename){
+int IsFileExists(char *filename){
     struct stat buffer;
     int exist = stat(filename,&buffer);
     if(exist == 0)
@@ -37,11 +37,12 @@ void unshortenSkillName(char skillName[]){
     }
 }
 
-void Load(int *banyakPemain, int *round, pUserName *pU, pIsTeleported *pT, pPosition *pP, pIsImune *pI, pIsCermin *pC,
+void Load(int *banyakPemain, char *configmap, int *round, pUserName *pU, pIsTeleported *pT, pPosition *pP, pIsImune *pI, pIsCermin *pC,
 pIsSenterBesar *pSB, pIsSenterKecil *pSK, Skill *pS1, Skill *pS2, Skill *pS3, Skill *pS4){
 // KAMUS
     int i, jmlskill, j, k; 
     char filename[100];
+    char configname[20];
     char skname[30];
     char uname[30];
     char skill1[30];
@@ -60,7 +61,7 @@ pIsSenterBesar *pSB, pIsSenterKecil *pSK, Skill *pS1, Skill *pS2, Skill *pS3, Sk
     while(!valid){
         printf("Masukkan nama save file yang ingin diload: ");
         scanf("%s", filename);
-        if(IsfFileExists(filename)){
+        if(IsFileExists(filename)){
             printf("Load file berhasil, selamat bermain!\n");
             valid = TRUE;
         }
@@ -73,8 +74,15 @@ pIsSenterBesar *pSB, pIsSenterKecil *pSK, Skill *pS1, Skill *pS2, Skill *pS3, Sk
     // printf("setelah startkata\n");
     // printf("Kta length >> %d\n", CKata.Length);
 
+    // NAMA MAP
+    for (k=1; k <= CKata.Length; k++){
+        configname[k-1] = CKata.TabKata[k];
+    }
+    strcpy(configmap, configname);
+    printf("file configmap >> %s\n", configmap);
+    ADVKATA2();
 
-
+    // Data game general
     *banyakPemain = KataToInt(CKata);
     ADVKATA2();
     *round = KataToInt(CKata);
@@ -116,15 +124,30 @@ pIsSenterBesar *pSB, pIsSenterKecil *pSK, Skill *pS1, Skill *pS2, Skill *pS3, Sk
 
     // Load skill
     for (i=1; i<=*banyakPemain; i++){
-        printf("masuk loop skill\n");
         jmlskill = KataToInt(CKata); ADVKATA2();
         printf("jumlah skill >> %d\n", jmlskill);
+
+        // if (i == 1){
+        //     for (j=1; j <= jmlskill; j++){ // loop sebanyak jml skill di satu uname
+        //         for (k=1; k <= CKata.Length; k++){
+        //             //strcpy(skill1, CKata.TabKata[k]);
+        //             skill1[k-1] = CKata.TabKata[k];
+        //         }
+        //         strcpy(skname, skill1);
+        //         unshortenSkillName(skname);
+        //         insertVSkill(pS1, skname);
+        //         ADVKATA2();
+        //     }
+        //     address P = ADDR_HEADSKILL(*pS1);
+        //     while (P != 0){
+        //         printf("%s\n", SKILLNAME(P));
+        //         P = NEXTSKILL(P);
+        //     }
+        // }
+
         if (i == 1){
-            printf("Ckata length skill namanya >> %d\n", CKata.Length);
             for (j=1; j <= jmlskill; j++){ // loop sebanyak jml skill di satu uname
-                
                 for (k=1; k <= CKata.Length; k++){
-                    //strcpy(skill1, CKata.TabKata[k]);
                     skill1[k-1] = CKata.TabKata[k];
                 }
                 strcpy(skname, skill1);
