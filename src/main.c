@@ -458,19 +458,24 @@ int main () {
                 printf("\nLEADERBOARD\n");
 
                 for (int i = 1; i <= banyakPemain; i++) {     
-                    for (int j = i+1; j < banyakPemain; j++) {     
-                        if((pP).pos[i] < (pP).pos[j]) {   
-                            int temp;
-                            temp = (pP).pos[i];    
-                            (pP).pos[i] = (pP).pos[j];    
-                            (pP).pos[j] = temp;    
-                        }     
-                    }     
+                    for (int j = i+1; j <= banyakPemain; j++) {     
+                        if((pP.pos[i] < pP.pos[j])){
+                            int tempP;
+                            tempP = pP.pos[i];
+                            pP.pos[i] = pP.pos[j];
+                            pP.pos[j] = tempP;
+
+                            char tempU[16];
+                            strcpy(tempU,pU.uname[i]);
+                            strcpy(pU.uname[i],pU.uname[j]);
+                            strcpy(pU.uname[j],tempU);
+                        }
+                    }  
                 }
 
                 
                 for (int i = 1; i <= banyakPemain; i++) {
-                    printf("%d. %s dengan petak akhir %d\n", i, pU.uname[i], pP.pos[i]);  
+                    printf("%d. %s dengan posisi akhir di %d\n", i, pU.uname[i], pP.pos[i]);  
                 }    
 
                 /*ini kayanya ga langsung stop, tapi ditanya apakah ingin lanjut ke ronde selanjutnya atau udahan*/
