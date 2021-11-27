@@ -47,7 +47,6 @@ int main () {
     int loopSkill;
     int buff;
     int x1;
-    
 
 
     /* CATATAN BUG 
@@ -455,6 +454,7 @@ int main () {
             /* Kalo Commandnya SAVE */
             else if (strcmp(command, "SAVE") == 0) {
                 /* Update semua player txt */
+                Save(banyakPemain, pU, pT, pP, pI, pC, pSB, pSK, pS1, pS2, pS3, pS4);
 
                 /* Update semua map txt */
             }

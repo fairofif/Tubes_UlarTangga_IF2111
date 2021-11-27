@@ -2,7 +2,7 @@
 #define _PLAYER_H
 
 #include "../../console.h"
-#define Nil 0
+#define Nil NULL
  
 typedef int ElType;
 #define IdxMax 4
