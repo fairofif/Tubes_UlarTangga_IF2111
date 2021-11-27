@@ -5,18 +5,19 @@ int inputIndicator = 1; //teleport indikator (mengindikasikan input berupa telpo
 void inputConfig(Map *CurrentMap) 
 {
     char namafile[254];
-    char *dummy = "map1.txt";
     boolean valid = FALSE;
     TELEPORT_NEFF(*CurrentMap) = 0;
 
     while(!valid){
+        printf("\nKONFIGURASI MAP YANG TERSEDIA : \n\n1.RAT-RACE(rat-race.txt) -> Difficulty 9/10, Fun 3/10\n2.FLOOR-ISLAVA(lavafloor.txt) -> Difficulty 6/10, Fun 7/10\n\n"); 
         printf("Masukkan file config txt : ");
         scanf("%s", namafile);
-        if(strcmp(namafile, dummy) == 0) { //ini masih harus ditanya boleh pake strcmp ngga
+        if((strcmp(namafile, "rat-race.txt") == 0) || (strcmp(namafile, "lavafloor.txt") == 0)) {
             fileconfig = &namafile;
             valid = TRUE;
         } else {
-            printf("File tidak ditemukan. HINT : masukin map1.txt (dummy)\n"); 
+            printf("\nMasukkan salah!");
+            printf("\nKONFIGURASI MAP YANG TERSEDIA : \n\n1.RAT-RACE(rat-race.txt) -> Difficulty 9/10, Fun 3/10\n2.FLOOR-ISLAVA(lavafloor.txt) -> Difficulty 6/10, Fun 7/10\n\n"); 
         }
     }
     readConfig(CurrentMap);
@@ -88,7 +89,7 @@ int rollDice(int max)
     while (num == 0) {
         num = rand() % (max+1);
     };
-    printf( "Hasil roll adalah %d \n", num);
+    printf("\nHasil roll adalah %d \n", num);
     return num;
 }
 
@@ -96,10 +97,12 @@ void movePlayer(int roll, int idxCurrentPlayer, Map *CurrentMap, pPosition (*pP)
 {
     int depan = (*pP).pos[idxCurrentPlayer] + roll;
     int belakang = (*pP).pos[idxCurrentPlayer] - roll;
+    int ujungmap = MAP_LENGTH(*CurrentMap);
+    int awalmap = 1;
 
     boolean validMove = FALSE;
     char input[1];
-    if (depan <= 20 && belakang >= 1) {
+    if (depan <= ujungmap && belakang >= awalmap) {
         if (MAP_LAYOUT(*CurrentMap)[depan] == '#') {
             if (MAP_LAYOUT(*CurrentMap)[belakang] == '#') {
                 printf("tidak bisa bergerak! karena di depan dan belakang ada pagar!\n");
@@ -129,14 +132,16 @@ void movePlayer(int roll, int idxCurrentPlayer, Map *CurrentMap, pPosition (*pP)
                 }
             }
         }
-    } else if ((*pP).pos[idxCurrentPlayer] + roll > 20) {
+    } else if (depan > ujungmap && belakang < awalmap) {
+        printf("tidak bisa bergerak! karena hasil roll melebihi layout map!\n");
+    } else if ((*pP).pos[idxCurrentPlayer] + roll > ujungmap) {
         if (MAP_LAYOUT(*CurrentMap)[belakang] == '#') {
             printf("tidak bisa bergerak! karena ke depan lebih dari 20 dan ke belakang ada pagar\n");
         } else {
             (*pP).pos[idxCurrentPlayer] = belakang;
             printf("anda berhasil mundur sebanyak %d petak ke petak %d\n", roll, belakang);
         }
-    } else if ((*pP).pos[idxCurrentPlayer] - roll < 1) {
+    } else if ((*pP).pos[idxCurrentPlayer] - roll < awalmap) {
         if (MAP_LAYOUT(*CurrentMap)[depan] == '#') {
             printf("tidak bisa bergerak! karena ke belakang kurang dari 0 dan ke depan ada pagar!\n");
         } else {

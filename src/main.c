@@ -68,7 +68,7 @@ int main () {
         /* loop sampe input valid */
         inputValid = FALSE;
         while(!inputValid) {
-            printf("Masukkan Command: ");
+            printf("\nMasukkan Command: ");
             strcpy(command, "");
             scanf("%s", command);
         
@@ -159,7 +159,7 @@ int main () {
             /* Prosedur UI In Game */
             
             /* input command */
-            printf("Masukkan Command: ");
+            printf("\nMasukkan Command: ");
             strcpy(command, "");
             scanf("%s", command);
 
@@ -178,11 +178,11 @@ int main () {
                 /* input (int) SKILL yang mau dipake (kalo punya SKILL) */
                 if (nSkill >= 1) {
                     strcpy(command, "");
-                    printf("Jadi menggunakan SKILL? (ya/no): ");
+                    printf("\nJadi menggunakan SKILL? (Y/N): ");
                     scanf("%s", command);
 
-                    if (strcmp(command, "ya") == 0) {
-                        printf("Ingin menggunakan skill No: ");
+                    if (strcmp(command, "Y") == 0) {
+                        printf("\nIngin menggunakan skill No: ");
                         scanf("%d", &pilihanskill);
                 
                         /* salin nama skill yang dipake ke variable */
@@ -255,9 +255,9 @@ int main () {
 
                             /* Perubahan kondisi player yang dimajuin */
                             forceMove(roll, idxPKenaSkill, &CurrentMap, &pP, &pI);
-                            if (getPositionOfPlayer(pP, idxPKenaSkill) > 20) {
+                            if (getPositionOfPlayer(pP, idxPKenaSkill) > MAP_LENGTH(CurrentMap)) {
                                 pP.pos[idxPKenaSkill] = x1;
-                                printf("Tidak bisa pindah, karena roll menghasilkan posisi > 20\n");
+                                printf("Tidak bisa pindah, karena roll menghasilkan posisi > %d\n", MAP_LENGTH(CurrentMap));
                             }
 
                             /* Perubahan kondisi di player */
@@ -480,10 +480,10 @@ int main () {
                         undoLagi = TRUE;
                     }
                     while ((round > 1) && (undoLagi)) {
-                        printf("Apakah ingin undo lagi ke round sebelumnya? (ya/no): ");
+                        printf("Apakah ingin undo lagi ke round sebelumnya? (Y/N): ");
                         strcpy(command, "");
                         scanf("%s", command);
-                        if (strcmp(command, "ya")==0) {
+                        if (strcmp(command, "Y")==0) {
                             undoRound(&R,&pP,&pT,&pI,&pC,&pSB,&pSK,&pS1,&pS2,&pS3,&pS4,banyakPemain);
                             idxCurrentPlayer = banyakPemain;
                             nextPlayer = TRUE;
@@ -574,7 +574,7 @@ int main () {
                     }
 
                 }
-                printf("Silahkan bermain %s!\n", pU.uname[idxCurrentPlayer]);
+                printf("\n|| Silahkan bermain player %s! ||\n", pU.uname[idxCurrentPlayer]);
             }
         }
     }
