@@ -511,6 +511,7 @@ int main () {
             else if (nextPlayer) {
                 ableToRoll = TRUE;
                 pC.isCermin[idxCurrentPlayer] = FALSE;
+                pT.isTele[idxCurrentPlayer] = FALSE;
                 if (idxCurrentPlayer == banyakPemain) {
                     idxCurrentPlayer = 1;
                     pushRound(&R,pP,pT,pI,pC,pSB,pSK,pS1,pS2,pS3,pS4,banyakPemain);
@@ -577,5 +578,5 @@ int main () {
             }
         }
     }
-    printf("SELAMAT %s MENANG!!!\n", pU.uname[idxCurrentPlayer]);
+    leaderBoard(pU, pP, idxCurrentPlayer, banyakPemain);
 }

@@ -229,7 +229,7 @@ void teleport (int idxCurrentPlayer, Map *CurrentMap, pPosition *pP, pIsImune *p
                 if(strcmp(use, "N")==0) {
                     for(int i = 0; i < TELEPORT_COUNT(*CurrentMap); i++){
                         if (((*pP).pos[idxCurrentPlayer]) == (TELEPORT_LAYOUT(*CurrentMap)[IdxTeleIn])){
-                            (*pT).isTele[idxCurrentPlayer] == TRUE;
+                            (*pT).isTele[idxCurrentPlayer] = TRUE;
                             (*pP).pos[idxCurrentPlayer] = TELEPORT_LAYOUT(*CurrentMap)[IdxTeleOut];
                         }
                     IdxTeleIn += 2;
@@ -244,7 +244,7 @@ void teleport (int idxCurrentPlayer, Map *CurrentMap, pPosition *pP, pIsImune *p
                 printf("Kamu tidak memiliki anti-teleport, posisi Anda akan dipindahkan \n");
                 for(int i = 0; i < TELEPORT_COUNT(*CurrentMap); i++){
                     if (((*pP).pos[idxCurrentPlayer]) == (TELEPORT_LAYOUT(*CurrentMap)[IdxTeleIn])){
-                        (*pT).isTele[idxCurrentPlayer] == TRUE;
+                        (*pT).isTele[idxCurrentPlayer] = TRUE;
                         (*pP).pos[idxCurrentPlayer] = TELEPORT_LAYOUT(*CurrentMap)[IdxTeleOut];
                     }
                     IdxTeleIn += 2;

@@ -9,4 +9,6 @@ void start();
 
 void help();
 
+void leaderBoard(pUserName pU, pPosition pP, int idxCurrentPlayer, int banyakPemain);
+
 #endif

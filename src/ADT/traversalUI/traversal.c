@@ -41,3 +41,25 @@ void help()
     printf("| EXIT	  : Keluar dari permainan                                                        | \n");
     printf("+----------------------------------------------------------------------------------------+ \n");
 };
+
+void leaderBoard(pUserName pU, pPosition pP, int idxCurrentPlayer, int banyakPemain)
+{
+    printf("\nCONGRATULATIONS!!\n");
+    printf("%s telah mencapai petak terakhir!\n", pU.uname[idxCurrentPlayer]);
+    printf("\nLEADERBOARD\n");
+
+    for (int i = 1; i <= banyakPemain; i++) {     
+        for (int j = i+1; j < banyakPemain; j++) {     
+            if((pP).pos[i] < (pP).pos[j]) {   
+                int temp;
+                temp = (pP).pos[i];    
+                (pP).pos[i] = (pP).pos[j];    
+                (pP).pos[j] = temp;    
+            }     
+        }     
+    }
+
+    for (int i = 1; i <= banyakPemain; i++) {
+        printf("%d. %s dengan petak akhir %d\n", i, pU.uname[i], pP.pos[i]);  
+    }   
+}
