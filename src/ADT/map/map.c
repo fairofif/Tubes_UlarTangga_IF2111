@@ -17,7 +17,7 @@ void inputConfig(Map *CurrentMap)
             valid = TRUE;
         } else {
             printf("\nMasukkan salah!");
-            printf("\nKONFIGURASI MAP YANG TERSEDIA : \n\n1.RAT-RACE(rat-race.txt) -> Difficulty 9/10, Fun 3/10\n2.FLOOR-ISLAVA(lavafloor.txt) -> Difficulty 6/10, Fun 7/10\n\n"); 
+            printf("\nKONFIGURASI MAP YANG TERSEDIA : \n\n1.RAT-RACE(ratrace.txt) -> Difficulty 9/10, Fun 3/10\n2.FLOOR-ISLAVA(lavafloor.txt) -> Difficulty 6/10, Fun 7/10\n\n"); 
         }
     }
     readConfig(CurrentMap);
