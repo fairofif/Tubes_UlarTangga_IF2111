@@ -144,11 +144,17 @@ int main () {
                 /* Load player data ke variable2 player */
                 createEmptyRound(&R);
                 Load(&banyakPemain, configmap, &round, &pU, &pT, &pP, &pI, &pC, &pSB, &pSK, &pS1, &pS2, &pS3, &pS4);
+                loadConfig(&CurrentMap, configmap);
+                for(int i = 0; i < 20; i++ ){
+                    (*fileconfig)[i] = configmap[i];
+                }
+                printConfig(&CurrentMap);
+                
                 printf("Banyak pemain >> %d\n", banyakPemain);
                 printf("Round >> %d\n", round);
                 
                 printSkill(pS1, pS2, pS3, pS4, 1, &nSkill);
-
+                
                 idxCurrentPlayer = 1;
                 /* kasih skill pertama buat pemain 1 */
                 srand(time(0));
@@ -174,8 +180,7 @@ int main () {
                 printf("Silahkan bermain %s!\n", pU.uname[idxCurrentPlayer]);
 
                 /* Load map data ke variable2 map */
-                loadConfig(&CurrentMap, configmap);
-                printConfig(&CurrentMap);
+                
 
                 /* Load jumlah pemain dari Neff */
 
