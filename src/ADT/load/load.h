@@ -8,8 +8,12 @@ pIsSenterBesar *pSB, pIsSenterKecil *pSK, Skill *pS1, Skill *pS2, Skill *pS3, Sk
 /*  Me-load kondisi game yang sudah disimpan sebelumnya
     n: jumlah player */
 
-int IsFileExists(char *filename);
+boolean IsFileExists(char *filename);
+/*  Mengecek apakah file save ditemukan 
+    F.S. : TRUE jika file ditemukan, FALSE jika tidak ditemukan */
 
 void unshortenSkillName(char skillName[]);
+/*  Mengubah nama skill dari file save menjadi nama sebenarnya
+    F.S. : nama skill menjadi nama sebenarnya, tiap kata dipisah dengan BLANK */
 
 #endif

@@ -9,6 +9,14 @@ void welcome()
     printf(" /        \\  ___/|  |__/ __ \\|  Y Y  \\/ __ \\|  |    |    `   \\/ __ \\|  |  / __ \\|   |  \\/ /_/ |    \n");
     printf("/_______  /\\___  >____(____  /__|_|  (____  /__|   /_______  (____  /__| (____  /___|  /\\___  /     \n");
     printf("        \\/     \\/          \\/      \\/     \\/               \\/     \\/          \\/     \\//_____/\n");
+    printf("\n");
+    printf("/-------------------------------------------------------------------------------------------/|\n");
+    printf("+------------------------------------------------------------------------------------------+ |\n");
+    printf("| Masukkan command LOAD untuk memulai permainan dari penyimpanan terakhir                  | |\n");
+    printf("| Masukkan command NEWGAME untuk memulai permainan baru                                    | |\n");
+    printf("| Masukkan command HELP untuk memunculkan command bantuan                                  | |\n");
+    printf("| Masukkan command EXIT untuk keluar dari permainan                                        | /\n");
+    printf("+------------------------------------------------------------------------------------------+\n");
 };
 
 void start()

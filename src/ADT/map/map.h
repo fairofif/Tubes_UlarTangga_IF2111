@@ -41,6 +41,11 @@ void inputConfig(Map *CurrentMap);
    F.S. : fpointer menunjuk pada file yang akan digunakan sebagai file konfigurasi
           input */
 
+void loadConfig(Map *CurrentMap, char configmap[]);
+/*  Memasukkan nama configmap yang akan di load
+    I.S. : nama map sudah terdefinisi
+    F.S. : fpointer menunjuk pada file yang akan digunakan sebagai file konfigurasi*/
+
 void readConfig(Map *CurrentMap);
 /* Membaca teks pada file txt dari nama file konfigurasi yang dipilih.
     I.S. : tidak ada nilai yang disimpan
