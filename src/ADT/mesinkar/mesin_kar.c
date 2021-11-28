@@ -19,7 +19,6 @@ void START() {
           Jika CC = MARK maka EOP akan menyala (true) */
 
     /* Algoritma */
-    printf("masuk sini ga (start open config)\n");
     pita = fopen(*fileconfig, "r");
     ADV(); // 4
 }

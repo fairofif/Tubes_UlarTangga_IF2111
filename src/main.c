@@ -157,7 +157,7 @@ int main () {
             
                 
                 idxCurrentPlayer = 1;
-                 printf("||  round %d   ||\n, round");
+                printf("||  round %d   ||\n, round");
 
                 /* kasih skill pertama buat pemain 1 */
                 srand(time(0));

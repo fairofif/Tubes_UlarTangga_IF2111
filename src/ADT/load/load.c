@@ -77,7 +77,6 @@ pIsSenterBesar *pSB, pIsSenterKecil *pSK, Skill *pS1, Skill *pS2, Skill *pS3, Sk
         configname[k-1] = CKata.TabKata[k];
     }
     strcpy(configmap, configname);
-    printf("file configmap >> %s\n", configmap);
     ADVKATA2();
 
     // Data game general
