@@ -50,6 +50,7 @@ int main () {
     char mapname[20];
     char configmap[20];
     char hasilconfigmap[20];
+    boolean adajuara;
 
 
     /* CATATAN BUG 
@@ -82,6 +83,7 @@ int main () {
             /* Kalo new game */
             else if (strcmp(command, "NEWGAME") == 0) {
                 /* Input file konfigurasi map yang mau dipake */
+                adajuara = TRUE;
                 inputConfig(&CurrentMap);
                 for(int i = 0; i < 20; i++ ) {
                     mapname[i] = (*fileconfig)[i];
@@ -139,11 +141,13 @@ int main () {
                 /* stopProgram jadi TRUE */
                 stopProgram = TRUE;
                 inputValid = TRUE;
+                adajuara = FALSE;
             }
 
             /* Kalo load game */
             else if (strcmp(command, "LOAD") == 0) {
-
+                
+                adajuara = TRUE;
                 /* Load player data ke variable2 player */
                 createEmptyRound(&R);
                 Load(&banyakPemain, configmap, &round, &pU, &pT, &pP, &pI, &pC, &pSB, &pSK, &pS1, &pS2, &pS3, &pS4);
@@ -208,6 +212,11 @@ int main () {
             if (strcmp(command, "HELP") == 0) {
                 help();
                 /* Tunjukin command2 yang ada di In Game */
+            }
+
+            else if (strcmp(command, "EXIT") == 0) {
+                stopProgram = TRUE;
+                adajuara = FALSE;
             }
             
             /* Kalo commandnya SKILL */
@@ -438,7 +447,8 @@ int main () {
                 // showMap(array of char username, idx posisi player);
 
             }
-
+            
+            
             /* Kalo Commandnya BUFF */
             else if (strcmp(command, "BUFF") == 0) {
                 buff = 0;
@@ -633,5 +643,5 @@ int main () {
             }
         }
     }
-    leaderBoard(pU, pP, idxCurrentPlayer, banyakPemain);
+    leaderBoard(pU, pP, idxCurrentPlayer, banyakPemain, adajuara);
 }

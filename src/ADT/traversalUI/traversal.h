@@ -9,6 +9,6 @@ void start();
 
 void help();
 
-void leaderBoard(pUserName pU, pPosition pP, int idxCurrentPlayer, int banyakPemain);
+void leaderBoard(pUserName pU, pPosition pP, int idxCurrentPlayer, int banyakPemain, boolean adajuara);
 
 #endif

@@ -50,11 +50,13 @@ void help()
     printf("+----------------------------------------------------------------------------------------+ \n");
 };
 
-void leaderBoard(pUserName pU, pPosition pP, int idxCurrentPlayer, int banyakPemain)
+void leaderBoard(pUserName pU, pPosition pP, int idxCurrentPlayer, int banyakPemain, boolean adajuara)
 {
-    printf("\nCONGRATULATIONS!!\n");
-    printf("%s telah mencapai petak terakhir!\n", pU.uname[idxCurrentPlayer]);
     
+    if (adajuara) {
+        printf("\nCONGRATULATIONS!!\n");
+        printf("%s telah mencapai petak terakhir!\n", pU.uname[idxCurrentPlayer]);
+    }
     /* Sort Leaderboard berdasarkan posisi akhir */
     for (int i = 1; i <= banyakPemain; i++) {     
         for (int j = i+1; j <= banyakPemain; j++) {     
