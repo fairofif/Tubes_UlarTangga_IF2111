@@ -1,10 +1,9 @@
 #include "../../console.h"
+#include "getfileconfig.c"
+#include "getmap.h"
 
-
-int main()
-{   
-    char dummy[] = "Dito";
-    inputConfig(); 
-    showMap(dummy ,4);
-    return 0;
+void main(){
+    Map CurrentMap;
+    inputConfig(&CurrentMap);
+    printConfig(&CurrentMap);
 }

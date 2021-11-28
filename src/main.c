@@ -19,12 +19,16 @@ int main () {
     /* Declare variable map */
     Map CurrentMap;
 
+    // Declare variable round //
+    Round R;
+
     /* Declare main variable */
     boolean stopProgram;
     boolean stopGame;
     boolean nextPlayer;
     boolean inputValid;
     boolean ableToRoll;
+    boolean undoLagi;
     int banyakPemain;
     int roll;
     int idxCurrentPlayer;
@@ -43,7 +47,9 @@ int main () {
     int loopSkill;
     int buff;
     int x1;
-    
+    char mapname[20];
+    char configmap[20];
+    char hasilconfigmap[20];
 
 
     /* CATATAN BUG 
@@ -54,6 +60,7 @@ int main () {
 
 
     /* loop program */
+    stopGame = TRUE;
     stopProgram = FALSE;
     while (!stopProgram) {
         /* Prosedur UI Main Menu */
@@ -63,7 +70,7 @@ int main () {
         /* loop sampe input valid */
         inputValid = FALSE;
         while(!inputValid) {
-            printf("Masukkan Command: ");
+            printf("\nMasukkan Command: ");
             strcpy(command, "");
             scanf("%s", command);
         
@@ -76,40 +83,55 @@ int main () {
             else if (strcmp(command, "NEWGAME") == 0) {
                 /* Input file konfigurasi map yang mau dipake */
                 inputConfig(&CurrentMap);
+                for(int i = 0; i < 20; i++ ) {
+                    mapname[i] = (*fileconfig)[i];
+                }
                 printConfig(&CurrentMap);
                 start();
-                
+
                 /* masukinn jumlah pemain & username pemain2nya */
-                printf("Masukkan jumlah pemain: ");
-                scanf("%d", &banyakPemain);
+                while(banyakPemain < 2 || banyakPemain > 4) {
+                    printf("Masukkan jumlah pemain: ");
+                    scanf("%d", &banyakPemain);
+                }
+                
                 preparationSkillList(&pS1,&pS2,&pS3,&pS4, banyakPemain);
                 createEmptyPlayerList(&pU);
                 summonPlayer(&pU, &pT, &pP, &pI, &pC, &pSB, &pSK, banyakPemain);
 
-                /* kasih skill pertama buat para pemain */
-                srand(time(0));
-                for (int i = 1; i <= (banyakPemain*10); i++) {
-                    loopSkill = (i%banyakPemain) + 1;
-                    strcpy(getSkill, "");
-                    randomSkillGenerator(getSkill);
-                    if (loopSkill == 1) {
-                        insertVSkill(&pS1, getSkill);
-                    }
-                    else if (loopSkill == 2) {
-                        insertVSkill(&pS2, getSkill);
-                    }
-                    else if (loopSkill == 3) {
-                        insertVSkill(&pS3, getSkill);
-                    }
-                    else if (loopSkill == 4) {
-                        insertVSkill(&pS4, getSkill);
-                    }
-                }
-
+                
                 /* set idxPlayer ke 1 */
                 idxCurrentPlayer = 1;
+                createEmptyRound(&R);
                 round = 1;
                 inputValid = TRUE;
+                stopGame = FALSE;
+                printf("\n||| ROUND %d  |||\n\n", round);
+
+                /* kasih skill pertama buat pemain 1 */
+                srand(time(0));
+                if (banyaknyaSkill(pS1,pS2,pS3,pS4, idxCurrentPlayer) < 10) {
+                    strcpy(getSkill, "");
+                    randomSkillGenerator(getSkill);
+                    if (idxCurrentPlayer == 1) {
+                        insertVSkill(&pS1, getSkill);
+                    }
+                    else if (idxCurrentPlayer == 2) {
+                        insertVSkill(&pS2, getSkill);
+                    }
+                    else if (idxCurrentPlayer == 3) {
+                        insertVSkill(&pS3, getSkill);
+                    }
+                    else if (idxCurrentPlayer == 4) {
+                        insertVSkill(&pS4, getSkill);
+                    }
+                    printf("Bonus Pre-Turn Round %d: ", round);
+                    printf("%s berhasil ditambahkan ke %s\n", getSkill, pU.uname[idxCurrentPlayer]);
+                }
+
+                
+
+                printf("Silahkan bermain %s!\n", pU.uname[idxCurrentPlayer]);
             }
 
             /* Kalo Exit */
@@ -123,13 +145,51 @@ int main () {
             else if (strcmp(command, "LOAD") == 0) {
 
                 /* Load player data ke variable2 player */
+                createEmptyRound(&R);
+                Load(&banyakPemain, configmap, &round, &pU, &pT, &pP, &pI, &pC, &pSB, &pSK, &pS1, &pS2, &pS3, &pS4);
+                loadConfig(&CurrentMap, configmap);
+                for(int i = 0; i < 20; i++ ){
+                    (*fileconfig)[i] = configmap[i];
+                }
+                printConfig(&CurrentMap);
+                
+                printf("Banyak pemain >> %d\n", banyakPemain);
+                printf("Round >> %d\n", round);
+                
+                printSkill(pS1, pS2, pS3, pS4, 1, &nSkill);
+                
+                idxCurrentPlayer = 1;
+                /* kasih skill pertama buat pemain 1 */
+                srand(time(0));
+                if (banyaknyaSkill(pS1,pS2,pS3,pS4, idxCurrentPlayer) < 10) {
+                    strcpy(getSkill, "");
+                    randomSkillGenerator(getSkill);
+                    if (idxCurrentPlayer == 1) {
+                        insertVSkill(&pS1, getSkill);
+                    }
+                    else if (idxCurrentPlayer == 2) {
+                        insertVSkill(&pS2, getSkill);
+                    }
+                    else if (idxCurrentPlayer == 3) {
+                        insertVSkill(&pS3, getSkill);
+                    }
+                    else if (idxCurrentPlayer == 4) {
+                        insertVSkill(&pS4, getSkill);
+                    }
+                    printf("Bonus Pre-Turn Round %d: ", round);
+                    printf("%s berhasil ditambahkan ke %s\n", getSkill, pU.uname[idxCurrentPlayer]);
+                }
+
+                printf("Silahkan bermain %s!\n", pU.uname[idxCurrentPlayer]);
 
                 /* Load map data ke variable2 map */
+                
 
                 /* Load jumlah pemain dari Neff */
 
                 /* Load idxCurrentPlayer terakhir */
                 inputValid = TRUE;
+                stopGame = FALSE;
             }
 
             else {
@@ -137,16 +197,14 @@ int main () {
             }
         }      
         
-        stopGame = FALSE;
         ableToRoll = TRUE;
-        printf("Silahkan bermain %s!\n", pU.uname[idxCurrentPlayer]);
         while ((!stopGame) && (!stopProgram)) {
             nextPlayer = FALSE;
             
             /* Prosedur UI In Game */
-
+            
             /* input command */
-            printf("Masukkan Command: ");
+            printf("\nMasukkan Command: ");
             strcpy(command, "");
             scanf("%s", command);
 
@@ -165,11 +223,17 @@ int main () {
                 /* input (int) SKILL yang mau dipake (kalo punya SKILL) */
                 if (nSkill >= 1) {
                     strcpy(command, "");
-                    printf("Jadi menggunakan SKILL? (ya/no): ");
+                    printf("\nJadi menggunakan SKILL? (Y/N): ");
                     scanf("%s", command);
+                    while (strcmp(command, "Y") != 0 && strcmp(command, "N") != 0) {
+                        printf("Input salah, masukan Y/N.\n");
+                        strcpy(command, "");
+                        printf("\nJadi menggunakan SKILL? (Y/N): ");
+                        scanf("%s", command);
+                    }
 
-                    if (strcmp(command, "ya") == 0) {
-                        printf("Ingin menggunakan skill No: ");
+                    if (strcmp(command, "Y") == 0) {
+                        printf("\nIngin menggunakan skill No: ");
                         scanf("%d", &pilihanskill);
                 
                         /* salin nama skill yang dipake ke variable */
@@ -193,9 +257,18 @@ int main () {
                         /* Kalo SKILL == "Mesin Waktu" */
                         else if (strcmp(skname, "Mesin Waktu") == 0) {
                             /* Masukin username yang mau dimundurin */
+                            printf("Daftar Pemain: \n");
+                            for (int i = 1; i <= banyakPemain; i++) {
+                                printf("%d. %s\n", i, pU.uname[i]);
+                            }
                             printf("Masukkan username pemain untuk dimundurin: ");
                             strcpy(uname, "");
                             scanf("%s", uname);
+                            while (strcmp(uname, pU.uname[idxCurrentPlayer])==0) {
+                                printf("Hanya bisa memindahkan player lain.\nMasukkan username pemain untuk dimajuin: ");
+                                strcpy(uname, "");
+                                scanf("%s", uname);
+                            }
                             idxPKenaSkill = getIdxOfPlayer(pU, uname);
                             
                             /* roll dadu dulu */
@@ -220,9 +293,18 @@ int main () {
                         /* Kalo SKILL == "Baling Baling Jambu" */
                         else if (strcmp(skname, "Baling Baling Jambu") == 0) {
                             /* Masukin username yang mau dimajuin */
+                            printf("Daftar Pemain: \n");
+                            for (int i = 1; i <= banyakPemain; i++) {
+                                printf("%d. %s\n", i, pU.uname[i]);
+                            }
                             printf("Masukkan username pemain untuk dimajuin: ");
                             strcpy(uname, "");
                             scanf("%s", uname);
+                            while (strcmp(uname, pU.uname[idxCurrentPlayer])==0) {
+                                printf("Hanya bisa memindahkan player lain.\nMasukkan username pemain untuk dimajuin: ");
+                                strcpy(uname, "");
+                                scanf("%s", uname);
+                            }
                             idxPKenaSkill = getIdxOfPlayer(pU, uname);
                      
                             /* roll dulu gan */
@@ -232,9 +314,9 @@ int main () {
 
                             /* Perubahan kondisi player yang dimajuin */
                             forceMove(roll, idxPKenaSkill, &CurrentMap, &pP, &pI);
-                            if (getPositionOfPlayer(pP, idxPKenaSkill) > 20) {
+                            if (getPositionOfPlayer(pP, idxPKenaSkill) > MAP_LENGTH(CurrentMap)) {
                                 pP.pos[idxPKenaSkill] = x1;
-                                printf("Tidak bisa pindah, karena roll menghasilkan posisi > 20\n");
+                                printf("Tidak bisa pindah, karena roll menghasilkan posisi > %d\n", MAP_LENGTH(CurrentMap));
                             }
 
                             /* Perubahan kondisi di player */
@@ -317,6 +399,11 @@ int main () {
                             printf("Masukkan username pemain untuk ditukar posisi: ");
                             strcpy(uname, "");
                             scanf("%s", uname);
+                            while (strcmp(uname, pU.uname[idxCurrentPlayer])==0) {
+                                printf("Hanya bisa tukar tempat dengan player lain.\nMasukkan username pemain untuk dimajuin: ");
+                                strcpy(uname, "");
+                                scanf("%s", uname);
+                            }
                             idxPKenaSkill = getIdxOfPlayer(pU, uname);
 
                             /* Perubahan kondisi player yang ditukar posisi */
@@ -391,21 +478,21 @@ int main () {
                 prevPos = getPositionOfPlayer(pP, idxCurrentPlayer);
                 if(ableToRoll) {
                     if (getSenterBesarConditionOfPlayer(pSB, idxCurrentPlayer)){
-                        printf("Anda memiliki Buff Senter Besar, roll akan >= 5\n");
+                        printf("Anda memiliki Buff Senter Besar, roll akan >= %d\n", MAP_MAXROLL(CurrentMap)/2);
                         srand(time(0));
                         roll = rollDice(MAP_MAXROLL(CurrentMap));
                         while (roll < (MAP_MAXROLL(CurrentMap)/2)) {
-                            printf("Karena roll < 5, maka roll diulang otomatis...\n");
+                            printf("Karena roll < %d, maka roll diulang otomatis...\n", MAP_MAXROLL(CurrentMap)/2);
                             roll = rollDice(MAP_MAXROLL(CurrentMap));
                         }
                         pSB.isSenterBesar[idxCurrentPlayer] = FALSE;
                     }
                     else if (getSenterKecilConditionOfPlayer(pSK, idxCurrentPlayer)){
-                        printf("Anda memiliki Buff Senter Kecil, roll akan <= 5\n");
+                        printf("Anda memiliki Buff Senter Kecil, roll akan <= %d\n", MAP_MAXROLL(CurrentMap)/2);
                         srand(time(0));
                         roll = rollDice(MAP_MAXROLL(CurrentMap));
                         while (roll > (MAP_MAXROLL(CurrentMap)/2)) {
-                            printf("Karena roll > 5, maka roll diulang otomatis...\n");
+                            printf("Karena roll > %d, maka roll diulang otomatis...\n", MAP_MAXROLL(CurrentMap)/2);
                             roll = rollDice(MAP_MAXROLL(CurrentMap));
                         }
                         pSK.isSenterKecil[idxCurrentPlayer] = FALSE;
@@ -427,7 +514,8 @@ int main () {
             /* Kalo Commandnya SAVE */
             else if (strcmp(command, "SAVE") == 0) {
                 /* Update semua player txt */
-
+                Save(banyakPemain, round, mapname, pU, pT, pP, pI, pC, pSB, pSK, pS1, pS2, pS3, pS4);
+                
                 /* Update semua map txt */
             }
 
@@ -443,62 +531,112 @@ int main () {
 
             /* Kalo Commandnya UNDO */
             else if (strcmp(command, "UNDO") == 0) {
-                /* ini kita yang meninggal sebagai developer */
-
+                if (round > 1) {    
+                    undoRound(&R,&pP,&pT,&pI,&pC,&pSB,&pSK,&pS1,&pS2,&pS3,&pS4,banyakPemain);
+                    idxCurrentPlayer = banyakPemain;
+                    nextPlayer = TRUE;
+                    round--;
+                    if (round > 1) {
+                        undoLagi = TRUE;
+                    }
+                    while ((round > 1) && (undoLagi)) {
+                        printf("Apakah ingin undo lagi ke round sebelumnya? (Y/N): ");
+                        strcpy(command, "");
+                        scanf("%s", command);
+                        if (strcmp(command, "Y")==0) {
+                            undoRound(&R,&pP,&pT,&pI,&pC,&pSB,&pSK,&pS1,&pS2,&pS3,&pS4,banyakPemain);
+                            idxCurrentPlayer = banyakPemain;
+                            nextPlayer = TRUE;
+                            round--;
+                        }
+                        else {
+                            undoLagi = FALSE;
+                        }
+                    }
+                }
+                else {
+                    printf("Minimal berada di Round 2 untuk melakukan UNDO.\n");
+                }
             }
 
             else {
                 printf("ERROR!! masukkan input command yang benar\n<HELP/SKILL/MAP/BUFF/INSPECT/ROLL/SAVE/UNDO/ENDTURN>\n");
             }
 
-            /* Leaderboard jika sudah ada yang menang */
-            if ((pP).pos[idxCurrentPlayer] == MAP_LENGTH(CurrentMap)){
-                printf("\nCONGRATULATIONS!!\n");
-                printf("%s telah mencapai petak terakhir!\n", pU.uname[idxCurrentPlayer]);
-                printf("\nLEADERBOARD\n");
-
-                for (int i = 1; i <= banyakPemain; i++) {     
-                    for (int j = i+1; j <= banyakPemain; j++) {     
-                        if((pP.pos[i] < pP.pos[j])){
-                            int tempP;
-                            tempP = pP.pos[i];
-                            pP.pos[i] = pP.pos[j];
-                            pP.pos[j] = tempP;
-
-                            char tempU[16];
-                            strcpy(tempU,pU.uname[i]);
-                            strcpy(pU.uname[i],pU.uname[j]);
-                            strcpy(pU.uname[j],tempU);
-                        }
-                    }  
-                }
-
-                
-                for (int i = 1; i <= banyakPemain; i++) {
-                    printf("%d. %s dengan posisi akhir di %d\n", i, pU.uname[i], pP.pos[i]);  
-                }    
-
-                /*ini kayanya ga langsung stop, tapi ditanya apakah ingin lanjut ke ronde selanjutnya atau udahan*/
-                stopProgram = TRUE;
-            }
-
             /* ini buat gantian giliran player */
-            if (getPositionOfPlayer(pP, idxCurrentPlayer) == 20) {
+            if (getPositionOfPlayer(pP, idxCurrentPlayer) == MAP_LENGTH(CurrentMap)) {
                 stopGame = TRUE;
                 stopProgram = TRUE;
             } 
             else if (nextPlayer) {
                 ableToRoll = TRUE;
                 pC.isCermin[idxCurrentPlayer] = FALSE;
+                pT.isTele[idxCurrentPlayer] = FALSE;
                 if (idxCurrentPlayer == banyakPemain) {
                     idxCurrentPlayer = 1;
+                    pushRound(&R,pP,pT,pI,pC,pSB,pSK,pS1,pS2,pS3,pS4,banyakPemain);
                     round++;
+                    printf("\n||| ROUND %d  |||\n\n", round);
+
                 }
                 else {
                     idxCurrentPlayer++;
                 }
-                printf("Silahkan bermain %s!\n", pU.uname[idxCurrentPlayer]);
+                
+                if (banyaknyaSkill(pS1,pS2,pS3,pS4, idxCurrentPlayer) < 10) {
+                    strcpy(getSkill, "");
+                    srand(time(0));
+                    randomSkillGenerator(getSkill);
+                    if (idxCurrentPlayer == 1) {
+                        insertVSkill(&pS1, getSkill);
+                    }
+                    else if (idxCurrentPlayer == 2) {
+                        insertVSkill(&pS2, getSkill);
+                    }
+                    else if (idxCurrentPlayer == 3) {
+                        insertVSkill(&pS3, getSkill);
+                    }
+                    else if (idxCurrentPlayer == 4) {
+                        insertVSkill(&pS4, getSkill);
+                    }
+                    printf("Bonus Pre-Turn Round %d: ", round);
+                    printf("%s berhasil ditambahkan ke %s\n", getSkill, pU.uname[idxCurrentPlayer]);
+                }
+                else {
+                    printSkill(pS1,pS2,pS3,pS4, idxCurrentPlayer, &nSkill);
+                    printf("Inventory Skill penuh. Apakah mau menghapus salah satu skill untuk mendapat bonus round skill? (ya/no): ");
+                    strcpy(command, "");
+                    scanf("%s", command);
+                    if (strcmp(command, "ya") == 0) {
+                        printf("Pilih no skill yang akan dihapus: ");
+                        scanf("%d", &skillDelete);
+                        deleteSkill(&pS1,&pS2,&pS3,&pS4, idxCurrentPlayer, skillDelete);
+                        strcpy(getSkill, "");
+                        srand(time(0));
+                        randomSkillGenerator(getSkill);
+                        if (idxCurrentPlayer == 1) {
+                            insertVSkill(&pS1, getSkill);
+                        }
+                        else if (idxCurrentPlayer == 2) {
+                            insertVSkill(&pS2, getSkill);
+                        }
+                        else if (idxCurrentPlayer == 3) {
+                            insertVSkill(&pS3, getSkill);
+                        }
+                        else if (idxCurrentPlayer == 4) {
+                            insertVSkill(&pS4, getSkill);
+                        }
+                        printf("Bonus Pre-Turn Round %d: ", round);
+                        printf("%s berhasil ditambahkan ke %s\n", getSkill, pU.uname[idxCurrentPlayer]);
+                    }
+                    else {
+                        printf("Tidak menerima bonus turn round.\n");
+                    }
+
+                }
+                printf("\n|| Silahkan bermain player %s! ||\n", pU.uname[idxCurrentPlayer]);
             }
         }
     }
+    leaderBoard(pU, pP, idxCurrentPlayer, banyakPemain);
 }

@@ -27,4 +27,10 @@ void ADV();
           CC mungkin = MARK
           Jika  CC = MARK maka EOP akan menyala (true) */
 
+void START2(char *namafile);
+
+void ADV2();
+
+
+
 #endif

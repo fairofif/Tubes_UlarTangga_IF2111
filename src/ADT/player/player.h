@@ -59,10 +59,8 @@ void createEmptyPlayerList (pUserName *pU);
     I.S. array pU sembarang
     F.S. array pU kosong
 */
-void createEmptyPlayerSkillslList (Skill *S);
+void createEmptyPlayerSkillsList (Skill *S);
 /*
-    S adalah Sebuah linked list yang dapat diakses dari array pSkill dengan cara
-    (*S).sk[idxPlayer]
     I.S Linked List S sembarang
     F.S Linked List S kosong
 */
@@ -74,25 +72,35 @@ address newSkillNode ();
 void preparationSkillList (Skill *pS1, Skill *pS2, Skill *pS3, Skill *pS4, int n);
 /*
     I.S     sembarang
-    F.S semua list player skill kosong
+    F.S     semua list player skill kosong
 */
  
 void printSkill (Skill pS1, Skill pS2, Skill pS3, Skill pS4, int idxP, int *nSkill);
- 
+ /*
+    prosedur print semua skill yang dimiliki player dengan index idxP
+ */
 int banyaknyaSkill (Skill pS1, Skill pS2, Skill pS3, Skill pS4, int idxP);
- 
+/*
+    fungsi untuk return banyaknya skill dari player dengan index idxP
+*/
 int returnIdxSkill (Skill pS1, Skill pS2, Skill pS3, Skill pS4, int idxP, char *skName);
- 
+/*
+    fungsi return index dari skill dengan nama sama dengan skName di player dengan index idxP
+*/
 boolean isSkillExists (Skill pS1, Skill pS2, Skill pS3, Skill pS4, int idxP, char *skName);
- 
+/*
+    fungsi untuk mengecek apakah skill skName ada di list Skill player dengan index idxP
+*/
 void deleteSkill (Skill *pS1, Skill *pS2, Skill *pS3, Skill *pS4, int idxP, int idxS);
- 
+/*
+    menghapus skill dengan index skill idxS di list skill player dengan index idxP
+*/
 void summonPlayer(pUserName *pU, pIsTeleported *pT, pPosition *pP, pIsImune *pI, pIsCermin *pC,
 pIsSenterBesar *pSB, pIsSenterKecil *pSK, int n);
 /*
     Prosedur untuk membuat list pemain sebanyak n pemain
-    I.S array pU, pT, pP, pI kosong
-    F.S array pU, pT, pP, pI terisi informasi kondisi awal permainan sebanyak n
+    I.S array pU, pT, pP, pI, pC, pSB, pSK kosong
+    F.S array pU, pT, pP, pI, pC, pSB, pSK terisi informasi kondisi awal permainan sebanyak n
         pU.uname[ indexPlayer ] terisi inputan
 */
 int getIdxOfPlayer (pUserName pU, char *name);
@@ -102,7 +110,7 @@ int getIdxOfPlayer (pUserName pU, char *name);
 */
 void insertVSkill (Skill *pS, char *skname);
 /*
-    Prosedur menambahkan skill ke salah satu linked list skill
+    Prosedur menambahkan skill skname ke linked list pS
     I.S linked list sembarang
     F.S jika linked list < 10 akan ditambahkan skill
         Jika penuh Skill  akan tetap
@@ -113,46 +121,53 @@ boolean isEmptyList (Skill pS);
 */
 boolean getTeleportedConditionOfPlayer (pIsTeleported pT, int idx);
 /*
-    Fungsi untuk mendapatkan informasi kondisi pemain dengan username uname, apakah
-sebelumnya terkena portal (teleported) atau tidak
+    Fungsi untuk mendapatkan informasi kondisi pemain dengan index idx, apakah
+    sebelumnya terkena portal (teleported) atau tidak
 */
 boolean getImmunityConditionOfPlayer (pIsImune pI, int idx);
 /*
-    Fungsi untuk mendapatkan informasi kondisi pemain dengan username uname, apakah
+    Fungsi untuk mendapatkan informasi kondisi pemain dengan index idx, apakah
     Sedang imune terhadap efek apapun atau tidak
 */
  
 boolean getCerminConditionOfPlayer (pIsCermin pC, int idx);
 /*
-    Fungsi untuk mendapatkan informasi kondisi pemain dengan username uname, apakah
+    Fungsi untuk mendapatkan informasi kondisi pemain dengan index idx, apakah
     Sedang memiliki buff cermin ganda atau tidak
 */
  
 boolean getSenterBesarConditionOfPlayer (pIsSenterBesar pSB, int idx);
 /*
-    Fungsi untuk mendapatkan informasi kondisi pemain dengan username uname, apakah
+    Fungsi untuk mendapatkan informasi kondisi pemain dengan index idx, apakah
     Sedang memiliki buff senter pembesar atau tidak
 */
  
 boolean getSenterKecilConditionOfPlayer (pIsSenterKecil pSK, int idx);
 /*
-    Fungsi untuk mendapatkan informasi kondisi pemain dengan username uname, apakah
+    Fungsi untuk mendapatkan informasi kondisi pemain dengan index idx, apakah
     Sedang memiliki buff senter pengecil atau tidak
 */
  
  
 int getPositionOfPlayer (pPosition pP, int idx);
 /*
-    Fungsi untuk mendapatkan informasi posisi terakhir dari pemain dengan username
+    Fungsi untuk mendapatkan informasi posisi terakhir dari pemain dengan index idx
     uname;
 */
  
-int randomInt07();
- 
 void randomSkillGenerator(char *skname);
+/*
+    prosedur untuk merandom SKILL dan menyimpannya di skname sesuai dengan chance
+    masing-masing skill.
+*/
 
 void copySkillName (Skill pS1, Skill pS2, Skill pS3, Skill pS4, int idxP, int idxSkill, char *skname);
- 
-int randomInt99();
+/*
+    menyalin skill index idxSkill pada player dengan index idxP, dan menyimpannya di skname
+*/
 
+int randomInt99();
+/*
+    fungsi return random integer [0..99]
+*/
 #endif

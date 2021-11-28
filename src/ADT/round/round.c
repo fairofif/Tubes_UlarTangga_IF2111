@@ -39,7 +39,6 @@ Skill pS2, Skill pS3, Skill pS4, int nPlayer) {
     else {
         LATESTROUND(*R) = P;
     }
-    P = LATESTROUND(*R);
 
     for (int i = 1; i <= nPlayer; i++) {
         (POSITIONROUND(P))[i] = getPositionOfPlayer(pP, i);
@@ -51,11 +50,21 @@ Skill pS2, Skill pS3, Skill pS4, int nPlayer) {
         nSkill = banyaknyaSkill(pS1, pS2, pS3, pS4, i);
         for (int j = 1; j <= nSkill; j++) {
             strcpy(skname, "");
-            copySkillName(pS1,pS2,pS3,pS4,i,j,&skname);
+            copySkillName(pS1,pS2,pS3,pS4,i,j,skname);
             strcpy((SKILLROUND(P))[i][j], skname);
         }
     
     }
+}
+
+int lenArrSkill (addressRound P, int idxP) {
+    int j = 1;
+    int count = 0;
+    while ((strcmp((SKILLROUND(P))[idxP][j], "") != 0) && (j<11) ){
+        count++;
+        j++;
+    }
+    return count;
 }
 
 void undoRound (Round *R, pPosition *pP, pIsTeleported *pT, pIsImune *pI,
@@ -71,9 +80,9 @@ Skill *pS2, Skill *pS3, Skill *pS4, int nPlayer) {
         (*pC).isCermin[i] = (CERMINROUND(P))[i];
         (*pSB).isSenterBesar[i] = (SENTERBROUND(P))[i];
         (*pSK).isSenterKecil[i] = (SENTERKROUND(P))[i];
-        nSkill = banyaknyaSkill(*pS1,*pS2,*pS3,*pS4,i);
+        nSkill = lenArrSkill(P, i);
         if (i == 1) {
-            createEmptyPlayerSkillslList(pS1);
+            createEmptyPlayerSkillsList(pS1);
             for (int j = 1; j <= nSkill; j++) {
                 strcpy(skname, "");
                 strcpy(skname, (SKILLROUND(P))[i][j]);
@@ -81,7 +90,7 @@ Skill *pS2, Skill *pS3, Skill *pS4, int nPlayer) {
             }
         }
         else if (i == 2) {
-            createEmptyPlayerSkillslList(pS2);
+            createEmptyPlayerSkillsList(pS2);
             for (int j = 1; j <= nSkill; j++) {
                 strcpy(skname, "");
                 strcpy(skname, (SKILLROUND(P))[i][j]);
@@ -89,7 +98,7 @@ Skill *pS2, Skill *pS3, Skill *pS4, int nPlayer) {
             }
         }
         else if (i == 3) {
-            createEmptyPlayerSkillslList(pS3);
+            createEmptyPlayerSkillsList(pS3);
             for (int j = 1; j <= nSkill; j++) {
                 strcpy(skname, "");
                 strcpy(skname, (SKILLROUND(P))[i][j]);
@@ -97,7 +106,7 @@ Skill *pS2, Skill *pS3, Skill *pS4, int nPlayer) {
             }
         }
         else if (i == 4) {
-            createEmptyPlayerSkillslList(pS4);
+            createEmptyPlayerSkillsList(pS4);
             for (int j = 1; j <= nSkill; j++) {
                 strcpy(skname, "");
                 strcpy(skname, (SKILLROUND(P))[i][j]);

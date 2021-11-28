@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "save.h": "c",
+        "save.c": "cpp",
+        "mesin_kar.c": "cpp",
+        "chartoint.c": "cpp"
+    }
+}
