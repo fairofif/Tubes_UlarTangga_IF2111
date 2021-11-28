@@ -15,14 +15,14 @@ Permainan ini juga menghadirkan fitur-fitur yang dapat digunakan oleh pemain unt
 
 # How to Play
 1. Pastikan sudah terinstall gcc ataupun mingw
-2. Gunakan terminal/shell/commandprompt lalu masuk ke dalam direktori file ini tersimpan
-3. Lalu ketik, < cd "...\Tubes_UlarTangga_IF2111\src" && gcc main.c -o main && "...\Tubes_UlarTangga_IF2111\src\"main > pada terminal tanpa tanda < > (isi ... dengan direktori kamu menyimpan file ini)
-4. Ketik NEWGAME untuk memulai permainan baru ataupun ketik LOAD untuk memulai permainan dari penyimpanan terakhir
+2. Gunakan terminal/shell/commandprompt lalu masuk ke dalam direktori file main.c tersimpan dengan mengetikkan < cd "...\Tubes_UlarTangga_IF2111\src" > tanpa tanda <> (isi ... dengan direktori kamu menyimpan file ini)
+3. Ketik gcc -o main main.c
+4. Ketik main.exe untuk dapat masuk ke dalam program permainan
+5. Ketik NEWGAME untuk memulai permainan baru ataupun ketik LOAD untuk memulai permainan dari penyimpanan terakhir
 5. Masukkan jumlah pemain yang akan bermain beserta namanya
 6. Selamat Anda sudah masuk ke dalam permainan! Pemain akan mendapatkan skill random untuk setiap ronde serta akan ada tantangan lain berupa teleport untuk menambah keseruan dalam permainan
 7. Jika Anda kebingungan di tengah permainan, Anda dapat menggunakan command "HELP" untuk melihat panduan yang ada
-8. Jika Anda ingin berhenti bermain sementara dan melanjutkan di lain waktu, Anda dapat menggunakan command "SAVE" untuk menyimpan state permainan pada saat itu. Command ini hanya bisa digunakan setelah pemain pada giliran tersebut sudah menjalankan command "ROLL"
-9. Pemain yang berhasil mencapai petak terakhir ialah yang menjadi pemenang!
+8. Pemain yang berhasil mencapai petak terakhir ialah yang menjadi pemenang!
 
 # ADT yang Digunakan
 1. ADT Array (Diimplementasikan dengan nama ADT Map)
