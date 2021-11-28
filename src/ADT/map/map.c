@@ -25,14 +25,7 @@ void inputConfig(Map *CurrentMap)
 
 void loadConfig(Map *CurrentMap, char configmap[]){
     TELEPORT_NEFF(*CurrentMap) = 0;
-    // fileconfig = configmap;
-    // for(int i = 0; i < 20; i++ ) {
-    //     mapname[i] = (*fileconfig)[i];
-    // }
-    printf("sebelum for loop\n");
-    
     fileconfig = configmap;
-    printf("setelah for loop\n");
     readConfig(CurrentMap);
 }
 

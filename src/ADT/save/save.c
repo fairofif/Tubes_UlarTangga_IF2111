@@ -32,17 +32,15 @@ void Save(int n, int round, char mapname[], pUserName pU, pIsTeleported pT, pPos
 pIsSenterBesar pSB, pIsSenterKecil pSK, Skill pS1, Skill pS2, Skill pS3, Skill pS4){
 // KAMUS
     int i;
-    char filename[100];
+    char filename[50];
     char skname[30];
 
 // ALGORITMA
-    printf("Masukkan nama save file yang ingin dibuat: ");
+    printf("Masukkan file name yang ingin dibuat: ");
     scanf("%s", filename);
 
     FILE *pfile = fopen(filename, "wt");
 
-
-    printf("coba nama mapname %s\n", mapname);
     fprintf(pfile, "%s\n", mapname);
 
     fprintf(pfile, "%d\n", n);
@@ -102,6 +100,6 @@ pIsSenterBesar pSB, pIsSenterKecil pSK, Skill pS1, Skill pS2, Skill pS3, Skill p
     }
     fprintf(pfile, "!");
     fclose(pfile);
-    printf("Game berhasil di save yuhu!\n");
+    printf("Save data berhasil disimpan!\n");
     getchar();
 }

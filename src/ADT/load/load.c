@@ -1,13 +1,13 @@
 #include <sys/stat.h>
 #include "load.h"
 
-int IsFileExists(char *filename){
+boolean IsFileExists(char *filename){
     struct stat buffer;
     int exist = stat(filename,&buffer);
     if(exist == 0)
-        return 1;
+        return TRUE;
     else  
-        return 0;
+        return FALSE;
 }
 
 void unshortenSkillName(char skillName[]){
@@ -59,20 +59,18 @@ pIsSenterBesar *pSB, pIsSenterKecil *pSK, Skill *pS1, Skill *pS2, Skill *pS3, Sk
 
     boolean valid = FALSE;
     while(!valid){
-        printf("Masukkan nama save file yang ingin diload: ");
+        printf("Masukkan file name yang ingin diload: ");
         scanf("%s", filename);
         if(IsFileExists(filename)){
             printf("Load file berhasil, selamat bermain!\n");
             valid = TRUE;
         }
         else {
-            printf("Error: File tidak ada!\n");
+            printf("ERROR!! File tidak ditemukan.\n");
         }
     }
 
     STARTKATA2(filename);
-    // printf("setelah startkata\n");
-    // printf("Kta length >> %d\n", CKata.Length);
 
     // NAMA MAP
     for (k=1; k <= CKata.Length; k++){
@@ -86,15 +84,10 @@ pIsSenterBesar *pSB, pIsSenterKecil *pSK, Skill *pS1, Skill *pS2, Skill *pS3, Sk
     *banyakPemain = KataToInt(CKata);
     ADVKATA2();
     *round = KataToInt(CKata);
-
-    // KatatoInt(CKata.TabKata, CKata.Length);
     ADVKATA2();
-    printf("banyak pemain >> %d\n", (*banyakPemain));
-    printf("banyak round (load.c) >> %d\n", (*round));
 
     // Load kondisi player
     for (i=1; i<=*banyakPemain; i++){
-        //printf("loop data status player\n");
         
         for (k=1; k <= CKata.Length; k++){
             uname[k-1] = CKata.TabKata[k];
@@ -103,47 +96,22 @@ pIsSenterBesar *pSB, pIsSenterKecil *pSK, Skill *pS1, Skill *pS2, Skill *pS3, Sk
         ADVKATA2();
 
         (*pP).pos[i] = KataToInt(CKata);
-        printf("pos : %d\n", (*pP).pos[i]);
         ADVKATA2();
         (*pT).isTele[i] = KataToInt(CKata);
-        printf("istele : %d\n", (*pT).isTele[i]);
         ADVKATA2();
         (*pI).isImun[i] = KataToInt(CKata);
-        printf("isimun : %d\n", (*pI).isImun[i]);
         ADVKATA2();
         (*pC).isCermin[i] = KataToInt(CKata);
-        printf("iscermin : %d\n", (*pC).isCermin[i]);
         ADVKATA2();
         (*pSB).isSenterBesar[i] = KataToInt(CKata);
-        printf("issenterbesar : %d\n", (*pSB).isSenterBesar[i]);
         ADVKATA2();
         (*pSK).isSenterKecil[i] = KataToInt(CKata);
-        printf("issenterkecil : %d\n", (*pSK).isSenterKecil[i]);
         ADVKATA2();
     }
 
     // Load skill
     for (i=1; i<=*banyakPemain; i++){
         jmlskill = KataToInt(CKata); ADVKATA2();
-        printf("jumlah skill >> %d\n", jmlskill);
-
-        // if (i == 1){
-        //     for (j=1; j <= jmlskill; j++){ // loop sebanyak jml skill di satu uname
-        //         for (k=1; k <= CKata.Length; k++){
-        //             //strcpy(skill1, CKata.TabKata[k]);
-        //             skill1[k-1] = CKata.TabKata[k];
-        //         }
-        //         strcpy(skname, skill1);
-        //         unshortenSkillName(skname);
-        //         insertVSkill(pS1, skname);
-        //         ADVKATA2();
-        //     }
-        //     address P = ADDR_HEADSKILL(*pS1);
-        //     while (P != 0){
-        //         printf("%s\n", SKILLNAME(P));
-        //         P = NEXTSKILL(P);
-        //     }
-        // }
 
         if (i == 1){
             for (j=1; j <= jmlskill; j++){ // loop sebanyak jml skill di satu uname
@@ -178,6 +146,7 @@ pIsSenterBesar *pSB, pIsSenterKecil *pSK, Skill *pS1, Skill *pS2, Skill *pS3, Sk
                 P = NEXTSKILL(P);
             }
         }
+
         else if (i == 3){
             for (j=1; j <= jmlskill; j++){ // loop sebanyak jml skill di satu uname
                 for (k=1; k <= CKata.Length; k++){
@@ -194,6 +163,7 @@ pIsSenterBesar *pSB, pIsSenterKecil *pSK, Skill *pS1, Skill *pS2, Skill *pS3, Sk
                 P = NEXTSKILL(P);
             }
         }
+        
         else if (i == 4){
             for (j=1; j <= jmlskill; j++){ // loop sebanyak jml skill di satu uname
                 for (k=1; k <= CKata.Length; k++){

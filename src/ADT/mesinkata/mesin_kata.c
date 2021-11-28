@@ -43,9 +43,6 @@ void ADVKATA(Map *CurrentMap) {
 }
 
 
-
-// ==================================================////////////////////////////////////////
-
 void STARTKATA2(char *namafile) { //untuk nerima input dari semua isi file
     START2(namafile);
     IgnoreBlank2();
@@ -71,8 +68,8 @@ void ADVKATA2(){
     IgnoreBlank2();
 }
 
-void SalinKata2() { //untuk input semua ke array
-    int i = 1; //tinggal diubah ke 1 kl mau kepisah2
+void SalinKata2() { 
+    int i = 1; 
     while((CC != MARK) && (CC != NEWLINE) && (CC != BLANK)) {
         CKata.TabKata[i] = CC;
         ADV();
@@ -112,29 +109,4 @@ int KataToInt (Kata K){
         i++;
     }
     return value;
-}
-
-char KataToChar (Kata K){
-    int i = 1;
-    while (i <= K.Length){
-        return (K.TabKata[i]);
-    }
-}
-
-int KatatoInt(char a[], int len){   
-    int tel2;
-    int n = 0;
-    int valueue = 0;
-    for(int i = len; i > 0; i--) {
-        if(CKata.TabKata[i] == BLANK) {
-            tel2 = valueue;
-            valueue = 0;
-            n = 0;
-        } else {
-            int temp = CKata.TabKata[i] - '0';
-            valueue = valueue + (temp * pow(10, n));
-            n++;
-        }
-    }
-    return 0;
 }

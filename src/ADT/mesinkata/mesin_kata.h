@@ -48,18 +48,27 @@ void ADVKATA(Map *CurrentMap);
 
 
 void STARTKATA2(char *namafile);
+/* Implementasi STARTKATA untuk membaca file save.
+   I.S. : CC sembarang
+   F.S. : EndKata = true, dan CC = MARK;
+          atau EndKata = false, CKata adalah kata yang sudah diakuisisi,
+          CC karakter pertama sesudah karakter terakhir kata */
 
 void IgnoreBlank2();
+/* Mengabaikan satu atau beberapa BLANK. Implementasi ADVKATA untuk membaca file save.
+   I.S. : CC sembarang
+   F.S. : CC ≠ BLANK atau CC = MARK */
 
 void ADVKATA2();
-/* I.S. : CC adalah karakter pertama kata yang akan diakuisisi
+/* Implementasi ADVKATA untuk membaca file save.
+   I.S. : CC adalah karakter pertama kata yang akan diakuisisi
    F.S. : CKata adalah kata terakhir yang sudah diakuisisi,
           CC adalah karakter pertama dari kata berikutnya, mungkin MARK
           Jika CC = MARK, EndKata = true.
-   Proses : Akuisisi kata menggunakan procedure SalinKata, digunakan untuk prosedur load */
+   Proses : Akuisisi kata menggunakan procedure SalinKata*/
 
 void SalinKata2();
-/* Mengakuisisi kata, menyimpan dalam CKata
+/* Mengakuisisi kata, menyimpan dalam CKata. Implementasi STARTKATA untuk membaca file save.
    I.S. : CC adalah karakter pertama dari kata
    F.S. : CKata berisi kata yang sudah diakuisisi;
           CC = BLANK atau CC = MARK;
@@ -69,11 +78,5 @@ void SalinKata2();
 
 int KataToInt (Kata K);
 /* Mengubah Kata yang berisi tipe integer tapi dalam format teks(kata) menjadi integer */
-
-char KataToChar (Kata K);
-/* Mengubah Kata yang berisi tipe char tapi dalam format teks(kata) menjadi char */
-
-int KatatoInt(char a[], int len);
-
 
 #endif
