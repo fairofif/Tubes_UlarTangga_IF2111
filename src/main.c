@@ -90,8 +90,11 @@ int main () {
                 start();
 
                 /* masukinn jumlah pemain & username pemain2nya */
-                printf("Masukkan jumlah pemain: ");
-                scanf("%d", &banyakPemain);
+                while(banyakPemain < 2 || banyakPemain > 4) {
+                    printf("Masukkan jumlah pemain: ");
+                    scanf("%d", &banyakPemain);
+                }
+                
                 preparationSkillList(&pS1,&pS2,&pS3,&pS4, banyakPemain);
                 createEmptyPlayerList(&pU);
                 summonPlayer(&pU, &pT, &pP, &pI, &pC, &pSB, &pSK, banyakPemain);
